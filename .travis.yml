@@ -1,0 +1,8 @@
+language: java
+addons:
+  sonarcloud:
+    organization: "internet-software-architecture"
+    token: $isa_sonar_cloud_2021
+script: 
+    - cd server
+    - mvn clean verify sonar:sonar -Pcoverage -Dsonar.projectKey=isa:project
