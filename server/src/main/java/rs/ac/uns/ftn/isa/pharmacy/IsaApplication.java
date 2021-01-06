@@ -1,4 +1,4 @@
-package isa;
+package rs.ac.uns.ftn.isa.pharmacy;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
