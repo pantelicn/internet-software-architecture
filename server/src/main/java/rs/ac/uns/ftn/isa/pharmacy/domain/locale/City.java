@@ -1,17 +1,16 @@
 package rs.ac.uns.ftn.isa.pharmacy.domain.locale;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "city")
 public class City {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String name;
     private String postalCode;
+    @OneToOne
     private Country country;
 
     public long getId() {

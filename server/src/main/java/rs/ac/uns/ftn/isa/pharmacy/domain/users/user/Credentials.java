@@ -3,10 +3,9 @@ package rs.ac.uns.ftn.isa.pharmacy.domain.users.user;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "credentials", uniqueConstraints = {@UniqueConstraint(columnNames = "userIds")})
+@Table(name = "credentials")
 public class Credentials {
     @Id
     private String email;

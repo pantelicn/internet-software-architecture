@@ -1,13 +1,27 @@
 package rs.ac.uns.ftn.isa.pharmacy.domain.locale;
 
+import javax.persistence.*;
 import java.io.Serializable;
 
+@Entity
+@Table(name = "address")
 public class Address implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+    @OneToOne
     private City city;
     private String streetName;
     private double latitude;
     private double longitude;
+
+    public long getId() {
+        return id;
+    }
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public City getCity() {
         return city;

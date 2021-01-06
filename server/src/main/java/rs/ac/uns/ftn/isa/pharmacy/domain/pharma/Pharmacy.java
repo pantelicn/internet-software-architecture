@@ -2,18 +2,17 @@ package rs.ac.uns.ftn.isa.pharmacy.domain.pharma;
 
 import rs.ac.uns.ftn.isa.pharmacy.domain.locale.Address;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@Table(name = "pharmacy")
 public class Pharmacy {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String name;
+    @OneToOne
     private Address address;
     private String description;
     private double rating;

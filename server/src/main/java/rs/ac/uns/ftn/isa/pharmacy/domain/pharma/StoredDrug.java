@@ -6,11 +6,11 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+@Table(name = "storedDrug")
 public class StoredDrug {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long quantity;
-
     private Price price;
     private Date validUntil;
     @OneToOne
