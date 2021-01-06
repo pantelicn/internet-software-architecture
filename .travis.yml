@@ -4,6 +4,10 @@ addons:
   sonarcloud:
     organization: "nikolapantelic-ftn"
     token: $SONARCLOUD_TOKEN
+services:
+  - mysql
+before_install:
+  - mysql -e 'CREATE DATABASE isa;'
 script: 
     - cd server
     - mvn clean verify sonar:sonar -Pcoverage -Dsonar.projectKey=isa:project
