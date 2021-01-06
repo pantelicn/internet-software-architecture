@@ -1,4 +1,10 @@
+  
 language: java
+addons:
+  sonarcloud:
+    organization: "nikolapantelic-ftn"
+    token: $SONARCLOUD_TOKEN
 script: 
     - cd server
-    - mvn clean verify
+    - mvn clean verify sonar:sonar -Pcoverage -Dsonar.projectKey=isa:project
+    
