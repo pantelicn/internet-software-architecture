@@ -2,10 +2,7 @@ package rs.ac.uns.ftn.isa.pharmacy.domain.pharma;
 
 import rs.ac.uns.ftn.isa.pharmacy.domain.finance.Price;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -13,8 +10,10 @@ public class StoredDrug {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long quantity;
+
     private Price price;
     private Date validUntil;
+    @OneToOne
     private Drug drug;
 
     public long getQuantity() {

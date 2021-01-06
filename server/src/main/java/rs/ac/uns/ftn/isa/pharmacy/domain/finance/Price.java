@@ -1,8 +1,9 @@
 package rs.ac.uns.ftn.isa.pharmacy.domain.finance;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Price {
+public class Price implements Serializable {
     private Money price;
     private Date validUntil;
 

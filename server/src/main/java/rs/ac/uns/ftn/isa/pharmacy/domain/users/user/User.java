@@ -1,9 +1,6 @@
 package rs.ac.uns.ftn.isa.pharmacy.domain.users.user;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
@@ -11,6 +8,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+    @OneToOne
     private Person person;
     private boolean isActivated;
     private UUID uid;

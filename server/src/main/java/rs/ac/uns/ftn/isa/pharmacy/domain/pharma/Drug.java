@@ -1,9 +1,6 @@
 package rs.ac.uns.ftn.isa.pharmacy.domain.pharma;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
@@ -14,9 +11,11 @@ public class Drug {
     private String name;
     private String drugType;
     private String intakeType;
+    @ElementCollection
     private List<String> ingredients;
     private boolean requiresPrescription;
     private String additionalNotes;
+    @ManyToMany
     private List<Drug> alternatives;
 
     public long getId() {

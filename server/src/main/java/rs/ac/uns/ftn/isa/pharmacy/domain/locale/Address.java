@@ -1,6 +1,8 @@
 package rs.ac.uns.ftn.isa.pharmacy.domain.locale;
 
-public class Address {
+import java.io.Serializable;
+
+public class Address implements Serializable {
 
     private City city;
     private String streetName;
