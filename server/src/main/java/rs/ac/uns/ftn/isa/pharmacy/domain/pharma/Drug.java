@@ -1,10 +1,16 @@
 package rs.ac.uns.ftn.isa.pharmacy.domain.pharma;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.List;
 
+@Entity
 public class Drug {
-
-    private String drugId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
     private String name;
     private String drugType;
     private String intakeType;
@@ -13,14 +19,12 @@ public class Drug {
     private String additionalNotes;
     private List<Drug> alternatives;
 
-    public Drug() {
-    }
-    public String getDrugId() {
-        return drugId;
+    public long getId() {
+        return id;
     }
 
-    public void setDrugId(String drugId) {
-        this.drugId = drugId;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getName() {

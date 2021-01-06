@@ -6,13 +6,9 @@ public class Price {
     private Money price;
     private Date validUntil;
 
-    public Price() {
-    }
-
     public Money getPrice() {
         return price;
     }
-
     public void setPrice(Money price) {
         this.price = price;
     }
@@ -20,10 +16,7 @@ public class Price {
     public Date getValidUntil() {
         return validUntil;
     }
-
     public void setValidUntil(Date validUntil) {
         this.validUntil = validUntil;
     }
-
-
 }

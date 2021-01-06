@@ -1,26 +1,45 @@
 package rs.ac.uns.ftn.isa.pharmacy.domain.users.user;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import java.util.UUID;
+
+@Entity
 public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+    private Person person;
+    private boolean isActivated;
+    private UUID uid;
 
-    private Credentials credentials;
-    private PersonalInfo personalInfo;
-
-    public User() {
+    public long getId() {
+        return id;
+    }
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public Credentials getCredentials() {
-        return credentials;
+    public boolean isActivated() {
+        return isActivated;
+    }
+    public void setActivated(boolean activated) {
+        isActivated = activated;
     }
 
-    public void setCredentials(Credentials credentials) {
-        this.credentials = credentials;
+    public Person getPerson() {
+        return person;
+    }
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
-    public PersonalInfo getPersonalInfo() {
-        return personalInfo;
+    public UUID getUid() {
+        return uid;
     }
-
-    public void setPersonalInfo(PersonalInfo personalInfo) {
-        this.personalInfo = personalInfo;
+    public void setUid(UUID uid) {
+        this.uid = uid;
     }
 }

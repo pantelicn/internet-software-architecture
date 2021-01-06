@@ -2,15 +2,28 @@ package rs.ac.uns.ftn.isa.pharmacy.domain.pharma;
 
 import rs.ac.uns.ftn.isa.pharmacy.domain.locale.Address;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.List;
 
+@Entity
 public class Pharmacy {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
     private String name;
     private Address address;
-    private double averageRating;
-    private List<StoredDrug> storedDrugs;
+    private String description;
+    private double rating;
 
-    public Pharmacy() {
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -29,19 +42,19 @@ public class Pharmacy {
         this.address = address;
     }
 
-    public double getAverageRating() {
-        return averageRating;
+    public String getDescription() {
+        return description;
     }
 
-    public void setAverageRating(double averageRating) {
-        this.averageRating = averageRating;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public List<StoredDrug> getStoredDrugs() {
-        return storedDrugs;
+    public double getRating() {
+        return rating;
     }
 
-    public void setStoredDrugs(List<StoredDrug> storedDrugs) {
-        this.storedDrugs = storedDrugs;
+    public void setRating(double rating) {
+        this.rating = rating;
     }
 }
