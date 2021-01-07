@@ -32,9 +32,9 @@ public class DrugController {
         return service.save(drug);
     }
 
-    @PutMapping("{id}")
-    Drug update(@RequestBody Drug drug, @PathVariable Long id) {
-        return service.update(drug, id);
+    @PutMapping
+    Drug update(@RequestBody Drug drug) {
+        return service.update(drug);
     }
 
     @DeleteMapping("{id}")
