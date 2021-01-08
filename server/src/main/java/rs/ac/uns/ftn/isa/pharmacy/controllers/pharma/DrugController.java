@@ -16,27 +16,27 @@ public class DrugController {
     }
 
     @GetMapping
-    List<Drug> getAll() {
+    public List<Drug> getAll() {
         return service.findAll();
     }
 
     @GetMapping("{id}")
-    Drug find(@PathVariable Long id) {
+    public Drug find(@PathVariable Long id) {
         return service.findById(id);
     }
 
     @PostMapping
-    Drug add(@RequestBody Drug drug) {
+    public Drug add(@RequestBody Drug drug) {
         return service.save(drug);
     }
 
     @PutMapping("{id}")
-    Drug update(@RequestBody Drug drug, @PathVariable Long id) {
+    public Drug update(@RequestBody Drug drug, @PathVariable Long id) {
         return service.update(drug, id);
     }
 
     @DeleteMapping("{id}")
-    void delete(@PathVariable Long id) {
+    public void delete(@PathVariable Long id) {
         service.deleteById(id);
     }
 }

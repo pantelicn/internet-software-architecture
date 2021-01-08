@@ -2,10 +2,6 @@ package rs.ac.uns.ftn.isa.pharmacy.domain.users.user;
 
 import rs.ac.uns.ftn.isa.pharmacy.domain.locale.Address;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.*;
 import java.util.Date;
 
