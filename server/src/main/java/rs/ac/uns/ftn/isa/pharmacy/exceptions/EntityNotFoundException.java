@@ -1,4 +1,4 @@
-package rs.ac.uns.ftn.isa.pharmacy.infrastructure.exceptions;
+package rs.ac.uns.ftn.isa.pharmacy.exceptions;
 
 import javax.persistence.PersistenceException;
 

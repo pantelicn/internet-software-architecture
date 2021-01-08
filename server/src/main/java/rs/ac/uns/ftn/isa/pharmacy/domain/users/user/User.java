@@ -10,8 +10,6 @@ public class User {
     private long id;
     @OneToOne
     private Person person;
-    private boolean isActivated;
-    private UUID uid;
 
     public long getId() {
         return id;
@@ -20,24 +18,10 @@ public class User {
         this.id = id;
     }
 
-    public boolean isActivated() {
-        return isActivated;
-    }
-    public void setActivated(boolean activated) {
-        isActivated = activated;
-    }
-
     public Person getPerson() {
         return person;
     }
     public void setPerson(Person person) {
         this.person = person;
-    }
-
-    public UUID getUid() {
-        return uid;
-    }
-    public void setUid(UUID uid) {
-        this.uid = uid;
     }
 }

@@ -2,9 +2,9 @@ package rs.ac.uns.ftn.isa.pharmacy.services.pharma;
 
 import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.isa.pharmacy.domain.pharma.Drug;
-import rs.ac.uns.ftn.isa.pharmacy.infrastructure.exceptions.EntityAlreadyExistsException;
-import rs.ac.uns.ftn.isa.pharmacy.infrastructure.exceptions.EntityNotFoundException;
-import rs.ac.uns.ftn.isa.pharmacy.infrastructure.repository.DrugRepository;
+import rs.ac.uns.ftn.isa.pharmacy.exceptions.EntityAlreadyExistsException;
+import rs.ac.uns.ftn.isa.pharmacy.exceptions.EntityNotFoundException;
+import rs.ac.uns.ftn.isa.pharmacy.repository.DrugRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,7 +27,7 @@ public class DrugService {
                 .orElseThrow(() -> new EntityNotFoundException(Drug.class.getSimpleName(), id));
     }
 
-    public Drug save(Drug drug) {
+    public Drug create(Drug drug) {
         Optional<Drug> existingEntry = repository.findById(drug.getId());
         if (existingEntry.isPresent()) {
             throw new EntityAlreadyExistsException("Drug", drug.getId());

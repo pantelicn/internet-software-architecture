@@ -1,4 +1,4 @@
-package rs.ac.uns.ftn.isa.pharmacy.infrastructure.repository;
+package rs.ac.uns.ftn.isa.pharmacy.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
