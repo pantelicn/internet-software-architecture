@@ -7,7 +7,6 @@ import rs.ac.uns.ftn.isa.pharmacy.infrastructure.exceptions.EntityNotFoundExcept
 import rs.ac.uns.ftn.isa.pharmacy.infrastructure.repository.DrugRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class DrugService {
@@ -28,16 +27,15 @@ public class DrugService {
     }
 
     public Drug save(Drug drug) {
-        Optional<Drug> existingEntry = repository.findById(drug.getId());
-        if (existingEntry.isPresent()) {
+        if (repository.existsById(drug.getId())) {
             throw new EntityAlreadyExistsException("Drug", drug.getId());
         }
         return repository.save(drug);
     }
 
-    public Drug update(Drug newDrug) {
-        Optional<Drug> existingEntry =  repository.findById(newDrug.getId());
-        if (existingEntry.isPresent()) {
+    public Drug update(Drug newDrug, Long id) {
+        if (repository.existsById(id)) {
+            newDrug.setId(id);
             return repository.save(newDrug);
         }
         throw new EntityNotFoundException("Drug", newDrug.getId());

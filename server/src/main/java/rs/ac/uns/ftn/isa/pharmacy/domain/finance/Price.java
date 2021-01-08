@@ -4,14 +4,14 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Price implements Serializable {
-    private Money price;
+    private Money amount;
     private Date validUntil;
 
-    public Money getPrice() {
-        return price;
+    public Money getAmount() {
+        return amount;
     }
-    public void setPrice(Money price) {
-        this.price = price;
+    public void setPrice(Money amount) {
+        this.amount = amount;
     }
 
     public Date getValidUntil() {

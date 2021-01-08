@@ -2,8 +2,6 @@ package rs.ac.uns.ftn.isa.pharmacy.controllers.pharma;
 
 import org.springframework.web.bind.annotation.*;
 import rs.ac.uns.ftn.isa.pharmacy.domain.pharma.Drug;
-import rs.ac.uns.ftn.isa.pharmacy.infrastructure.exceptions.EntityNotFoundException;
-import rs.ac.uns.ftn.isa.pharmacy.infrastructure.repository.DrugRepository;
 import rs.ac.uns.ftn.isa.pharmacy.services.pharma.DrugService;
 
 import java.util.List;
@@ -32,9 +30,9 @@ public class DrugController {
         return service.save(drug);
     }
 
-    @PutMapping
-    Drug update(@RequestBody Drug drug) {
-        return service.update(drug);
+    @PutMapping("{id}")
+    Drug update(@RequestBody Drug drug, @PathVariable Long id) {
+        return service.update(drug, id);
     }
 
     @DeleteMapping("{id}")

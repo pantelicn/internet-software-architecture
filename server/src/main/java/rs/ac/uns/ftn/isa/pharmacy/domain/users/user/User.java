@@ -10,6 +10,8 @@ public class User {
     private long id;
     @OneToOne
     private Person person;
+    @Embedded
+    private Credentials credentials;
     private boolean isActivated;
     private UUID uid;
 
