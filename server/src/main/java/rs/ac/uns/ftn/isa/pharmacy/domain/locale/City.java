@@ -10,7 +10,7 @@ public class City {
     private long id;
     private String name;
     private String postalCode;
-    @OneToOne
+    @ManyToOne
     private Country country;
 
     public long getId() {

@@ -2,10 +2,7 @@ package rs.ac.uns.ftn.isa.pharmacy.domain.users.user;
 
 import rs.ac.uns.ftn.isa.pharmacy.domain.locale.Address;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -18,6 +15,7 @@ public class Person {
     private Gender gender;
     private String phoneNumber;
     private Date dateOfBirth;
+    @OneToOne
     private Address address;
 
     public long getId() {

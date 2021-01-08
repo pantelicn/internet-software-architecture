@@ -10,11 +10,20 @@ import java.util.Date;
 public class StoredDrug {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
     private long quantity;
     private Price price;
     private Date validUntil;
     @OneToOne
     private Drug drug;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public long getQuantity() {
         return quantity;

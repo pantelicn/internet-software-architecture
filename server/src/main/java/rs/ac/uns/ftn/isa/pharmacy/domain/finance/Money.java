@@ -1,7 +1,9 @@
 package rs.ac.uns.ftn.isa.pharmacy.domain.finance;
 
 
-public class Money {
+import java.io.Serializable;
+
+public class Money implements Serializable {
     private float amount;
 
     public String getCurrency() {

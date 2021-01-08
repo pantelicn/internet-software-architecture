@@ -9,7 +9,7 @@ import rs.ac.uns.ftn.isa.pharmacy.exceptions.EntityAlreadyExistsException;
 import rs.ac.uns.ftn.isa.pharmacy.exceptions.EntityNotFoundException;
 
 @ControllerAdvice
-public class EntityNotFoundAdvice {
+public class PersistenceExceptionHandler {
 
     @ResponseBody
     @ExceptionHandler(EntityNotFoundException.class)

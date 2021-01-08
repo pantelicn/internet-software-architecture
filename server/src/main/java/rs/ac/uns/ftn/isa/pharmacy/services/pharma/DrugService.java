@@ -35,9 +35,9 @@ public class DrugService {
         return repository.save(drug);
     }
 
-    public Drug update(Drug newDrug) {
-        Optional<Drug> existingEntry =  repository.findById(newDrug.getId());
-        if (existingEntry.isPresent()) {
+    public Drug update(Drug newDrug, Long id) {
+        if (repository.existsById(id)) {
+            newDrug.setId(id);
             return repository.save(newDrug);
         }
         throw new EntityNotFoundException("Drug", newDrug.getId());
