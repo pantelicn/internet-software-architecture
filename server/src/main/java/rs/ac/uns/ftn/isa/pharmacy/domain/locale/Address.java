@@ -5,12 +5,12 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "address")
-public class Address implements Serializable {
+public class Address {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    @OneToOne
+    @ManyToOne
     private City city;
     private String streetName;
     private double latitude;
