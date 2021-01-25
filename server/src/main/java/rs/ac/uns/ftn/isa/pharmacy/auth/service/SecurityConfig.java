@@ -1,8 +1,10 @@
 package rs.ac.uns.ftn.isa.pharmacy.auth.service;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -14,7 +16,9 @@ import rs.ac.uns.ftn.isa.pharmacy.auth.repository.CredentialsRepository;
 
 import javax.servlet.http.HttpServletResponse;
 
+@Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final CredentialsRepository credentialsRepository;
@@ -56,9 +60,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 )
                 .and();
 
-        http.authorizeRequests()
-                .antMatchers("/api/auth/*").permitAll()
-                .anyRequest().authenticated();
+        // @Secured should be used instead
+        // Path specific authorization
+        // Use "antMatchers(path)"
+        //http.authorizeRequests();
+        //        .antMatchers("/api/auth/*").permitAll()
+        //        .anyRequest().authenticated();
 
         http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
     }

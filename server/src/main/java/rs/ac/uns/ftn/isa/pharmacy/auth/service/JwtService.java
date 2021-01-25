@@ -8,6 +8,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.google.gson.Gson;
 import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.isa.pharmacy.auth.model.AuthToken;
+import rs.ac.uns.ftn.isa.pharmacy.auth.model.exceptions.AuthorizationException;
 import rs.ac.uns.ftn.isa.pharmacy.auth.model.IdentityProvider;
 
 
@@ -24,13 +25,13 @@ public class JwtService {
 
     private static final String IDENTITY_CLAIM_KEY = "identity";
 
-    public IdentityProvider decrypt(String jwt) throws IllegalArgumentException {
+    public IdentityProvider decrypt(String jwt) throws AuthorizationException {
         JWTVerifier verifier = JWT.require(_algorithm).build();
         try {
             verifier.verify(jwt);
         }
         catch (JWTVerificationException e) {
-            throw new IllegalArgumentException("Bad signature.");
+            throw new AuthorizationException();
         }
         DecodedJWT decodedJWT = JWT.decode(jwt);
         return deserializeIdentityToken(decodedJWT.getClaim(IDENTITY_CLAIM_KEY).asString());
@@ -42,10 +43,13 @@ public class JwtService {
                 .sign(_algorithm);
     }
 
+    // Gson identity serialization
     private static Gson gson = new Gson();
+
     private String serializeIdentityToken(IdentityProvider identityProvider) {
         return gson.toJson(identityProvider);
     }
+
     private AuthToken deserializeIdentityToken(String serializedToken) {
         return gson.fromJson(serializedToken, AuthToken.class);
     }

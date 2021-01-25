@@ -1,6 +1,9 @@
 package rs.ac.uns.ftn.isa.pharmacy.controllers.pharma;
 
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import rs.ac.uns.ftn.isa.pharmacy.auth.model.Role;
 import rs.ac.uns.ftn.isa.pharmacy.domain.pharma.Drug;
 import rs.ac.uns.ftn.isa.pharmacy.services.pharma.DrugService;
 
@@ -16,6 +19,7 @@ public class DrugController {
     }
 
     @GetMapping
+    @Secured({Role.ADMIN, Role.PATIENT})
     public List<Drug> getAll() {
         return service.findAll();
     }
@@ -26,6 +30,7 @@ public class DrugController {
     }
 
     @PostMapping
+    @Secured(Role.ADMIN)
     Drug create(@RequestBody Drug drug) {
         return service.create(drug);
     }

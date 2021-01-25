@@ -2,12 +2,11 @@ package rs.ac.uns.ftn.isa.pharmacy.auth.service;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-import rs.ac.uns.ftn.isa.pharmacy.auth.model.AuthToken;
+import rs.ac.uns.ftn.isa.pharmacy.auth.model.exceptions.AuthorizationException;
 import rs.ac.uns.ftn.isa.pharmacy.auth.model.Credentials;
 import rs.ac.uns.ftn.isa.pharmacy.auth.model.IdentityProvider;
 import rs.ac.uns.ftn.isa.pharmacy.auth.repository.CredentialsRepository;
@@ -43,13 +42,18 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         }
 
         // Get jwt token and validate
-        final String jwtToken = header.split(" ")[1].trim();
+        String[] headerAuthSplitTokens = header.split(" ");
+        if (headerAuthSplitTokens.length != 2) {
+            chain.doFilter(request, response);
+            return;
+        }
+        String jwtToken = headerAuthSplitTokens[1].trim();
         IdentityProvider requestToken;
 
         try {
             requestToken = jwtService.decrypt(jwtToken);
         }
-        catch (IllegalArgumentException e) {
+        catch (AuthorizationException e) {
             chain.doFilter(request, response);
             return;
         }

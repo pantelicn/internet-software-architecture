@@ -1,4 +1,4 @@
-package rs.ac.uns.ftn.isa.pharmacy.auth.model;
+package rs.ac.uns.ftn.isa.pharmacy.auth.controller;
 
 public class LoginDto {
     public String email;

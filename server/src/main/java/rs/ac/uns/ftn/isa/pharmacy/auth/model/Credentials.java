@@ -1,12 +1,14 @@
 package rs.ac.uns.ftn.isa.pharmacy.auth.model;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -15,7 +17,7 @@ public class Credentials implements UserDetails {
     @Id
     private String email;
     private String password;
-    // TODO Role
+    private String role;
 
     private boolean isActivated;
     private UUID uid;
@@ -24,7 +26,7 @@ public class Credentials implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return List.of(new SimpleGrantedAuthority(role));
     }
 
     @Override
@@ -34,7 +36,7 @@ public class Credentials implements UserDetails {
 
     @Override
     public String getUsername() {
-        return null;
+        return email;
     }
 
     @Override
@@ -69,6 +71,14 @@ public class Credentials implements UserDetails {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public boolean isActivated() {

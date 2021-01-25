@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import rs.ac.uns.ftn.isa.pharmacy.auth.service.CredentialsTokenMapper;
 import rs.ac.uns.ftn.isa.pharmacy.auth.service.JwtService;
 import rs.ac.uns.ftn.isa.pharmacy.auth.model.Credentials;
-import rs.ac.uns.ftn.isa.pharmacy.auth.model.LoginDto;
 
 @RestController
 @RequestMapping(path = "api/auth")
@@ -43,8 +42,7 @@ public class AuthController {
                     .header(
                             HttpHeaders.AUTHORIZATION,
                             jwtService.encrypt(CredentialsTokenMapper.getInstance().createAuthToken(credentials))
-                    )
-                    .body(loginDto);
+                    ).build();
         }
         catch (BadCredentialsException ex) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
