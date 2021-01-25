@@ -1,15 +1,42 @@
 package rs.ac.uns.ftn.isa.pharmacy.domain.locale;
 
+import javax.persistence.*;
+import java.io.Serializable;
+
+@Entity
+@Table(name = "address")
 public class Address {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+    @ManyToOne
+    private City city;
+    private String streetName;
     private double latitude;
     private double longitude;
-    private String countryName;
-    private String cityName;
-    private String address;
-    private int zipCode;
 
-    public Address() {
+    public long getId() {
+        return id;
+    }
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
+    }
+
+    public String getStreetName() {
+        return streetName;
+    }
+
+    public void setStreetName(String streetName) {
+        this.streetName = streetName;
     }
 
     public double getLatitude() {
@@ -26,37 +53,5 @@ public class Address {
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
-    }
-
-    public String getCountryName() {
-        return countryName;
-    }
-
-    public void setCountryName(String countryName) {
-        this.countryName = countryName;
-    }
-
-    public String getCityName() {
-        return cityName;
-    }
-
-    public void setCityName(String cityName) {
-        this.cityName = cityName;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public int getZipCode() {
-        return zipCode;
-    }
-
-    public void setZipCode(int zipCode) {
-        this.zipCode = zipCode;
     }
 }

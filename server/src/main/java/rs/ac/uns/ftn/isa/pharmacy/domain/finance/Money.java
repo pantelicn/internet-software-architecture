@@ -1,25 +1,18 @@
 package rs.ac.uns.ftn.isa.pharmacy.domain.finance;
 
 
-public class Money {
-    private Currency currency;
+import java.io.Serializable;
+
+public class Money implements Serializable {
     private float amount;
 
-    public Money() {
-    }
-
-    public Currency getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(Currency currency) {
-        this.currency = currency;
+    public String getCurrency() {
+        return "RSD";
     }
 
     public float getAmount() {
         return amount;
     }
-
     public void setAmount(float amount) {
         this.amount = amount;
     }

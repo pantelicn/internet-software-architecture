@@ -2,27 +2,28 @@ package rs.ac.uns.ftn.isa.pharmacy.domain.users.user;
 
 import rs.ac.uns.ftn.isa.pharmacy.domain.locale.Address;
 
+import javax.persistence.*;
 import java.util.Date;
 
-public class PersonalInfo {
-
-    private String PID;
+@Entity
+public class Person {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
     private String firstName;
     private String lastName;
     private Gender gender;
     private String phoneNumber;
     private Date dateOfBirth;
+    @OneToOne
     private Address address;
 
-    public PersonalInfo() {
+    public long getId() {
+        return id;
     }
 
-    public String getPID() {
-        return PID;
-    }
-
-    public void setPID(String PID) {
-        this.PID = PID;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getFirstName() {

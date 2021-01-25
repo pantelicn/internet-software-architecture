@@ -1,26 +1,27 @@
 package rs.ac.uns.ftn.isa.pharmacy.domain.users.user;
 
+import javax.persistence.*;
+import java.util.UUID;
+
+@Entity
 public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+    @OneToOne
+    private Person person;
 
-    private Credentials credentials;
-    private PersonalInfo personalInfo;
-
-    public User() {
+    public long getId() {
+        return id;
+    }
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public Credentials getCredentials() {
-        return credentials;
+    public Person getPerson() {
+        return person;
     }
-
-    public void setCredentials(Credentials credentials) {
-        this.credentials = credentials;
-    }
-
-    public PersonalInfo getPersonalInfo() {
-        return personalInfo;
-    }
-
-    public void setPersonalInfo(PersonalInfo personalInfo) {
-        this.personalInfo = personalInfo;
+    public void setPerson(Person person) {
+        this.person = person;
     }
 }

@@ -1,26 +1,30 @@
 package rs.ac.uns.ftn.isa.pharmacy.domain.pharma;
 
+import javax.persistence.*;
 import java.util.List;
 
+@Entity
+@Table(name = "drug")
 public class Drug {
-
-    private String drugId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
     private String name;
     private String drugType;
     private String intakeType;
+    @ElementCollection
     private List<String> ingredients;
-    private boolean requiresPrescription;
+    private boolean prescriptionRequired;
     private String additionalNotes;
+    @ManyToMany
     private List<Drug> alternatives;
 
-    public Drug() {
-    }
-    public String getDrugId() {
-        return drugId;
+    public long getId() {
+        return id;
     }
 
-    public void setDrugId(String drugId) {
-        this.drugId = drugId;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -55,12 +59,12 @@ public class Drug {
         this.ingredients = ingredients;
     }
 
-    public boolean isRequiresPrescription() {
-        return requiresPrescription;
+    public boolean isPrescriptionRequired() {
+        return prescriptionRequired;
     }
 
-    public void setRequiresPrescription(boolean requiresPrescription) {
-        this.requiresPrescription = requiresPrescription;
+    public void setPrescriptionRequired(boolean prescriptionRequired) {
+        this.prescriptionRequired = prescriptionRequired;
     }
 
     public String getAdditionalNotes() {
