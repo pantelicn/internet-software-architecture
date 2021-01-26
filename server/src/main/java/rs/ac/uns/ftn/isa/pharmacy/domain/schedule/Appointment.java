@@ -5,10 +5,9 @@ import rs.ac.uns.ftn.isa.pharmacy.domain.users.employee.Term;
 import rs.ac.uns.ftn.isa.pharmacy.domain.users.user.Person;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
-@Table("appointment")
+@Table(name = "appointment")
 public class Appointment {
     @Id
     private long id;
