@@ -35,7 +35,6 @@ public class AuthController {
                     .authenticate(
                             new UsernamePasswordAuthenticationToken(loginDto.email, loginDto.password)
                     );
-
             Credentials credentials = (Credentials) authenticate.getPrincipal();
 
             return ResponseEntity.ok()
