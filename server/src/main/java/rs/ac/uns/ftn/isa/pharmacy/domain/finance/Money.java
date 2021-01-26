@@ -1,9 +1,9 @@
 package rs.ac.uns.ftn.isa.pharmacy.domain.finance;
 
+import javax.persistence.Embeddable;
 
-import java.io.Serializable;
-
-public class Money implements Serializable {
+@Embeddable
+public class Money {
     private float amount;
 
     public String getCurrency() {

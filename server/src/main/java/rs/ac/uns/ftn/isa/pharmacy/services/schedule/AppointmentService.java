@@ -6,6 +6,8 @@ import rs.ac.uns.ftn.isa.pharmacy.repository.schedule.AppointmentRepository;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class AppointmentService {
@@ -19,7 +21,15 @@ public class AppointmentService {
         return repository.findAll();
     }
 
+    @Transactional
     public List<Appointment> findFreeExaminationsByPharmacy(long pharmacyId) {
-        return null;
+        return repository.findFreeExaminations()
+                .stream()
+                .filter(a -> a.getShift().getPharmacy().getId() == pharmacyId)
+                .collect(Collectors.toList());
+    }
+
+    public Appointment createFreeExamination(Appointment appointment) {
+        return repository.save(appointment);
     }
 }

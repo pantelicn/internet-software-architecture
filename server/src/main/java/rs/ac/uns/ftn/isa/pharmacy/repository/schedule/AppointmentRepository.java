@@ -5,11 +5,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import rs.ac.uns.ftn.isa.pharmacy.domain.schedule.Appointment;
 
-import java.util.stream.Stream;
+import java.util.List;
 
 @Repository
 public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
 
-    @Query("select a from Appointment a where a.type = 'Examination' and a.patient is null")
-    public Stream<Appointment> findFreeExaminations();
+    @Query("select a from Appointment a where a.type = 1 and a.patient is null")
+    public List<Appointment> findFreeExaminations();
 }
