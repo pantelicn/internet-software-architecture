@@ -1,6 +1,8 @@
 package rs.ac.uns.ftn.isa.pharmacy.auth.model;
 
 
+import java.util.UUID;
+
 public class AuthToken implements IdentityProvider {
     private String email;
     private long userId;
@@ -9,7 +11,6 @@ public class AuthToken implements IdentityProvider {
     public String getEmail() {
         return email;
     }
-
     public void setEmail(String email) {
         this.email = email;
     }
@@ -17,7 +18,6 @@ public class AuthToken implements IdentityProvider {
     public long getUserId() {
         return userId;
     }
-
     public void setUserId(long userId) {
         this.userId = userId;
     }
@@ -25,7 +25,6 @@ public class AuthToken implements IdentityProvider {
     public String getRole() {
         return role;
     }
-
     public void setRole(String role) {
         this.role = role;
     }

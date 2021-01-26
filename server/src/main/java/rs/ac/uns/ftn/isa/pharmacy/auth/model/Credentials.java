@@ -5,10 +5,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import rs.ac.uns.ftn.isa.pharmacy.domain.users.user.Person;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
@@ -17,16 +14,17 @@ import java.util.UUID;
 @Table(name = "credentials")
 public class Credentials implements UserDetails {
     @Id
-    private UUID uid;
     private String email;
+    @Column(unique = true)
+    private UUID uid;
     private String password;
     private String role;
-
-
 
     @OneToOne
     private Person person;
     private boolean isActivated;
+
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role));
