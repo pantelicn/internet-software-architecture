@@ -1,5 +1,6 @@
 package rs.ac.uns.ftn.isa.pharmacy.domain.users.user;
 
+import rs.ac.uns.ftn.isa.pharmacy.auth.model.Credentials;
 import rs.ac.uns.ftn.isa.pharmacy.domain.locale.Address;
 
 import javax.persistence.*;
@@ -17,6 +18,7 @@ public class Person {
     private Date dateOfBirth;
     @OneToOne
     private Address address;
+
 
     public long getId() {
         return id;
@@ -65,6 +67,7 @@ public class Person {
     public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
+
     public Address getAddress() {
         return address;
     }
@@ -72,4 +75,6 @@ public class Person {
     public void setAddress(Address address) {
         this.address = address;
     }
+
+
 }

@@ -9,7 +9,6 @@ public class Shift {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    private int employeeId;
     private Date start;
     private Date end;
 
@@ -34,10 +33,4 @@ public class Shift {
         this.end = end;
     }
 
-    public int getEmployeeId() {
-        return employeeId;
-    }
-    public void setEmployeeId(int employeeId) {
-        this.employeeId = employeeId;
-    }
 }

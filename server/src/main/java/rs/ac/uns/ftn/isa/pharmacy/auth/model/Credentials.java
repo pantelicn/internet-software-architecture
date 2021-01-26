@@ -3,9 +3,11 @@ package rs.ac.uns.ftn.isa.pharmacy.auth.model;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import rs.ac.uns.ftn.isa.pharmacy.domain.users.user.Person;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.Collection;
 import java.util.List;
@@ -15,15 +17,16 @@ import java.util.UUID;
 @Table(name = "credentials")
 public class Credentials implements UserDetails {
     @Id
+    private UUID uid;
     private String email;
     private String password;
     private String role;
 
+
+
+    @OneToOne
+    private Person person;
     private boolean isActivated;
-    private UUID uid;
-
-    private int userId;
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role));
@@ -96,12 +99,11 @@ public class Credentials implements UserDetails {
     public void setUid(UUID uid) {
         this.uid = uid;
     }
-
-    public int getUserId() {
-        return userId;
+    public Person getPerson() {
+        return person;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setPerson(Person person) {
+        this.person = person;
     }
 }

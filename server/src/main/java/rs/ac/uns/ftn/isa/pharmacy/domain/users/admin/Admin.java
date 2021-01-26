@@ -1,8 +1,8 @@
 package rs.ac.uns.ftn.isa.pharmacy.domain.users.admin;
 
-import rs.ac.uns.ftn.isa.pharmacy.domain.users.user.User;
+import rs.ac.uns.ftn.isa.pharmacy.domain.users.user.Person;
 
-public class Admin extends User {
+public class Admin extends Person {
     private AdminType adminType;
 
     public AdminType getAdminType() {
