@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "shift")
+@Table(name = "shifts")
 public class Shift {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,6 +20,8 @@ public class Shift {
     private List<Appointment> appointments;
     @ManyToOne
     private Pharmacy pharmacy;
+    @ManyToOne
+    private Employee employee;
 
     public long getId() {
         return id;
@@ -59,5 +61,13 @@ public class Shift {
 
     public void setPharmacy(Pharmacy pharmacy) {
         this.pharmacy = pharmacy;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 }

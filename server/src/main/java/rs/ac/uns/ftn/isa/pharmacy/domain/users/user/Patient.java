@@ -1,21 +1,21 @@
-package rs.ac.uns.ftn.isa.pharmacy.domain.users.employee;
+package rs.ac.uns.ftn.isa.pharmacy.domain.users.user;
 
+import rs.ac.uns.ftn.isa.pharmacy.domain.schedule.Appointment;
 import rs.ac.uns.ftn.isa.pharmacy.domain.users.user.Person;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name="employees")
-public class Employee {
+@Table(name="patients")
+public class Patient {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     @OneToOne
     private Person person;
-    private EmployeeType employeeType;
     @OneToMany
-    private List<Shift> shifts;
+    private List<Appointment> appointment;
 
     public long getId() {
         return id;
@@ -33,19 +33,11 @@ public class Employee {
         this.person = person;
     }
 
-    public EmployeeType getEmployeeType() {
-        return employeeType;
+    public List<Appointment> getAppointment() {
+        return appointment;
     }
 
-    public void setEmployeeType(EmployeeType employeeType) {
-        this.employeeType = employeeType;
-    }
-
-    public List<Shift> getShifts() {
-        return shifts;
-    }
-
-    public void setShifts(List<Shift> shifts) {
-        this.shifts = shifts;
+    public void setAppointment(List<Appointment> appointment) {
+        this.appointment = appointment;
     }
 }

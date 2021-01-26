@@ -1,15 +1,14 @@
 package rs.ac.uns.ftn.isa.pharmacy.domain.schedule;
 
 import rs.ac.uns.ftn.isa.pharmacy.domain.finance.Money;
-import rs.ac.uns.ftn.isa.pharmacy.domain.users.employee.Employee;
+import rs.ac.uns.ftn.isa.pharmacy.domain.users.user.Patient;
 import rs.ac.uns.ftn.isa.pharmacy.domain.users.employee.Shift;
 import rs.ac.uns.ftn.isa.pharmacy.domain.users.employee.Term;
-import rs.ac.uns.ftn.isa.pharmacy.domain.users.user.Person;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "appointment")
+@Table(name = "appointments")
 public class Appointment {
     @Id
     private long id;
@@ -19,7 +18,7 @@ public class Appointment {
     @Embedded
     private Money price;
     @ManyToOne
-    private Person patient;
+    private Patient patient;
     @ManyToOne(optional = false)
     private Shift shift;
 
@@ -55,11 +54,11 @@ public class Appointment {
         this.price = price;
     }
 
-    public Person getPatient() {
+    public Patient getPatient() {
         return patient;
     }
 
-    public void setPatient(Person patient) {
+    public void setPatient(Patient patient) {
         this.patient = patient;
     }
 

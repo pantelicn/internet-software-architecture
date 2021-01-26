@@ -2,6 +2,7 @@ package rs.ac.uns.ftn.isa.pharmacy.controllers.schedule;
 
 import org.springframework.web.bind.annotation.*;
 import rs.ac.uns.ftn.isa.pharmacy.domain.schedule.Appointment;
+import rs.ac.uns.ftn.isa.pharmacy.dtos.FreeAppointmentTermDto;
 import rs.ac.uns.ftn.isa.pharmacy.services.schedule.AppointmentService;
 
 import java.util.List;
@@ -22,11 +23,16 @@ public class AppointmentController {
 
     @GetMapping("{id}")
     public List<Appointment> getFreeExaminationsByPharmacy(@PathVariable long id) {
-        return service.findFreeExaminationsByPharmacy(id);
+        return service.getFreeExaminations(id);
     }
 
     @PostMapping()
     public Appointment createFreeExamination(@RequestBody Appointment appointment) {
         return service.createFreeExamination(appointment);
+    }
+
+    @GetMapping("/free-examinations")
+    public List<FreeAppointmentTermDto> getFreeExaminations(@RequestParam long pharmacyId, @RequestParam long dermatologistId) {
+        return service.getFreeExaminations(pharmacyId,dermatologistId);
     }
 }

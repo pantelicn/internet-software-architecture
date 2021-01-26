@@ -2,9 +2,11 @@ package rs.ac.uns.ftn.isa.pharmacy.services.schedule;
 
 import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.isa.pharmacy.domain.schedule.Appointment;
+import rs.ac.uns.ftn.isa.pharmacy.dtos.FreeAppointmentTermDto;
 import rs.ac.uns.ftn.isa.pharmacy.repository.schedule.AppointmentRepository;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -22,7 +24,7 @@ public class AppointmentService {
     }
 
     @Transactional
-    public List<Appointment> findFreeExaminationsByPharmacy(long pharmacyId) {
+    public List<Appointment> getFreeExaminations(long pharmacyId) {
         return repository.findFreeExaminations()
                 .stream()
                 .filter(a -> a.getShift().getPharmacy().getId() == pharmacyId)
@@ -32,4 +34,20 @@ public class AppointmentService {
     public Appointment createFreeExamination(Appointment appointment) {
         return repository.save(appointment);
     }
+
+    public List<FreeAppointmentTermDto> getFreeExaminations(long pharmacyId, long dermatologistId){
+        var freeAppointmentTerms = new ArrayList<FreeAppointmentTermDto>();
+
+        var freeAppointments= repository.findFreeExaminations()
+                        .stream()
+                        .filter(a -> a.getShift().getPharmacy().getId() == pharmacyId &&
+                                    a.getShift().getEmployee().getId() == dermatologistId)
+                        .collect(Collectors.toList());
+
+        for(var appointment : freeAppointments){
+            freeAppointmentTerms.add(new FreeAppointmentTermDto(appointment.getShift().getStart(), appointment.getTerm().getDuration(),appointment.getId()));
+        }
+        return freeAppointmentTerms;
+    }
+
 }
