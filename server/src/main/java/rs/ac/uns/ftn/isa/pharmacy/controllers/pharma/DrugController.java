@@ -19,7 +19,7 @@ public class DrugController {
     }
 
     @GetMapping
-    @Secured({Role.ADMIN, Role.PATIENT})
+    @Secured({Role.SYS_ADMIN, Role.PATIENT})
     public List<Drug> getAll() {
         return service.findAll();
     }
@@ -30,7 +30,6 @@ public class DrugController {
     }
 
     @PostMapping
-    @Secured(Role.ADMIN)
     Drug create(@RequestBody Drug drug) {
         return service.create(drug);
     }
