@@ -7,17 +7,25 @@ import java.util.List;
 @Table(name = "drug")
 public class Drug {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String name;
-    private String drugType;
-    private String intakeType;
+    private Drug.Type drugType;
+    private Drug.IntakeType intakeType;
     @ElementCollection
     private List<String> ingredients;
-    private boolean prescriptionRequired;
-    private String additionalNotes;
+    private String manufacturer;
+    private boolean requiresPrescription;
     @ManyToMany
     private List<Drug> alternatives;
+    private String additionalNotes;
+
+    public enum IntakeType {
+        CAPSULE, POWDER, OINTMENT, TABLET, PASTE, GEL, SYRUP, SOLUTION
+    }
+
+    public enum Type {
+        NERVE, CARDIO, RESPIRATORY, BLOOD, ANTIINFECTANT
+    }
 
     public long getId() {
         return id;
@@ -35,19 +43,19 @@ public class Drug {
         this.name = name;
     }
 
-    public String getDrugType() {
+    public Type getDrugType() {
         return drugType;
     }
 
-    public void setDrugType(String drugType) {
+    public void setDrugType(Type drugType) {
         this.drugType = drugType;
     }
 
-    public String getIntakeType() {
+    public IntakeType getIntakeType() {
         return intakeType;
     }
 
-    public void setIntakeType(String intakeType) {
+    public void setIntakeType(IntakeType intakeType) {
         this.intakeType = intakeType;
     }
 
@@ -59,20 +67,20 @@ public class Drug {
         this.ingredients = ingredients;
     }
 
-    public boolean isPrescriptionRequired() {
-        return prescriptionRequired;
+    public String getManufacturer() {
+        return manufacturer;
     }
 
-    public void setPrescriptionRequired(boolean prescriptionRequired) {
-        this.prescriptionRequired = prescriptionRequired;
+    public void setManufacturer(String manufacturer) {
+        this.manufacturer = manufacturer;
     }
 
-    public String getAdditionalNotes() {
-        return additionalNotes;
+    public boolean isRequiresPrescription() {
+        return requiresPrescription;
     }
 
-    public void setAdditionalNotes(String additionalNotes) {
-        this.additionalNotes = additionalNotes;
+    public void setRequiresPrescription(boolean requiresPrescription) {
+        this.requiresPrescription = requiresPrescription;
     }
 
     public List<Drug> getAlternatives() {
@@ -83,5 +91,11 @@ public class Drug {
         this.alternatives = alternatives;
     }
 
+    public String getAdditionalNotes() {
+        return additionalNotes;
+    }
 
+    public void setAdditionalNotes(String additionalNotes) {
+        this.additionalNotes = additionalNotes;
+    }
 }
