@@ -35,6 +35,7 @@ public class AppointmentService {
         return repository.save(appointment);
     }
 
+    // TODO: Refaktorisi da koristi mapper
     public List<FreeAppointmentTermDto> getFreeExaminations(long pharmacyId, long dermatologistId){
         var freeAppointmentTerms = new ArrayList<FreeAppointmentTermDto>();
 
@@ -44,9 +45,9 @@ public class AppointmentService {
                                     a.getShift().getEmployee().getId() == dermatologistId)
                         .collect(Collectors.toList());
 
-        for(var appointment : freeAppointments){
-            freeAppointmentTerms.add(new FreeAppointmentTermDto(appointment.getShift().getStart(), appointment.getTerm().getDuration(),appointment.getId()));
-        }
+        for(var appointment : freeAppointments)
+            freeAppointmentTerms.add(new FreeAppointmentTermDto(appointment.getTerm().getStart(), appointment.getTerm().getDuration(),appointment.getId()));
+
         return freeAppointmentTerms;
     }
 

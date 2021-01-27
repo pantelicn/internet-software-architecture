@@ -1,5 +1,7 @@
 drop schema isa;
 create schema isa;
+SET @@session.time_zone='+00:00';
+SELECT @@global.time_zone, @@session.time_zone;
 
 insert into isa.countries (id, code, name)
 values (1, "RS", "Srbija");
@@ -37,6 +39,9 @@ insert into isa.patients_appointment(patient_id,appointment_id) values (1,1);
 insert into isa.shifts_appointments(shift_id,appointments_id) values (1,1);
 
 insert into isa.appointments (id, amount, duration, start, type, patient_id, shift_id)
-values (2, 2000, 10000, "2021-2-2 8:00:00", 1, null, 2);
+values (2, 2000, 1800000000000, "2021-2-2 8:00:00", 1, null, 2);
 insert into isa.shifts_appointments(shift_id,appointments_id) values (2,2);
+
+insert into isa.appointments (id, amount, duration, start, type, patient_id, shift_id)
+values (3, 2000, 1800000000000, "2021-2-2 9:00:00", 1, null, 2);
 
