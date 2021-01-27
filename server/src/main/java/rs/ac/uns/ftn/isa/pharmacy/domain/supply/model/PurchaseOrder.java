@@ -1,4 +1,4 @@
-package rs.ac.uns.ftn.isa.pharmacy.domain.supply;
+package rs.ac.uns.ftn.isa.pharmacy.domain.supply.model;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -16,6 +16,11 @@ public class PurchaseOrder {
     private LocalDateTime offerDeadline;
     @OneToMany
     private List<OrderedDrug> orderedDrugs;
+    private PurchaseOrder.Status status;
+
+    public enum Status {
+        AWAITING_OFFERS, FINISHED
+    }
 
     public long getId() {
         return id;
@@ -39,5 +44,13 @@ public class PurchaseOrder {
 
     public void setOrderedDrugs(List<OrderedDrug> orderedDrugs) {
         this.orderedDrugs = orderedDrugs;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 }

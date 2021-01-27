@@ -1,4 +1,4 @@
-package rs.ac.uns.ftn.isa.pharmacy.domain.supply;
+package rs.ac.uns.ftn.isa.pharmacy.domain.supply.model;
 
 import rs.ac.uns.ftn.isa.pharmacy.domain.finance.Money;
 
@@ -16,8 +16,15 @@ public class Offer {
     private long id;
     private Money price;
     private LocalDateTime deliveryDeadline;
+    private Offer.Status status;
     @OneToOne
-    private PurchaseOrder order;
+    private PurchaseOrder purchaseOrder;
+    @OneToOne
+    private Supplier supplier;
+
+    public enum Status {
+        ACCEPTED, REJECTED, PENDING
+    }
 
     public long getId() {
         return id;
@@ -43,11 +50,19 @@ public class Offer {
         this.deliveryDeadline = deliveryDeadline;
     }
 
-    public PurchaseOrder getOrder() {
-        return order;
+    public PurchaseOrder getPurchaseOrder() {
+        return purchaseOrder;
     }
 
-    public void setOrder(PurchaseOrder order) {
-        this.order = order;
+    public void setPurchaseOrder(PurchaseOrder order) {
+        this.purchaseOrder = order;
+    }
+
+    public Supplier getSupplier() {
+        return supplier;
+    }
+
+    public void setSupplier(Supplier supplier) {
+        this.supplier = supplier;
     }
 }

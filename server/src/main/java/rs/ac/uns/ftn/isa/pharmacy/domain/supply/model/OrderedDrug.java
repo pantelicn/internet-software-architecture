@@ -1,23 +1,22 @@
-package rs.ac.uns.ftn.isa.pharmacy.domain.supply;
+package rs.ac.uns.ftn.isa.pharmacy.domain.supply.model;
 
 import rs.ac.uns.ftn.isa.pharmacy.domain.pharma.Drug;
 
 import javax.persistence.*;
 
-// TODO Composite key for object ids
 /**
- * Amount of a specific drug which a given Supplier has in stock at the moment.
+ * Drug which is being ordered by a Pharmacy through PurchaseOrder, in a specific amount.
  */
 @Entity
-@Table(name = "supplier_drug_stock")
-public class DrugStock {
+@Table(name = "ordered_drug")
+public class OrderedDrug {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     @OneToOne
-    private Supplier supplier;
-    @OneToOne
     private Drug drug;
+    @OneToOne
+    private PurchaseOrder order;
     private int amount;
 
     public long getId() {
@@ -28,20 +27,20 @@ public class DrugStock {
         this.id = id;
     }
 
-    public Supplier getSupplier() {
-        return supplier;
-    }
-
-    public void setSupplier(Supplier supplier) {
-        this.supplier = supplier;
-    }
-
     public Drug getDrug() {
         return drug;
     }
 
     public void setDrug(Drug drug) {
         this.drug = drug;
+    }
+
+    public PurchaseOrder getOrder() {
+        return order;
+    }
+
+    public void setOrder(PurchaseOrder order) {
+        this.order = order;
     }
 
     public int getAmount() {
