@@ -13,16 +13,4 @@ public class IsaApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(IsaApplication.class, args);
 	}
-
-	@Bean
-	public WebMvcConfigurer corsConfigure() {
-		return new WebMvcConfigurer() {
-			@Override
-			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**")
-						.allowedOrigins("http://localhost:8081");
-			}
-		};
-	}
-
 }
