@@ -3,7 +3,7 @@ package rs.ac.uns.ftn.isa.pharmacy.domain.locale;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "city")
+@Table(name = "cities")
 public class City {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

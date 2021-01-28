@@ -6,14 +6,14 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "storedDrug")
+@Table(name = "stored_drugs")
 public class StoredDrug {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private long quantity;
+    @Embedded
     private Price price;
-    private Date validUntil;
     @OneToOne
     private Drug drug;
 
@@ -39,14 +39,6 @@ public class StoredDrug {
 
     public void setPrice(Price price) {
         this.price = price;
-    }
-
-    public Date getValidUntil() {
-        return validUntil;
-    }
-
-    public void setValidUntil(Date validUntil) {
-        this.validUntil = validUntil;
     }
 
     public Drug getDrug() {
