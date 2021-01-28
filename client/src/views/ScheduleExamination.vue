@@ -1,11 +1,20 @@
 <template>
 <div>
-    <FreeAppointment v-for="appointment in freeAppointments" v-bind:key="appointment.id" v-bind:appointment="appointment"/>
+    <div class="container d-flex justify-content-between my-3">
+        <button class="btn btn-success">Back</button>
+        <button class="btn btn-success">Next</button>
+    </div>
+    <div>
+        <AppointmentCalendar v-bind:appointments="freeAppointments"/>
+    </div>
 </div>
 </template>
 
 <script>
-import FreeAppointment from '../components/FreeAppointment.vue'
+import AppointmentCalendar from '../components/AppointmentCalendar.vue'
+import axios from 'axios'
+import { api } from '../api.js'
+
 export default {
     data: function () {
         return {
@@ -13,7 +22,14 @@ export default {
         }
     },
     components: {
-        FreeAppointment
+        AppointmentCalendar
+    },
+    mounted: function () {
+        axios.get(api.appointments.root + '/1')
+        .then(response => {
+            this.freeAppointments = response.data
+        })
+        .catch()
     }
 }
 </script>
