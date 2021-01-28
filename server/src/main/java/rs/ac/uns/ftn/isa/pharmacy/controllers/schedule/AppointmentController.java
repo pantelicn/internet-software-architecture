@@ -2,10 +2,14 @@ package rs.ac.uns.ftn.isa.pharmacy.controllers.schedule;
 
 import org.springframework.web.bind.annotation.*;
 import rs.ac.uns.ftn.isa.pharmacy.domain.schedule.Appointment;
+import rs.ac.uns.ftn.isa.pharmacy.dtos.FreeAppointmentDto;
 import rs.ac.uns.ftn.isa.pharmacy.dtos.FreeAppointmentTermDto;
+import rs.ac.uns.ftn.isa.pharmacy.mappers.AppointmentMapper;
 import rs.ac.uns.ftn.isa.pharmacy.services.schedule.AppointmentService;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("api/appointments")
@@ -22,8 +26,11 @@ public class AppointmentController {
     }
 
     @GetMapping("{id}")
-    public List<Appointment> getFreeExaminationsByPharmacy(@PathVariable long id) {
-        return service.getFreeExaminations(id);
+    public List<FreeAppointmentDto> getFreeExaminationsByPharmacy(@PathVariable long id) {
+        return service
+                .getFreeExaminations(id).stream()
+                .map(a -> AppointmentMapper.objectToDto(a))
+                .collect(Collectors.toList());
     }
 
     @PostMapping()

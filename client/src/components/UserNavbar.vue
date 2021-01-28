@@ -12,7 +12,7 @@
                         Schedule
                     </a>
                     <div class="dropdown-menu bg-dark" aria-labelledby="navbar-dropdown">
-                        <router-link class="dropdown-item" to="/">Dermatologist examination</router-link>
+                        <router-link to="/schedule" class="dropdown-item">Dermatologist examination</router-link>
                         <router-link class="dropdown-item" to="/">Pharmacist counseling</router-link>
                     </div>
                 </li>
