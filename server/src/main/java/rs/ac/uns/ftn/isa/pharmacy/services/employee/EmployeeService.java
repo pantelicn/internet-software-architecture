@@ -13,8 +13,9 @@ public class EmployeeService {
     public EmployeeService(EmployeeRepository repository){
         this.repository=repository;
     }
+
     // TODO: Refaktorisi da koristi mapper
-    public Set<EmployeeDto> getDermatologist(long pharmacyId){
+    public Set<EmployeeDto> getDermatologistsBasicInfo(long pharmacyId){
         var dermatologists = repository.getDermatologist();
         var dermatologistDtos = new HashSet<EmployeeDto>();
         for (var dermatologist : dermatologists)

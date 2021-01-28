@@ -17,8 +17,9 @@ public class EmployeeController {
     public EmployeeController(EmployeeService service) {
         this.service = service;
     }
-    @GetMapping("/basic-info/{pharmacyId}")
-    public Set<EmployeeDto> getEmployeesBasicInfo(@PathVariable int pharmacyId){
-        return service.getDermatologist(pharmacyId);
+
+    @GetMapping("/dermatologists/basic-info/{pharmacyId}")
+    public Set<EmployeeDto> getDermatologistsBasicInfo(@PathVariable int pharmacyId){
+        return service.getDermatologistsBasicInfo(pharmacyId);
     }
 }

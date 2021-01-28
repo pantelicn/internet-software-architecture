@@ -67,6 +67,9 @@ public class Term {
         }
         return false;
     }
+    public boolean isInFuture(){
+        return this.start.isAfter(LocalDateTime.now());
+    }
 
     @Override
     public boolean equals(Object obj) {

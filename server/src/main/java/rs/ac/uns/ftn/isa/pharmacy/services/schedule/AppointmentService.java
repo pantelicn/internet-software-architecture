@@ -46,7 +46,8 @@ public class AppointmentService {
                         .collect(Collectors.toList());
 
         for(var appointment : freeAppointments)
-            freeAppointmentTerms.add(new FreeAppointmentTermDto(appointment.getTerm().getStart(), appointment.getTerm().getDuration(),appointment.getId()));
+            if(appointment.getTerm().isInFuture())
+                freeAppointmentTerms.add(new FreeAppointmentTermDto(appointment.getTerm().getStart(), appointment.getTerm().getDuration(),appointment.getId()));
 
         return freeAppointmentTerms;
     }
