@@ -6,17 +6,25 @@
         {{formatPrice(appointment.price)}}<br>
         Dr. {{appointment.dermatologistName + ' ' + appointment.dermatologistLastName}}<br>
     </div>
-    <button class="btn btn-success btn-sm hidden w-100 mb-1">Schedule</button>
+    <button v-if="!scheduled" class="btn btn-success btn-sm hidden w-100 mb-1" @click="scheduleAppointment">Schedule</button>
+    <div v-else class="hidden w-100 mb-1 text-success">Scheduled</div>
 </div>
 
 </template>
 
 <script>
 import { format } from 'date-fns'
+import { api } from '../api.js'
+import axios from 'axios'
 
 export default {
+    data: function () {
+        return {
+            scheduled: false
+        }
+    },
     props: {
-        appointment: Object
+        appointment: Object,
     },
     methods: {
         format,
@@ -28,6 +36,21 @@ export default {
         },
         formatPrice: function (price) {
             return parseFloat(price.amount).toFixed(2) + price.currency
+        },
+        scheduleAppointment: function () {
+            let dto = {
+                appointmentId: this.appointment.id,
+                patientId: 1
+            }
+            axios.put(api.scheduling.predefined, dto)
+            .then(() => {
+                this.$toast.open('Examination successfully scheduled!')
+                this.scheduled = true
+            })
+            .catch(error => {
+                if (error.response.status == 400)
+                    this.$toast.error(error.response.data)
+            })
         }
     }
 }

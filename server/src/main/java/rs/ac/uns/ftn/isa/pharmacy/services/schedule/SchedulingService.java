@@ -3,6 +3,7 @@ package rs.ac.uns.ftn.isa.pharmacy.services.schedule;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import rs.ac.uns.ftn.isa.pharmacy.dtos.AppointmentReservationDTO;
+import rs.ac.uns.ftn.isa.pharmacy.exceptions.AppointmentTimeException;
 import rs.ac.uns.ftn.isa.pharmacy.exceptions.PatientOccupiedException;
 import rs.ac.uns.ftn.isa.pharmacy.repository.PatientRepository;
 import rs.ac.uns.ftn.isa.pharmacy.repository.schedule.AppointmentRepository;
@@ -24,6 +25,8 @@ public class SchedulingService {
 
         if(!patient.canSchedule(appointment))
             throw new PatientOccupiedException(patient);
+        else if (!appointment.getTerm().isInFuture())
+            throw new AppointmentTimeException();
 
         appointment.setPatient(patient);
         appointmentRepository.save(appointment);

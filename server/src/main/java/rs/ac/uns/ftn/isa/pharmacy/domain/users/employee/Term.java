@@ -67,8 +67,24 @@ public class Term {
         }
         return false;
     }
-    public boolean isInFuture(){
-        return this.start.isAfter(LocalDateTime.now());
+
+    /**
+     * Checks if the appointment is 24h in advance.
+     * @return boolean value indicating whether condition is met.
+     */
+    public boolean isInFuture() {
+        return isInFuture(Duration.ofHours(24));
+    }
+
+    /**
+     * Checks if the appointment is given amount of time in advance.
+     * @return boolean value indicating whether condition is met.
+     */
+    public boolean isInFuture(Duration time) {
+        if (this.getStart().isBefore(LocalDateTime.now().plus(time))) {
+            return false;
+        }
+        return true;
     }
 
     @Override
