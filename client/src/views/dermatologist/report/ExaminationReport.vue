@@ -15,8 +15,8 @@
     </div>
     <div class="d-flex flex-column justify-content-center" id="predefined-exams" v-if="predefined">
         <div class="d-flex row justify-content-center">
-            <label for="doctorSelect" id="doctor-select-label" class="mt-2">Dermatologist:</label>
-            <select id="doctorSelect" class="form-control" @change="doctorSelected($event)">
+            <label for="dermaSelect" id="doctor-select-label" class="mt-2">Dermatologist:</label>
+            <select id="dermaSelect" class="form-control" @change="dermaSelected($event)">
                 <option selected> Choose a dermatologist... </option>
                 <option v-for="dermatologist in dermatologists" 
                         :key="dermatologist.id"
@@ -28,17 +28,22 @@
     
         <div class="d-flex row mt-4 justify-content-center">
             <label class="mt-2 mr-4" id="exam-select-label" for="examSelect">Examination:</label>
-            <select class="d-flex flex-row form-control " id="doctorSelect" >
+            <select class="d-flex flex-row form-control " id="dermaSelect" 
+            @change="examinationSelected($event)">
                 <option selected> Choose an examination... </option>
-                <option> 14.12.2021. [10:30 - 11:00] </option>
-                <option> 15.12.2021. [11:30 - 12:00]</option>
+                <option v-for="exam in freeExaminations"
+                        :key="exam.appointmentId"
+                        :value="exam.appointmentId"> 
+                    {{formatExamTime(exam)}}
+                </option>
             </select>
         </div>
         <div class="d-flex row pt-4 justify-content-center">
             <button type="button" class="btn btn-primary" v-on:click="back">
                 Back
             </button>
-            <button type="button" class="btn btn-primary ml-4">
+            <button type="button" class="btn btn-primary ml-4" v-on:click="schedulePredefined()"
+            :disabled="selectedDoctor==null || selectedExam==null">
                 Schedule
             </button>
             
@@ -46,8 +51,8 @@
     </div>
     <div class="d-flex flex-column justify-content-center" id="exam-creation" v-if="examCreation">
         <div class="d-flex mr-4 row justify-content-center">
-            <label for="doctorSelect2" id="doctor-select-label2" class="mt-2">Dermatologist:</label>
-            <select id="doctorSelect2" class="form-control ml-2" @change="doctorSelected($event)" > 
+            <label for="dermaSelect2" id="doctor-select-label2" class="mt-2">Dermatologist:</label>
+            <select id="dermaSelect2" class="form-control ml-2" @change="dermaSelected($event)" > 
                 <option selected> Choose a dermatologist... </option>
                 <option :value="dermatologist.id" 
                         v-for="dermatologist in dermatologists"
@@ -106,9 +111,11 @@ export function getTomorrowsDate(){
     date.setDate(date.getDate() + 1)
     return date
 }
-
 import DatePicker from 'v-calendar/lib/components/date-picker.umd'
 import axios from 'axios'
+import { format, addMilliseconds} from 'date-fns'
+import { api } from '../../../api.js'
+import moment from 'moment'
 export default {
     name:"ExaminationReport",
     data:function(){
@@ -118,7 +125,10 @@ export default {
             examCreation:false,
             date:getTomorrowsDate(),
             dermatologists:null,
-            selectedDoctor:null
+            freeExaminations:null,
+            selectedDoctor:null,
+            selectedExam:null
+            
             
         }
     },
@@ -136,20 +146,59 @@ export default {
             this.showOptions = true
             this.examCreation = false
             this.predefined = false
+            this.selectedDoctor=null
+            this.selectedExam=null
         },
         getDermaBasicInfo:function(){
-            axios.get('http://localhost:5000/api/employees/dermatologists/basic-info/1')
+            // TODO: Kada implementiras izvestaj namesti da se ne zakucava pharma
+            axios.get(api.employees.dermatologists.basicInfo + 1)
             .then(response=>{
                 this.dermatologists = response.data
             })
         },
-        doctorSelected:function(event){
+        getFreeExaminations:function(){
+            // TODO: Kada implementiras izvestaj namesti da se ne zakucava pharma
+            axios.get(api.appointments.free+"?pharmacyId=1&dermatologistId="+this.selectedDoctor)
+            .then(response=>{
+                this.freeExaminations = response.data
+            })
+        },
+        dermaSelected:function(event){
             this.selectedDoctor = event.target.value
+            this.getFreeExaminations()
+
+        },
+        examinationSelected:function(event){
+            this.selectedExam = event.target.value
+        },
+        formatExamTime:function(appointment){
+            let date = format(new Date(appointment.start),'MM/dd/yyy')
+            let start = format (new Date(appointment.start),'HH:mm')
+            let duration = moment.duration(appointment.duration)
+            let end = format(addMilliseconds(new Date(appointment.start),duration),'HH:mm')
+             
+            return date + " [" + start + " - " + end+"]"
+        }
+        ,
+        // TODO: Kada implementiras izvestaj namesti da se ne zakucava pacijent
+        schedulePredefined:function(){
+            let appointmentReservationDto={
+                appointmentId: parseInt(this.selectedExam),
+                patientId: 1
+            }
+            
+            axios.put(api.scheduling.predefined,appointmentReservationDto)
+            .then(res=>{
+                this.$toast.open('Examination successfully scheduled!')
+            })
+            .catch(err=>{
+                if(err.response.status == 400)
+                    this.$toast.error(err.response.data)
+            })
         }
     },
     mounted(){
         this.getDermaBasicInfo()
-        
     }
 }
 </script>

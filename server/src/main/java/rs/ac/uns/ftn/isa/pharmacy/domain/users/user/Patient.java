@@ -1,7 +1,6 @@
 package rs.ac.uns.ftn.isa.pharmacy.domain.users.user;
 
 import rs.ac.uns.ftn.isa.pharmacy.domain.schedule.Appointment;
-import rs.ac.uns.ftn.isa.pharmacy.domain.users.user.Person;
 
 import javax.persistence.*;
 import java.util.List;
@@ -14,8 +13,20 @@ public class Patient {
     private long id;
     @OneToOne
     private Person person;
-    @OneToMany
-    private List<Appointment> appointment;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "patient")
+    private List<Appointment> appointments;
+
+    public Boolean canSchedule(Appointment appointment){
+        for(var patientAppointment:appointments)
+            if(appointment.getTerm().intersects(patientAppointment.getTerm())
+                    || appointment.getTerm().equals(patientAppointment.getTerm()))
+                return false;
+        return true;
+    }
+
+    public void addAppointment(Appointment appointment){
+        appointments.add(appointment);
+    }
 
     public long getId() {
         return id;
@@ -33,11 +44,11 @@ public class Patient {
         this.person = person;
     }
 
-    public List<Appointment> getAppointment() {
-        return appointment;
+    public List<Appointment> getAppointments() {
+        return appointments;
     }
 
-    public void setAppointment(List<Appointment> appointment) {
-        this.appointment = appointment;
+    public void setAppointments(List<Appointment> appointment) {
+        this.appointments = appointment;
     }
 }

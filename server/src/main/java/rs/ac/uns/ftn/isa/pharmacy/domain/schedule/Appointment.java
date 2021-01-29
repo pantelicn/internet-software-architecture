@@ -17,7 +17,8 @@ public class Appointment {
     private AppointmentType type;
     @Embedded
     private Money price;
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinColumn(name="patient_id")
     private Patient patient;
     @ManyToOne(optional = false)
     private Shift shift;

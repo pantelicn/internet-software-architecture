@@ -17,7 +17,7 @@ export const router = new VueRouter({
         ,
         {
             path: '/examination-report',
-            name: 'exam-report',
+            name: 'examination-report',
             component: ExaminationReport
         }
     ]
