@@ -12,6 +12,7 @@ public class Term {
         this(LocalDateTime.now(), Duration.ZERO);
     }
 
+
     public Term(Duration duration) {
         this(LocalDateTime.now(), duration);
     }
@@ -78,5 +79,13 @@ public class Term {
             return true;
         }
         return false;
+    }
+
+    public boolean isInRange(LocalDateTime start, LocalDateTime end) {
+        if(start.isAfter(this.getStart()) && end.isBefore(this.getEnd()))
+            return true;
+        else if(start.isEqual(this.getStart()) && end.isBefore(this.getEnd()))
+            return true;
+        else return start.isAfter(this.getStart()) && end.isEqual(this.getEnd());
     }
 }

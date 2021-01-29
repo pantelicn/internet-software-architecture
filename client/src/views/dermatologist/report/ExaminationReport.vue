@@ -65,7 +65,8 @@
              <label id="date-time-select-label" class="mt-2">Date and time: </label>
             <DatePicker
                 id="date-picker"
-                :min-date="date"
+                timezone="UTC"
+                :min-date="minDate"
                 v-model="date"
                 color="green"
                 is-dark
@@ -82,19 +83,21 @@
         </div>
         <div class="d-flex row pt-4 justify-content-center">
             <label for="duration-select" id="duration" class="mt-2">Duration:</label>
-            <select id="duration" class="form-control ml-2">
+            <select id="duration" class="form-control ml-2" @change="durationSelected($event)">
                 <option selected> Choose a duration... </option>
-                <option> 15 minutes </option>
-                <option> 30 minutes </option>
-                <option> 45 minutes </option>
-                <option> 1 hour </option>
+                <option value="15"> 15 minutes </option>
+                <option value="30"> 30 minutes </option>
+                <option value="45"> 45 minutes </option>
+                <option value="1"> 1 hour </option>
             </select>
         </div>
         <div class="d-flex row pt-4 justify-content-center">
             <button type="button" class="btn btn-primary" v-on:click="back">
                 Back
             </button>
-            <button type="button" class="btn btn-primary ml-4">
+            <button type="button" class="btn btn-primary ml-4"
+            :disabled="selectedDoctor==null || selectedDuration==null"
+            @click="scheduleNewExamination">
                 Schedule
             </button>
         </div>
@@ -123,11 +126,13 @@ export default {
             showOptions:true,
             predefined:false,
             examCreation:false,
+            minDate:getTomorrowsDate(),
             date:getTomorrowsDate(),
             dermatologists:null,
             freeExaminations:null,
             selectedDoctor:null,
-            selectedExam:null
+            selectedExam:null,
+            selectedDuration:null
             
             
         }
@@ -148,6 +153,7 @@ export default {
             this.predefined = false
             this.selectedDoctor=null
             this.selectedExam=null
+            this.selectedDuration=null
         },
         getDermaBasicInfo:function(){
             // TODO: Kada implementiras izvestaj namesti da se ne zakucava pharma
@@ -171,6 +177,9 @@ export default {
         examinationSelected:function(event){
             this.selectedExam = event.target.value
         },
+        durationSelected:function(event){
+            this.selectedDuration = event.target.value
+        },
         formatExamTime:function(appointment){
             let date = format(new Date(appointment.start),'MM/dd/yyy')
             let start = format (new Date(appointment.start),'HH:mm')
@@ -178,8 +187,13 @@ export default {
             let end = format(addMilliseconds(new Date(appointment.start),duration),'HH:mm')
              
             return date + " [" + start + " - " + end+"]"
-        }
-        ,
+        },
+        getDurationString:function(){
+            if(this.selectedDuration=="1")
+                return "PT1H"
+            else
+                return "PT"+this.selectedDuration+"M"
+        },
         // TODO: Kada implementiras izvestaj namesti da se ne zakucava pacijent
         schedulePredefined:function(){
             let appointmentReservationDto={
@@ -188,6 +202,23 @@ export default {
             }
             
             axios.put(api.scheduling.predefined,appointmentReservationDto)
+            .then(res=>{
+                this.$toast.open('Examination successfully scheduled!')
+            })
+            .catch(err=>{
+                if(err.response.status == 400)
+                    this.$toast.error(err.response.data)
+            })
+        },
+        scheduleNewExamination:function(){
+            let createdAppointmentDto = {
+                pharmacyId: 1,
+                employeeId: this.selectedDoctor,
+                patientId: 1,
+                start: this.date,
+                duration: this.getDurationString()
+            }
+            axios.post(api.scheduling.newExamination,createdAppointmentDto)
             .then(res=>{
                 this.$toast.open('Examination successfully scheduled!')
             })

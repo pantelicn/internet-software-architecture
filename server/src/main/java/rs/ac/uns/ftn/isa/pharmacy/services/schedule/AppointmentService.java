@@ -2,12 +2,9 @@ package rs.ac.uns.ftn.isa.pharmacy.services.schedule;
 
 import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.isa.pharmacy.domain.schedule.Appointment;
-import rs.ac.uns.ftn.isa.pharmacy.dtos.AppointmentReservationDTO;
-import rs.ac.uns.ftn.isa.pharmacy.dtos.FreeAppointmentTermDto;
 import rs.ac.uns.ftn.isa.pharmacy.repository.schedule.AppointmentRepository;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

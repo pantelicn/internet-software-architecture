@@ -16,11 +16,13 @@ public class Shift {
     private long id;
     private LocalDateTime start;
     private LocalDateTime end;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "shift")
     private List<Appointment> appointments;
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinColumn(name="pharmacy_id")
     private Pharmacy pharmacy;
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinColumn(name="employee_id")
     private Employee employee;
 
     public long getId() {
@@ -69,5 +71,13 @@ public class Shift {
 
     public void setEmployee(Employee employee) {
         this.employee = employee;
+    }
+
+    public boolean hasScheduledExam(Term term) {
+        for(var appointment : appointments)
+            if(appointment.overlaps(term))
+                return true;
+
+        return false;
     }
 }

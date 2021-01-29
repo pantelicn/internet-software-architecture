@@ -1,9 +1,7 @@
 package rs.ac.uns.ftn.isa.pharmacy.controllers.schedule;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import rs.ac.uns.ftn.isa.pharmacy.domain.schedule.Appointment;
-import rs.ac.uns.ftn.isa.pharmacy.dtos.AppointmentReservationDTO;
 import rs.ac.uns.ftn.isa.pharmacy.dtos.FreeAppointmentDto;
 import rs.ac.uns.ftn.isa.pharmacy.dtos.FreeAppointmentTermDto;
 import rs.ac.uns.ftn.isa.pharmacy.mappers.AppointmentMapper;

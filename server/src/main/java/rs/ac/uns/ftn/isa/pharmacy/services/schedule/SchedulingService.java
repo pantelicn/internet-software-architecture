@@ -2,23 +2,37 @@ package rs.ac.uns.ftn.isa.pharmacy.services.schedule;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import rs.ac.uns.ftn.isa.pharmacy.dtos.AppointmentReservationDTO;
+import rs.ac.uns.ftn.isa.pharmacy.domain.schedule.Appointment;
+import rs.ac.uns.ftn.isa.pharmacy.domain.schedule.AppointmentType;
+import rs.ac.uns.ftn.isa.pharmacy.dtos.CreatedAppointmentDto;
+import rs.ac.uns.ftn.isa.pharmacy.dtos.PredefinedAppointmentReservationDto;
+import rs.ac.uns.ftn.isa.pharmacy.exceptions.EmployeeOccupiedException;
+import rs.ac.uns.ftn.isa.pharmacy.exceptions.EmployeeShiftException;
 import rs.ac.uns.ftn.isa.pharmacy.exceptions.PatientOccupiedException;
 import rs.ac.uns.ftn.isa.pharmacy.repository.PatientRepository;
+import rs.ac.uns.ftn.isa.pharmacy.repository.employee.EmployeeRepository;
 import rs.ac.uns.ftn.isa.pharmacy.repository.schedule.AppointmentRepository;
+import rs.ac.uns.ftn.isa.pharmacy.services.notifiers.EmailService;
+
+import javax.persistence.PersistenceException;
 
 
 @Service
 public class SchedulingService {
     private final AppointmentRepository appointmentRepository;
     private final PatientRepository patientRepository;
+    private final EmployeeRepository employeeRepository;
+    private final EmailService emailService;
 
-    public SchedulingService(AppointmentRepository appointmentRepository, PatientRepository patientRepository) {
+    public SchedulingService(AppointmentRepository appointmentRepository, PatientRepository patientRepository,
+                             EmployeeRepository employeeRepository, EmailService emailService) {
         this.appointmentRepository = appointmentRepository;
         this.patientRepository = patientRepository;
+        this.employeeRepository = employeeRepository;
+        this.emailService = emailService;
     }
     @Transactional
-    public void schedulePredefinedAppointment(AppointmentReservationDTO appointmentReservation) throws PatientOccupiedException{
+    public void schedulePredefinedAppointment(PredefinedAppointmentReservationDto appointmentReservation) throws PatientOccupiedException{
         var appointment = appointmentRepository.getOne(appointmentReservation.getAppointmentId());
         var patient = patientRepository.getOne(appointmentReservation.getPatientId());
 
@@ -26,8 +40,28 @@ public class SchedulingService {
             throw new PatientOccupiedException(patient);
 
         appointment.setPatient(patient);
-        appointmentRepository.save(appointment);
+        appointment = appointmentRepository.save(appointment);
+        emailService.sendExaminationScheduledMessage(appointment);
+    }
+    @Transactional
+    public void scheduleNewExamination(CreatedAppointmentDto createdAppointmentDto) throws PersistenceException {
+        var term = createdAppointmentDto.getTerm();
 
+        var employee = employeeRepository.getOne(createdAppointmentDto.getEmployeeId());
+        var patient = patientRepository.getOne(createdAppointmentDto.getPatientId());
+        var appointment = new Appointment(term, AppointmentType.Examination,null,null);
 
+        if(employee.isOccupied(term))
+            throw new EmployeeOccupiedException(employee);
+        if(!patient.canSchedule(appointment))
+            throw new PatientOccupiedException(patient);
+        if(!employee.hasShiftAtPharmacy(term,createdAppointmentDto.getPharmacyId()))
+            throw new EmployeeShiftException(employee);
+
+        var shift = employee.getAdequateShift(term);
+        appointment.setPatient(patient);
+        appointment.setShift(shift);
+        appointment = appointmentRepository.save(appointment);
+        emailService.sendExaminationScheduledMessage(appointment);
     }
 }

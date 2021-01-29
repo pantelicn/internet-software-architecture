@@ -19,6 +19,8 @@ public class Person {
     private Date dateOfBirth;
     @OneToOne
     private Address address;
+    @OneToOne
+    private Credentials credentials;
 
 
     public long getId() {
@@ -76,6 +78,15 @@ public class Person {
     public void setAddress(Address address) {
         this.address = address;
     }
+
+    public Credentials getCredentials() {
+        return credentials;
+    }
+
+    public void setCredentials(Credentials credentials) {
+        this.credentials = credentials;
+    }
+
 
 
 }

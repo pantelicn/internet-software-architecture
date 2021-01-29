@@ -14,7 +14,7 @@ public class Employee {
     @OneToOne
     private Person person;
     private EmployeeType employeeType;
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST},mappedBy = "employee")
     private List<Shift> shifts;
 
     public long getId() {
@@ -47,5 +47,31 @@ public class Employee {
 
     public void setShifts(List<Shift> shifts) {
         this.shifts = shifts;
+    }
+
+    public boolean hasShiftAtPharmacy(Term term, double pharmacyId) {
+        for(var shift:shifts)
+            if (shift.getPharmacy().getId() != pharmacyId)
+                continue;
+            else
+                if(term.isInRange(shift.getStart(),shift.getEnd()))
+                    return true;
+
+        return false;
+    }
+
+    public boolean isOccupied(Term term) {
+        for(var shift : shifts){
+            if(shift.hasScheduledExam(term))
+                return true;
+        }
+        return false;
+    }
+
+    public Shift getAdequateShift(Term term) {
+        for(var shift : shifts)
+            if(term.isInRange(shift.getStart(),shift.getEnd()))
+                return shift;
+        return null;
     }
 }

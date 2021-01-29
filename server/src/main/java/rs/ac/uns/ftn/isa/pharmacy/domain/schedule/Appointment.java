@@ -9,8 +9,10 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "appointments")
+@SequenceGenerator(name="appointment_seq", initialValue=100, allocationSize=100)
 public class Appointment {
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "appointment_seq")
     private long id;
     @Embedded
     private Term term;
@@ -20,8 +22,23 @@ public class Appointment {
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name="patient_id")
     private Patient patient;
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinColumn(name="shift_id")
     private Shift shift;
+
+
+    public Appointment(){}
+    public Appointment(Term term, AppointmentType type,Patient patient, Shift shift) {
+        this.term = term;
+        this.type = type;
+        this.price = new Money();
+        this.patient = patient;
+        this.shift = shift;
+    }
+
+    public Boolean overlaps(Term term){
+        return this.term.intersects(term) || this.term.equals(term);
+    }
 
     public long getId() {
         return id;

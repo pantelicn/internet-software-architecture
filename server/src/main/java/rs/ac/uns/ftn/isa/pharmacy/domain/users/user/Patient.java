@@ -18,8 +18,7 @@ public class Patient {
 
     public Boolean canSchedule(Appointment appointment){
         for(var patientAppointment:appointments)
-            if(appointment.getTerm().intersects(patientAppointment.getTerm())
-                    || appointment.getTerm().equals(patientAppointment.getTerm()))
+            if(appointment.overlaps(patientAppointment.getTerm()))
                 return false;
         return true;
     }

@@ -22,6 +22,7 @@ export const api = {
     },
     scheduling: {
         root: host + scheduling,
-        predefined: host + scheduling + '/predefined'
+        predefined: host + scheduling + '/predefined',
+        newExamination: host + scheduling + '/examination'
     }
 }

@@ -15,7 +15,7 @@ public class Pharmacy {
     private String name;
     @OneToOne
     private Address address;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pharmacy")
     private List<Shift> shifts;
     private String description;
     private double rating;

@@ -1,6 +1,6 @@
 package rs.ac.uns.ftn.isa.pharmacy.dtos;
 
-public class AppointmentReservationDTO {
+public class PredefinedAppointmentReservationDto {
     private long appointmentId;
     private long patientId;
 
