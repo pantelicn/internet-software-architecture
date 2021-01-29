@@ -6,6 +6,7 @@ import rs.ac.uns.ftn.isa.pharmacy.domain.schedule.Appointment;
 import rs.ac.uns.ftn.isa.pharmacy.domain.schedule.AppointmentType;
 import rs.ac.uns.ftn.isa.pharmacy.dtos.CreatedAppointmentDto;
 import rs.ac.uns.ftn.isa.pharmacy.dtos.PredefinedAppointmentReservationDto;
+import rs.ac.uns.ftn.isa.pharmacy.exceptions.AppointmentTimeException;
 import rs.ac.uns.ftn.isa.pharmacy.exceptions.EmployeeOccupiedException;
 import rs.ac.uns.ftn.isa.pharmacy.exceptions.EmployeeShiftException;
 import rs.ac.uns.ftn.isa.pharmacy.exceptions.PatientOccupiedException;
@@ -38,6 +39,8 @@ public class SchedulingService {
 
         if(!patient.canSchedule(appointment))
             throw new PatientOccupiedException(patient);
+        else if (!appointment.getTerm().isInFuture())
+            throw new AppointmentTimeException();
 
         appointment.setPatient(patient);
         appointment = appointmentRepository.save(appointment);

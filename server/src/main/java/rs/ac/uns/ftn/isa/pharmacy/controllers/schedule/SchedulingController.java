@@ -23,12 +23,7 @@ public class SchedulingController {
 
     @PutMapping("/predefined")
     public ResponseEntity<?> schedulePredefinedAppointment(@RequestBody PredefinedAppointmentReservationDto appointmentReservation){
-        try {
-            schedulingService.schedulePredefinedAppointment(appointmentReservation);
-        }
-        catch (PatientOccupiedException e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
+        schedulingService.schedulePredefinedAppointment(appointmentReservation);
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 
