@@ -15,11 +15,11 @@
 </template>
 
 <script>
-import AppointmentCalendar from '../components/AppointmentCalendar.vue'
+import AppointmentCalendar from '../../components/AppointmentCalendar.vue'
 import DatePicker from 'v-calendar/lib/components/date-picker.umd'
 import { format, startOfWeek, endOfWeek, subWeeks, addWeeks, isSameDay } from 'date-fns'
 import axios from 'axios'
-import { api } from '../api.js'
+import { api } from '../../api.js'
 
 export default {
     data: function () {
@@ -53,6 +53,7 @@ export default {
         }
     },
     mounted: function () {
+        //TODO - Get pharmacy id dynamically
         axios.get(api.appointments.root + '/1')
         .then(response => {
             this.freeAppointments = response.data

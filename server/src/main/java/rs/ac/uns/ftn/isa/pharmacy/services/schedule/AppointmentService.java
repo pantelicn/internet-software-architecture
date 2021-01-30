@@ -32,14 +32,16 @@ public class AppointmentService {
         return repository.save(appointment);
     }
 
-    public List<Appointment> getFreeExaminations(long pharmacyId, long dermatologistId){
+    public List<Appointment> getFreeExaminations(long pharmacyId, long dermatologistId) {
         return repository.findFreeExaminations()
-                    .stream()
-                    .filter(a -> a.getShift().getPharmacy().getId() == pharmacyId &&
-                            a.getShift().getEmployee().getId() == dermatologistId &&
-                            a.getTerm().isInFuture())
-                    .collect(Collectors.toList());
+                .stream()
+                .filter(a -> a.getShift().getPharmacy().getId() == pharmacyId &&
+                        a.getShift().getEmployee().getId() == dermatologistId &&
+                        a.getTerm().isInFuture())
+                .collect(Collectors.toList());
     }
 
-
+    public List<Appointment> getPatientAppointments(long patientId) {
+        return repository.findAppointmentsByPatient(patientId);
+    }
 }

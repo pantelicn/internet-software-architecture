@@ -5,7 +5,7 @@ import rs.ac.uns.ftn.isa.pharmacy.domain.finance.Money;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
-public class FreeAppointmentDto {
+public class AppointmentDto {
     private long id;
     private LocalDateTime start;
     private Duration duration;
@@ -13,7 +13,7 @@ public class FreeAppointmentDto {
     private String dermatologistName;
     private String dermatologistLastName;
 
-    public FreeAppointmentDto(long id, LocalDateTime start, Duration duration, Money price, String dermatologistName, String dermatologistLastName) {
+    public AppointmentDto(long id, LocalDateTime start, Duration duration, Money price, String dermatologistName, String dermatologistLastName) {
         this.id = id;
         this.start = start;
         this.duration = duration;
