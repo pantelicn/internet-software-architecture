@@ -12,13 +12,16 @@
             {{appointment.employeeName}}
             {{appointment.employeeLastName}}
         </div>
-        <button class="btn btn-secondary">Cancel</button>
+        <button class="btn btn-secondary" @click="cancel">Cancel</button>
     </div>
 </div>
 </template>
 
 <script>
 import { format } from 'date-fns'
+import { api } from '../api.js'
+import axios from 'axios'
+
 export default {
     props: {
         appointment: Object
@@ -29,6 +32,14 @@ export default {
         },
         formatTime: function (dateString) {
             return format(new Date(dateString), 'hh:mm')
+        },
+        cancel: function () {
+            axios.get(api.appointments.cancel + '/' + this.appointment.id)
+            .then(() => this.$toast.open("Appointment canceled."))
+            .catch(error => {
+                if(error.response.status == 400)
+                    this.$toast.error(error.response.data)
+            })
         }
     }
 }

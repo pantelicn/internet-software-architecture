@@ -1,5 +1,6 @@
 package rs.ac.uns.ftn.isa.pharmacy.controllers.schedule;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import rs.ac.uns.ftn.isa.pharmacy.domain.schedule.Appointment;
 import rs.ac.uns.ftn.isa.pharmacy.dtos.AppointmentDto;
@@ -52,5 +53,13 @@ public class AppointmentController {
                 .getPatientAppointments(id).stream()
                 .map(a -> AppointmentMapper.objectToDto(a))
                 .collect(Collectors.toList());
+    }
+
+    @GetMapping("/cancel/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void cancelAppointment(@PathVariable long id)
+    {
+        //TODO - Get patient id from header
+        service.cancelPatientAppointment(1, id);
     }
 }

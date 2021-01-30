@@ -11,7 +11,8 @@ export const api = {
     appointments: {
         root: host + appointments,
         free: host + appointments + '/free-examinations',
-        patient: host + appointments + '/patient'
+        patient: host + appointments + '/patient',
+        cancel: host + appointments + '/cancel'
     },
     drugs: {
         root: host + drugs
