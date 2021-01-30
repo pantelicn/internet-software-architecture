@@ -11,6 +11,7 @@ public class AppointmentMapper {
                 appointment.getTerm().getDuration(),
                 appointment.getPrice(),
                 appointment.getShift().getEmployee().getPerson().getFirstName(),
-                appointment.getShift().getEmployee().getPerson().getLastName());
+                appointment.getShift().getEmployee().getPerson().getLastName(),
+                appointment.getType());
     }
 }

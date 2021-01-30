@@ -1,6 +1,7 @@
 package rs.ac.uns.ftn.isa.pharmacy.dtos;
 
 import rs.ac.uns.ftn.isa.pharmacy.domain.finance.Money;
+import rs.ac.uns.ftn.isa.pharmacy.domain.schedule.AppointmentType;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -10,16 +11,18 @@ public class AppointmentDto {
     private LocalDateTime start;
     private Duration duration;
     private Money price;
-    private String dermatologistName;
-    private String dermatologistLastName;
+    private String employeeName;
+    private String employeeLastName;
+    private AppointmentType type;
 
-    public AppointmentDto(long id, LocalDateTime start, Duration duration, Money price, String dermatologistName, String dermatologistLastName) {
+    public AppointmentDto(long id, LocalDateTime start, Duration duration, Money price, String employeeName, String employeeLastName, AppointmentType type) {
         this.id = id;
         this.start = start;
         this.duration = duration;
         this.price = price;
-        this.dermatologistName = dermatologistName;
-        this.dermatologistLastName = dermatologistLastName;
+        this.employeeName = employeeName;
+        this.employeeLastName = employeeLastName;
+        this.type = type;
     }
 
     public long getId() {
@@ -54,19 +57,27 @@ public class AppointmentDto {
         this.price = price;
     }
 
-    public String getDermatologistName() {
-        return dermatologistName;
+    public String getEmployeeName() {
+        return employeeName;
     }
 
-    public void setDermatologistName(String dermatologistName) {
-        this.dermatologistName = dermatologistName;
+    public void setEmployeeName(String employeeName) {
+        this.employeeName = employeeName;
     }
 
-    public String getDermatologistLastName() {
-        return dermatologistLastName;
+    public String getEmployeeLastName() {
+        return employeeLastName;
     }
 
-    public void setDermatologistLastName(String dermatologistLastName) {
-        this.dermatologistLastName = dermatologistLastName;
+    public void setEmployeeLastName(String employeeLastName) {
+        this.employeeLastName = employeeLastName;
+    }
+
+    public AppointmentType getType() {
+        return type;
+    }
+
+    public void setType(AppointmentType type) {
+        this.type = type;
     }
 }

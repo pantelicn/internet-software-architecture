@@ -1,7 +1,10 @@
 <template>
+<div>
+    <h3>Your appointments</h3>
     <div class="container">
         <ScheduledAppointment v-for="appointment in appointments" v-bind:key="appointment.id" v-bind:appointment="appointment"/>
     </div>
+</div>
 </template>
 
 <script>
