@@ -10,7 +10,7 @@ public class Supplier {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     @OneToMany
-    private List<DrugStock> drugsInStock;
+    private List<SupplierStock> drugsInStock;
     @OneToMany
     private List<Offer> offers;
 
@@ -22,11 +22,11 @@ public class Supplier {
         this.id = id;
     }
 
-    public List<DrugStock> getDrugsInStock() {
+    public List<SupplierStock> getDrugsInStock() {
         return drugsInStock;
     }
 
-    public void setDrugsInStock(List<DrugStock> drugsInStock) {
+    public void setDrugsInStock(List<SupplierStock> drugsInStock) {
         this.drugsInStock = drugsInStock;
     }
 

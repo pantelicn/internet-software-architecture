@@ -26,6 +26,10 @@ public class Offer {
         ACCEPTED, REJECTED, PENDING
     }
 
+    public boolean isInPast() {
+        return deliveryDeadline == null || deliveryDeadline.isBefore(LocalDateTime.now());
+    }
+
     public long getId() {
         return id;
     }
@@ -64,5 +68,13 @@ public class Offer {
 
     public void setSupplier(Supplier supplier) {
         this.supplier = supplier;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 }

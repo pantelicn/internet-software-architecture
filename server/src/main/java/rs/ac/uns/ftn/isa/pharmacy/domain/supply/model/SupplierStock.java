@@ -4,13 +4,12 @@ import rs.ac.uns.ftn.isa.pharmacy.domain.pharma.Drug;
 
 import javax.persistence.*;
 
-// TODO Composite key for object ids
 /**
  * Amount of a specific drug which a given Supplier has in stock at the moment.
  */
 @Entity
 @Table(name = "supplier_drug_stock")
-public class DrugStock {
+public class SupplierStock {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
