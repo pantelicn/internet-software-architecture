@@ -15,7 +15,8 @@ export const api = {
         cancel: host + appointments + '/cancel'
     },
     drugs: {
-        root: host + drugs
+        root: host + drugs,
+        search: host + drugs + '/search'
     },
     employees: {
         dermatologists: {
