@@ -1,24 +1,26 @@
 <template>
 <div class="container my-1">
     <div class="row border border-success rounded">
-        <div v-if="appointment.type == 'Examination'" class="bg-success rounded-left p-2">Dermatologist examination</div>
-        <div v-else class="bg-info rounded-left p-2">Pharmacist counseling</div>
-        <div class="bg-dark rounded-left text-success p-2 ml-1">Time:</div>
-        <div class="col p-2"> {{formatTime(appointment.start)}} </div>
-        <div class="bg-dark rounded-left text-success p-2 ml-1">Date:</div>
-        <div class="col p-2">{{formatDate(appointment.start)}}</div>
-        <div class="bg-dark rounded-left text-success p-2 ml-1">Doctor:</div>
-        <div class="col-md-4 p-2">
+        <div v-if="appointment.type == 'Examination'" class="bg-success rounded-left p-3">Dermatologist examination</div>
+        <div v-else class="bg-info rounded-left p-3">Pharmacist counseling</div>
+        <div class="bg-dark rounded-left text-success p-3 ml-1">Time:</div>
+        <div class="col p-3"> {{formatTime(appointment.start)}} </div>
+        <div class="bg-dark rounded-left text-success p-3 ml-1">Date:</div>
+        <div class="col p-3">{{formatDate(appointment.start)}}</div>
+        <div class="bg-dark rounded-left text-success p-3 ml-1">Doctor:</div>
+        <div class="col-md-3 p-3">
             {{appointment.employeeName}}
             {{appointment.employeeLastName}}
         </div>
-        <button class="btn btn-secondary" @click="cancel">Cancel</button>
+        <div class="col">
+            <button v-if="isCancelable()" class="btn btn-secondary my-2" @click="cancel">Cancel</button>
+        </div>
     </div>
 </div>
 </template>
 
 <script>
-import { format } from 'date-fns'
+import { format, addHours, isPast } from 'date-fns'
 import { api } from '../api.js'
 import axios from 'axios'
 
@@ -35,11 +37,17 @@ export default {
         },
         cancel: function () {
             axios.get(api.appointments.cancel + '/' + this.appointment.id)
-            .then(() => this.$toast.open("Appointment canceled."))
+            .then(() => {
+                this.$toast.open("Appointment canceled.")
+                this.$emit('update')
+            })
             .catch(error => {
                 if(error.response.status == 400)
                     this.$toast.error(error.response.data)
             })
+        },
+        isCancelable: function () {
+            return isPast(addHours(new Date(this.appointment.start), 24)) ? false : true
         }
     }
 }

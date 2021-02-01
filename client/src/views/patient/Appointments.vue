@@ -2,7 +2,7 @@
 <div>
     <h3>Your appointments</h3>
     <div class="container">
-        <ScheduledAppointment v-for="appointment in appointments" v-bind:key="appointment.id" v-bind:appointment="appointment"/>
+        <ScheduledAppointment v-for="appointment in appointments" v-bind:key="appointment.id" v-bind:appointment="appointment" @update="fetchAppointments"/>
     </div>
 </div>
 </template>
@@ -21,12 +21,17 @@ export default {
     components: {
         ScheduledAppointment
     },
+    methods: {
+        fetchAppointments: function () {
+            //TODO - Get patient id from headers
+            axios.get(api.appointments.patient + '/1')
+            .then(response => {
+                this.appointments = response.data
+            })
+        }
+    },
     mounted: function () {
-        //TODO - Get patient id from headers
-        axios.get(api.appointments.patient + '/1')
-        .then(response => {
-            this.appointments = response.data
-        })
+        this.fetchAppointments()
     }
 }
 </script>

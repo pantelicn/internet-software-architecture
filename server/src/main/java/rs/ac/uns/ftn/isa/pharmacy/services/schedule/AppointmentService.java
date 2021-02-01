@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import rs.ac.uns.ftn.isa.pharmacy.domain.pharma.Drug;
 import rs.ac.uns.ftn.isa.pharmacy.domain.schedule.Appointment;
+import rs.ac.uns.ftn.isa.pharmacy.exceptions.AppointmentTimeException;
 import rs.ac.uns.ftn.isa.pharmacy.exceptions.EntityNotFoundException;
 import rs.ac.uns.ftn.isa.pharmacy.exceptions.PatientAppointmentException;
 import rs.ac.uns.ftn.isa.pharmacy.repository.schedule.AppointmentRepository;
@@ -60,6 +61,8 @@ public class AppointmentService {
         Appointment appointment = findById(appointmentId);
         if (appointment.getPatient().getId() != patientId) {
             throw new PatientAppointmentException();
+        } else if (!appointment.getTerm().isInFuture()) {
+            throw new AppointmentTimeException();
         }
         appointment.setPatient(null);
         repository.save(appointment);
