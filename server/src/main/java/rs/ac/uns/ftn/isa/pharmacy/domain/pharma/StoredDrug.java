@@ -16,6 +16,8 @@ public class StoredDrug {
     private Price price;
     @OneToOne
     private Drug drug;
+    @ManyToOne
+    Pharmacy pharmacy;
 
     public long getId() {
         return id;
@@ -47,5 +49,13 @@ public class StoredDrug {
 
     public void setDrug(Drug drug) {
         this.drug = drug;
+    }
+
+    public Pharmacy getPharmacy() {
+        return pharmacy;
+    }
+
+    public void setPharmacy(Pharmacy pharmacy) {
+        this.pharmacy = pharmacy;
     }
 }
