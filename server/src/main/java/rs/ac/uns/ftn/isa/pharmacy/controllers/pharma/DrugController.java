@@ -5,9 +5,12 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import rs.ac.uns.ftn.isa.pharmacy.auth.model.Role;
 import rs.ac.uns.ftn.isa.pharmacy.domain.pharma.Drug;
+import rs.ac.uns.ftn.isa.pharmacy.dtos.DrugDto;
+import rs.ac.uns.ftn.isa.pharmacy.mappers.StoredDrugMapper;
 import rs.ac.uns.ftn.isa.pharmacy.services.pharma.DrugService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("api/drugs")
@@ -27,6 +30,13 @@ public class DrugController {
     @GetMapping("{id}")
     public Drug find(@PathVariable Long id) {
         return service.findById(id);
+    }
+
+    @GetMapping("/search/{name}")
+    public List<DrugDto> search(@PathVariable String name) {
+        return service.search(name).stream()
+                .map(d -> StoredDrugMapper.objectToDto(d))
+                .collect(Collectors.toList());
     }
 
     @PostMapping
