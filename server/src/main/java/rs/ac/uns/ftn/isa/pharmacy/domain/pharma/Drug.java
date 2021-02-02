@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "drug")
+@Table(name = "drugs")
 public class Drug {
     @Id
     private long id;

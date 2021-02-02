@@ -1,9 +1,9 @@
 package rs.ac.uns.ftn.isa.pharmacy.domain.finance;
 
-import java.io.Serializable;
+import javax.persistence.Embeddable;
 import java.util.Date;
-
-public class Price implements Serializable {
+@Embeddable
+public class Price {
     private Money amount;
     private Date validUntil;
 

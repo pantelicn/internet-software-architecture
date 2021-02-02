@@ -1,11 +1,13 @@
 package rs.ac.uns.ftn.isa.pharmacy.domain.users.user;
 
+import rs.ac.uns.ftn.isa.pharmacy.auth.model.Credentials;
 import rs.ac.uns.ftn.isa.pharmacy.domain.locale.Address;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+@Table(name="persons")
 public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -17,6 +19,9 @@ public class Person {
     private Date dateOfBirth;
     @OneToOne
     private Address address;
+    @OneToOne
+    private Credentials credentials;
+
 
     public long getId() {
         return id;
@@ -65,6 +70,7 @@ public class Person {
     public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
+
     public Address getAddress() {
         return address;
     }
@@ -72,4 +78,15 @@ public class Person {
     public void setAddress(Address address) {
         this.address = address;
     }
+
+    public Credentials getCredentials() {
+        return credentials;
+    }
+
+    public void setCredentials(Credentials credentials) {
+        this.credentials = credentials;
+    }
+
+
+
 }

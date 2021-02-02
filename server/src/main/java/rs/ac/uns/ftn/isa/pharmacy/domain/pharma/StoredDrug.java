@@ -6,16 +6,18 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "storedDrug")
+@Table(name = "stored_drugs")
 public class StoredDrug {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private long quantity;
+    @Embedded
     private Price price;
-    private Date validUntil;
     @OneToOne
     private Drug drug;
+    @ManyToOne
+    Pharmacy pharmacy;
 
     public long getId() {
         return id;
@@ -41,19 +43,19 @@ public class StoredDrug {
         this.price = price;
     }
 
-    public Date getValidUntil() {
-        return validUntil;
-    }
-
-    public void setValidUntil(Date validUntil) {
-        this.validUntil = validUntil;
-    }
-
     public Drug getDrug() {
         return drug;
     }
 
     public void setDrug(Drug drug) {
         this.drug = drug;
+    }
+
+    public Pharmacy getPharmacy() {
+        return pharmacy;
+    }
+
+    public void setPharmacy(Pharmacy pharmacy) {
+        this.pharmacy = pharmacy;
     }
 }

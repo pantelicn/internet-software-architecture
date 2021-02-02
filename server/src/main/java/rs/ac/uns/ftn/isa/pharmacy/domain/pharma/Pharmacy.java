@@ -1,12 +1,13 @@
 package rs.ac.uns.ftn.isa.pharmacy.domain.pharma;
 
 import rs.ac.uns.ftn.isa.pharmacy.domain.locale.Address;
+import rs.ac.uns.ftn.isa.pharmacy.domain.users.employee.Shift;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "pharmacy")
+@Table(name = "pharmacies")
 public class Pharmacy {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -14,6 +15,8 @@ public class Pharmacy {
     private String name;
     @OneToOne
     private Address address;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pharmacy")
+    private List<Shift> shifts;
     private String description;
     private double rating;
 
@@ -55,5 +58,13 @@ public class Pharmacy {
 
     public void setRating(double rating) {
         this.rating = rating;
+    }
+
+    public List<Shift> getShifts() {
+        return shifts;
+    }
+
+    public void setShifts(List<Shift> shifts) {
+        this.shifts = shifts;
     }
 }
