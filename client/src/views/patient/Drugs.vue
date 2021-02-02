@@ -16,6 +16,26 @@
                     <div class="form-inline">
                         <b class="mr-2">Select quantity:</b><input type="number" class="form-control col-sm-2" v-model="quantity"/>
                     </div>
+                    <hr>
+                    <div class="form-inline">
+                        <b class="mr-2">Pick up before:</b>
+                        <DatePicker
+                            id="date-picker"
+                            timezone="UTC"
+                            :min-date="minDate"
+                            v-model="date"
+                            color="green"
+                            is-dark
+                        >
+                            <template v-slot="{ inputValue, inputEvents }">
+                                <input
+                                class="bg-white border px-2 py-1 rounded"
+                                :value="inputValue"
+                                v-on="inputEvents"
+                                />
+                            </template>
+                        </DatePicker>
+                    </div>
                 </div>
                 <div v-else>
                     <b>No drug selected.</b>
@@ -72,6 +92,7 @@
 <script>
 import { api } from '../../api.js'
 import axios from 'axios'
+import DatePicker from 'v-calendar/lib/components/date-picker.umd'
 
 export default {
     data: function () {
@@ -80,8 +101,13 @@ export default {
             drugs: [],
             searchString: '',
             selectedDrug: null,
-            quantity: 1
+            quantity: 1,
+            minDate: new Date(),
+            date: new Date()
         }
+    },
+    components: {
+        DatePicker
     },
     methods: {
         search: function () {
@@ -91,13 +117,15 @@ export default {
             })
         },
         select: function (drug) {
+            this.date = new Date()
             this.selectedDrug = drug
             this.quantity = 1
         },
         reserve: function () {
             let dto = {
                 storedDrugId: this.selectedDrug.id,
-                quantity: this.quantity
+                quantity: this.quantity,
+                pickUpBefore: this.date
             }
             axios.post(api.drugs.reserve + '/1', dto)
             .then(() => {

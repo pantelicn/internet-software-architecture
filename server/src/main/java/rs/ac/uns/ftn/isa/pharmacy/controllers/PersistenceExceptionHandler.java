@@ -65,4 +65,11 @@ public class PersistenceExceptionHandler {
     String storedDrugQuantityHandler(QuantityException e){
         return e.getMessage();
     }
+
+    @ResponseBody
+    @ExceptionHandler(DateException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    String dateHandler(DateException e){
+        return e.getMessage();
+    }
 }

@@ -11,6 +11,7 @@ public class DrugReservationMapper {
         var storedDrug = new StoredDrug();
         storedDrug.setId(dto.getStoredDrugId());
         object.setStoredDrug(storedDrug);
+        object.setPickUpBefore(dto.getPickUpBefore());
         return object;
     }
 }
