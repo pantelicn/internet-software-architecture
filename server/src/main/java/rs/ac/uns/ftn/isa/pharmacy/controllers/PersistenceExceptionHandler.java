@@ -51,4 +51,11 @@ public class PersistenceExceptionHandler {
     String employeeShiftHandler(EmployeeShiftException e){
         return e.getMessage();
     }
+
+    @ResponseBody
+    @ExceptionHandler(PatientAppointmentException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    String patientAppointmentHandler(PatientAppointmentException e){
+        return e.getMessage();
+    }
 }

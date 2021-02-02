@@ -1,8 +1,9 @@
 import VueRouter from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
 import ExaminationReport from './views/dermatologist/report/ExaminationReport.vue'
-import ScheduleExamination from './views/ScheduleExamination.vue'
-import Counselingreport from './views/pharmacist/report/CounselingReport.vue'
+import CounselingReport from './views/pharmacist/report/CounselingReport.vue'
+import ScheduleExamination from './views/patient/ScheduleExamination.vue'
+import Appointments from './views/patient/Appointments.vue'
 
 export const router = new VueRouter({
     mode: 'hash',
@@ -12,10 +13,13 @@ export const router = new VueRouter({
             component: HelloWorld
         },
         {
-            path: '/schedule',
+            path: '/patient-schedule',
             component: ScheduleExamination
-        }
-        ,
+        },
+        {
+            path: '/patient-appointments',
+            component: Appointments
+        },
         {
             path: '/examination-report',
             name: 'examination-report',
@@ -25,7 +29,7 @@ export const router = new VueRouter({
         {
             path:'/counseling-report',
             name: 'counseling-report',
-            component: Counselingreport
+            component: CounselingReport
         }
     ]
 })

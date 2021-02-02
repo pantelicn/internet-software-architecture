@@ -4,7 +4,7 @@
         {{formatDate(appointment.start)}}<br>
         {{formatTime(appointment.start)}}<br>
         {{formatPrice(appointment.price)}}<br>
-        Dr. {{appointment.dermatologistName + ' ' + appointment.dermatologistLastName}}<br>
+        Dr. {{appointment.employeeName + ' ' + appointment.employeeLastName}}<br>
     </div>
     <button v-if="!scheduled" class="btn btn-success btn-sm hidden w-100 mb-1" @click="scheduleAppointment">Schedule</button>
     <div v-else class="hidden w-100 mb-1 text-success">Scheduled</div>
@@ -27,12 +27,11 @@ export default {
         appointment: Object,
     },
     methods: {
-        format,
         formatDate: function (dateString) {
-            return this.format(new Date(dateString), 'd.M.yyyy.')
+            return format(new Date(dateString), 'd.M.yyyy.')
         },
         formatTime: function (dateString) {
-            return this.format(new Date(dateString), 'hh:mm')
+            return format(new Date(dateString), 'hh:mm')
         },
         formatPrice: function (price) {
             return parseFloat(price.amount).toFixed(2) + price.currency

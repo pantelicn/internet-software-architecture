@@ -70,7 +70,16 @@ insert into isa.appointments (id, amount, duration, start, type, patient_id, shi
 values (4, 2000, 1800000000000, "2021-2-5 9:30:00", 1, null, 2);
 
 
+insert into isa.drugs (id, additional_notes, drug_type, intake_type, manufacturer, name, requires_prescription)
+values (1, "Ibuprofen", 0, 0, "Bayer", "Brufen", false);
+
+insert into isa.drugs (id, additional_notes, drug_type, intake_type, manufacturer, name, requires_prescription)
+values (2, "", 0, 0, "Bayer", "Strepsils", false);
+
+insert into isa.stored_drugs (id, amount, valid_until, quantity, drug_id, pharmacy_id)
+values (1, 200.5, "2022-03-03 00:00:00", 5, 1, 1);
+
+insert into isa.stored_drugs (id, amount, valid_until, quantity, drug_id, pharmacy_id)
+values (2, 300.0, "2022-03-03 00:00:00", 20, 2, 1);
+
 update isa.appointments set patient_id=null where id>1;
-
-select * from isa.appointments;
-

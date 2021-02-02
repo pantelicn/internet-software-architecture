@@ -1,8 +1,9 @@
 package rs.ac.uns.ftn.isa.pharmacy.controllers.schedule;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import rs.ac.uns.ftn.isa.pharmacy.domain.schedule.Appointment;
-import rs.ac.uns.ftn.isa.pharmacy.dtos.FreeAppointmentDto;
+import rs.ac.uns.ftn.isa.pharmacy.dtos.AppointmentDto;
 import rs.ac.uns.ftn.isa.pharmacy.dtos.FreeAppointmentTermDto;
 import rs.ac.uns.ftn.isa.pharmacy.mappers.AppointmentMapper;
 import rs.ac.uns.ftn.isa.pharmacy.mappers.AppointmentTermMapper;
@@ -26,7 +27,7 @@ public class AppointmentController {
     }
 
     @GetMapping("{id}")
-    public List<FreeAppointmentDto> getFreeExaminationsByPharmacy(@PathVariable long id) {
+    public List<AppointmentDto> getFreeExaminationsByPharmacy(@PathVariable long id) {
         return service
                 .getFreeExaminations(id).stream()
                 .map(AppointmentMapper::objectToDto)
@@ -46,4 +47,19 @@ public class AppointmentController {
                 .collect(Collectors.toList());
     }
 
+    @GetMapping("/patient/{id}")
+    public List<AppointmentDto> getPatientExaminations(@PathVariable long id) {
+        return service
+                .getPatientAppointments(id).stream()
+                .map(a -> AppointmentMapper.objectToDto(a))
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/cancel/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void cancelAppointment(@PathVariable long id)
+    {
+        //TODO - Get patient id from header
+        service.cancelPatientAppointment(1, id);
+    }
 }

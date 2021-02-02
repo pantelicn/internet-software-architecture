@@ -1,5 +1,14 @@
 <template>
 <div class="border border-success rounded p-3 container">
+    Sort by:
+    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+        <label class="btn btn-info">
+            <input type="radio" @click="sortByPrice"> Price
+        </label>
+        <label class="btn btn-info">
+            <input type="radio" @click="sortByRating"> Doctor rating
+        </label>
+    </div>
     <div class="container d-flex justify-content-between my-3">
         <button class="btn btn-success" @click="previousWeek">Back</button>
         <div class="border border-success rounded p-2 bg-dark dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{formatWeek(selectedDate)}}</div>
@@ -15,18 +24,20 @@
 </template>
 
 <script>
-import AppointmentCalendar from '../components/AppointmentCalendar.vue'
+import AppointmentCalendar from '../../components/AppointmentCalendar.vue'
 import DatePicker from 'v-calendar/lib/components/date-picker.umd'
 import { format, startOfWeek, endOfWeek, subWeeks, addWeeks, isSameDay } from 'date-fns'
 import axios from 'axios'
-import { api } from '../api.js'
+import { api } from '../../api.js'
 
 export default {
     data: function () {
         return {
             freeAppointments: [],
             showDatePicker: true,
-            selectedDate: new Date()
+            selectedDate: new Date(),
+            priceAscending: false,
+            ratingAscending: false
         }
     },
     components: {
@@ -50,9 +61,34 @@ export default {
                 }
             })
             return weeklyAppointments
+        },
+        sortByPrice: function () {
+            this.freeAppointments.sort((a1, a2) => {
+                if (a1.price.amount < a2.price.amount) {
+                    return this.priceAscending ? 1 : -1
+                }
+                if (a1.price.amount > a2.price.amount) {
+                    return this.priceAscending ? -1 : 1
+                }
+                return 0
+            })
+            this.priceAscending = !this.priceAscending
+        },
+        sortByRating: function () {
+            this.freeAppointments.sort((a1, a2) => {
+                if (a1.employeeRating < a2.employeeRating) {
+                    return this.ratingAscending ? 1 : -1
+                }
+                if (a1.employeeRating > a2.employeeRating) {
+                    return this.ratingAscending ? -1 : 1
+                }
+                return 0
+            })
+            this.ratingAscending = !this.ratingAscending
         }
     },
     mounted: function () {
+        //TODO - Get pharmacy id dynamically
         axios.get(api.appointments.root + '/1')
         .then(response => {
             this.freeAppointments = response.data
