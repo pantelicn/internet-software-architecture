@@ -41,4 +41,16 @@ public class OfferController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @PutMapping
+    public ResponseEntity<?> update(HttpServletRequest request, @RequestBody OfferRequestDto dto) {
+        try {
+            offerService.update(dto);
+            return ResponseEntity.ok().build();
+        }
+        catch (MessageException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
 }

@@ -34,14 +34,14 @@ public class OfferService {
         this.offerMapper = offerMapper;
     }
 
-    public void create(OfferRequestDto offerRequestDto)
+    public void create(OfferRequestDto dto)
             throws InvalidEntityException, LateDeadlineException, InvalidForeignKeyException,
             EntityExistsException, InsufficientDrugAmountException, ExpiredException
     {
-        Offer offer = offerMapper.dtoToObject(offerRequestDto);
+        Offer offer = offerMapper.dtoToObject(dto);
         offer.validateBeforeChange();
         if (offerExists(offer.getPurchaseOrder().getId(), offer.getSupplier().getId()))
-            throw new EntityExistsException("offer");
+            throw new EntityExistsException("Offer");
         if (isSupplierStockedUp(offer.getPurchaseOrder().getId(), offer.getSupplier().getId())) {
             offer.setStatus(Offer.Status.PENDING);
             offerRepository.save(offer);
@@ -49,19 +49,23 @@ public class OfferService {
         else throw new InsufficientDrugAmountException();
     }
 
-    public void update(OfferRequestDto offerRequestDto)
-            throws EntityNotFoundException, LateDeadlineException, InvalidForeignKeyException,
-            InvalidEntityException, ExpiredException
+    public void update(OfferRequestDto dto)
+            throws EntityNotFoundException, LateDeadlineException, InvalidEntityException, ExpiredException
     {
-        Offer offer = offerMapper.dtoToObject(offerRequestDto);
+        Offer offer = getOffer(dto.getPurchaseOrderId(), dto.getSupplierId());
+        if (offer == null) throw new EntityNotFoundException("Offer");
+        offer.setPrice(dto.getPrice());
+        offer.setDeliveryDeadline(dto.getDeliveryDeadline());
         offer.validateBeforeChange();
-        if (offerExists(offer.getPurchaseOrder().getId(), offer.getSupplier().getId()))
-            offerRepository.save(offer);
-        else throw new EntityNotFoundException("Offer");
+        offerRepository.save(offer);
     }
 
     private boolean offerExists(long purchaseOrderId, long supplierId) {
-        return offerRepository.findByPurchaseOrderAndSupplier(purchaseOrderId, supplierId) != null;
+        return getOffer(purchaseOrderId, supplierId) != null;
+    }
+
+    private Offer getOffer(long purchaseOrderId, long supplierId) {
+        return offerRepository.findByPurchaseOrderAndSupplier(purchaseOrderId, supplierId);
     }
 
     private boolean isSupplierStockedUp(long purchaseOrderId, long supplierId) {
