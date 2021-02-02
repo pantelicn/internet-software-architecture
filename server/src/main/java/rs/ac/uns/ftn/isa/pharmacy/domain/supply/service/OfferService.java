@@ -3,9 +3,7 @@ package rs.ac.uns.ftn.isa.pharmacy.domain.supply.service;
 import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.isa.pharmacy.domain.supply.dto.OfferMapper;
 import rs.ac.uns.ftn.isa.pharmacy.domain.supply.dto.OfferRequestDto;
-import rs.ac.uns.ftn.isa.pharmacy.domain.supply.exceptions.InsufficientDrugAmountException;
-import rs.ac.uns.ftn.isa.pharmacy.domain.supply.exceptions.InvalidForeignKeyException;
-import rs.ac.uns.ftn.isa.pharmacy.domain.supply.exceptions.LateDeadlineException;
+import rs.ac.uns.ftn.isa.pharmacy.domain.supply.exceptions.*;
 import rs.ac.uns.ftn.isa.pharmacy.domain.supply.model.Offer;
 import rs.ac.uns.ftn.isa.pharmacy.domain.supply.model.OrderedDrug;
 import rs.ac.uns.ftn.isa.pharmacy.domain.supply.model.SupplierStock;
@@ -37,16 +35,33 @@ public class OfferService {
     }
 
     public void create(OfferRequestDto offerRequestDto)
-            throws InsufficientDrugAmountException, LateDeadlineException, InvalidForeignKeyException
+            throws InvalidEntityException, LateDeadlineException, InvalidForeignKeyException,
+            EntityExistsException, InsufficientDrugAmountException, ExpiredException
     {
-            Offer offer = offerMapper.dtoToObject(offerRequestDto);
-            if (offer.isInPast())
-                throw new LateDeadlineException();
-            if (isSupplierStockedUp(offer.getPurchaseOrder().getId(), offer.getSupplier().getId())) {
-                offer.setStatus(Offer.Status.PENDING);
-                offerRepository.save(offer);
-            }
-            else throw new InsufficientDrugAmountException();
+        Offer offer = offerMapper.dtoToObject(offerRequestDto);
+        offer.validateBeforeChange();
+        if (offerExists(offer.getPurchaseOrder().getId(), offer.getSupplier().getId()))
+            throw new EntityExistsException("offer");
+        if (isSupplierStockedUp(offer.getPurchaseOrder().getId(), offer.getSupplier().getId())) {
+            offer.setStatus(Offer.Status.PENDING);
+            offerRepository.save(offer);
+        }
+        else throw new InsufficientDrugAmountException();
+    }
+
+    public void update(OfferRequestDto offerRequestDto)
+            throws EntityNotFoundException, LateDeadlineException, InvalidForeignKeyException,
+            InvalidEntityException, ExpiredException
+    {
+        Offer offer = offerMapper.dtoToObject(offerRequestDto);
+        offer.validateBeforeChange();
+        if (offerExists(offer.getPurchaseOrder().getId(), offer.getSupplier().getId()))
+            offerRepository.save(offer);
+        else throw new EntityNotFoundException("Offer");
+    }
+
+    private boolean offerExists(long purchaseOrderId, long supplierId) {
+        return offerRepository.findByPurchaseOrderAndSupplier(purchaseOrderId, supplierId) != null;
     }
 
     private boolean isSupplierStockedUp(long purchaseOrderId, long supplierId) {

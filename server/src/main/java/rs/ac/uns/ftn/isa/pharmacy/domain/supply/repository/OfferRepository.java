@@ -16,6 +16,9 @@ public interface OfferRepository extends JpaRepository<Offer, Long> {
     @Query(value = "select * from offer where purchase_order_id = ?1", nativeQuery = true)
     List<Offer> getByPurchaseOrderId(long purchaseOrderId);
 
+    @Query(value = "select * from offer where purchase_order_id = ?1 and supplier_id = ?2 limit 1", nativeQuery = true)
+    Offer findByPurchaseOrderAndSupplier(long purchaseOrderId, long supplierId);
+
 
     // JPQL:
     //      @Query(value = "select o from Offer o where o.supplier.id = ?1")

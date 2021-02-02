@@ -6,6 +6,7 @@ import java.util.List;
 @Entity
 @Table(name = "supplier")
 public class Supplier {
+    // TODO Supplier must be logged in? Therefore must have an ID token with Http to identify him (not email but number)
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;

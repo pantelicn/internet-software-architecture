@@ -1,6 +1,9 @@
 package rs.ac.uns.ftn.isa.pharmacy.domain.supply.model;
 
 import rs.ac.uns.ftn.isa.pharmacy.domain.finance.Money;
+import rs.ac.uns.ftn.isa.pharmacy.domain.supply.exceptions.ExpiredException;
+import rs.ac.uns.ftn.isa.pharmacy.domain.supply.exceptions.LateDeadlineException;
+import rs.ac.uns.ftn.isa.pharmacy.domain.supply.exceptions.InvalidEntityException;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -26,8 +29,30 @@ public class Offer {
         ACCEPTED, REJECTED, PENDING
     }
 
-    public boolean isInPast() {
-        return deliveryDeadline == null || deliveryDeadline.isBefore(LocalDateTime.now());
+    /**
+     * Validates all field values by checking for null-values and logically incorrect values (eg. expired PO).
+     * List of checks: Deadline, price, purchase order, supplier
+     */
+    public void validateBeforeChange() throws LateDeadlineException, InvalidEntityException, ExpiredException {
+        validateDeliveryDeadline();
+        validatePrice();
+        validatePurchaseOrder();
+        validateSuppler();
+    }
+
+    public void validateDeliveryDeadline() throws LateDeadlineException {
+        if (deliveryDeadline == null || deliveryDeadline.isBefore(LocalDateTime.now()))
+            throw new LateDeadlineException();
+    }
+    public void validatePrice() throws InvalidEntityException {
+        if (price == null || price.getAmount() <= 0) throw new InvalidEntityException("Price");
+    }
+    public void validatePurchaseOrder() throws InvalidEntityException, ExpiredException {
+        if (purchaseOrder == null) throw new InvalidEntityException("Purchase order");
+        if (!purchaseOrder.isActive()) throw new ExpiredException("Purchase order");
+    }
+    public void validateSuppler() throws InvalidEntityException {
+        if (supplier == null) throw new InvalidEntityException("Supplier");
     }
 
     public long getId() {

@@ -22,6 +22,10 @@ public class PurchaseOrder {
         AWAITING_OFFERS, FINISHED
     }
 
+    public boolean isActive() {
+        return status == Status.AWAITING_OFFERS;
+    }
+
     public long getId() {
         return id;
     }

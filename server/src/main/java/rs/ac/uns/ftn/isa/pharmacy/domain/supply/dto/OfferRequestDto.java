@@ -12,8 +12,8 @@ import java.time.LocalDateTime;
 public class OfferRequestDto {
     private LocalDateTime deliveryDeadline;
     private Money price;
-    private long purchaseOrderId;
-    private long supplierId;
+    public long purchaseOrderId;
+    public long supplierId;
 
     public LocalDateTime getDeliveryDeadline() {
         return deliveryDeadline;
