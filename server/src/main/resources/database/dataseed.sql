@@ -13,6 +13,10 @@ insert into isa.addresses(id, latitude, longitude, street_name, city_id)
 values(2,4.4,5.5,"Janka Čmelika 55",1);
 insert into isa.addresses(id, latitude, longitude, street_name, city_id)
 values(3,2.2,3.3,"Jerneja kopitara 90",1);
+insert into isa.addresses(id, latitude, longitude, street_name, city_id)
+values(4,1.1,2.45,"Narodnih heroja 20",1);
+insert into isa.addresses(id, latitude, longitude, street_name, city_id)
+values(5,32.22,45.32,"Danila Kisa 13",1);
 
 insert into isa.pharmacies (id, description, name, rating, address_id)
 values (1, "Tiny Pill", "Tiny Pill", 5, 1);
@@ -33,23 +37,38 @@ insert into isa.persons (id, date_of_birth, first_name, gender, last_name, phone
 values (3, "1998-1-1 8:00:00", "Sasa", 0, "Strbacki", "05123123123", 3);
 insert into isa.employees(id,employee_type,person_id) values (2,1,3);
 
+insert into isa.persons (id, date_of_birth, first_name, gender, last_name, phone_number, address_id)
+values (4, "1993-1-1 8:00:00", "John", 0, "Doe", "03223123123", 4);
+insert into isa.employees(id,employee_type,person_id) values (3,0,4);
+
+insert into isa.persons (id, date_of_birth, first_name, gender, last_name, phone_number, address_id)
+values (5, "1992-1-1 8:00:00", "Mark", 0, "Jackson", "03223123123", 5);
+insert into isa.employees(id,employee_type,person_id) values (4,0,5);
+
 insert into isa.shifts (id, end, start, pharmacy_id,employee_id)
-values (1, "2020-1-1 8:00:00", "2020-1-1 16:00:00", 1,1);
+values (1, "2020-2-4 8:00:00", "2020-2-4 15:00:00", 1,1);
 insert into isa.shifts (id, end, start, pharmacy_id,employee_id)
-values (2, "2021-2-2 8:00:00", "2021-2-2 16:00:00", 1,1);
+values (2, "2021-2-5 8:00:00", "2021-2-5 18:00:00", 1,1);
 insert into isa.shifts (id, end, start, pharmacy_id,employee_id)
-values (3, "2021-2-2 8:00:00", "2021-2-2 16:00:00", 1,2);
+values (3, "2021-2-3 8:00:00", "2021-2-3 13:00:00", 1,2);
 insert into isa.shifts (id, end, start, pharmacy_id,employee_id)
-values (4, "2021-5-2 8:00:00", "2021-5-2 16:00:00", 1,1);
+values (4, "2021-2-8 13:00:00", "2021-2-8 20:00:00", 1,2);
+insert into isa.shifts (id, end, start, pharmacy_id,employee_id)
+values (5, "2021-2-5 8:00:00", "2021-2-5 8:00:00", 1,3);
+insert into isa.shifts (id, end, start, pharmacy_id,employee_id)
+values (6, "2021-2-15 13:00:00", "2021-2-15 16:00:00", 1,4);
+insert into isa.shifts (id, end, start, pharmacy_id,employee_id)
+values (7, "2021-2-15 13:00:00", "2021-2-15 16:00:00", 1,5);
 
 insert into isa.appointments (id, amount, duration, start, type, patient_id, shift_id)
 values (1, 2000, 10000, "2020-1-1 8:00:00", 1, 1, 1);
-
 insert into isa.appointments (id, amount, duration, start, type, patient_id, shift_id)
-values (2, 2000, 1800000000000, "2021-2-2 8:00:00", 1, null, 2);
-
+values (2, 2000, 1800000000000, "2021-2-5 8:00:00", 1, null, 2);
 insert into isa.appointments (id, amount, duration, start, type, patient_id, shift_id)
-values (3, 2000, 1800000000000, "2021-2-2 9:00:00", 1, null, 2);
+values (3, 2000, 1800000000000, "2021-2-5 8:30:00", 1, null, 2);
+insert into isa.appointments (id, amount, duration, start, type, patient_id, shift_id)
+values (4, 2000, 1800000000000, "2021-2-5 9:30:00", 1, null, 2);
+
 
 update isa.appointments set patient_id=null where id>1;
 

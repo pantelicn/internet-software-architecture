@@ -2,12 +2,12 @@ package rs.ac.uns.ftn.isa.pharmacy.dtos;
 
 import java.util.Objects;
 
-public class EmployeeDto {
+public class EmployeeBasicInfoDto {
     private long id;
     private String firstName;
     private String lastName;
 
-    public EmployeeDto(long id, String firstName, String lastName) {
+    public EmployeeBasicInfoDto(long id, String firstName, String lastName) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -41,7 +41,7 @@ public class EmployeeDto {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        EmployeeDto that = (EmployeeDto) o;
+        EmployeeBasicInfoDto that = (EmployeeBasicInfoDto) o;
         return id == that.id;
     }
 

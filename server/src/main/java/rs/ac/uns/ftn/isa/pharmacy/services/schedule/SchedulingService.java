@@ -38,7 +38,7 @@ public class SchedulingService {
         var patient = patientRepository.getOne(appointmentReservation.getPatientId());
 
         if(!patient.canSchedule(appointment))
-            throw new PatientOccupiedException(patient);
+            throw new PatientOccupiedException();
         else if (!appointment.getTerm().isInFuture())
             throw new AppointmentTimeException();
 
@@ -46,20 +46,21 @@ public class SchedulingService {
         appointment = appointmentRepository.save(appointment);
         emailService.sendExaminationScheduledMessage(appointment);
     }
+    // TODO: Refactor!
     @Transactional
-    public void scheduleNewExamination(CreatedAppointmentDto createdAppointmentDto) throws PersistenceException {
+    public void scheduleNewAppointment(CreatedAppointmentDto createdAppointmentDto, AppointmentType type) throws PersistenceException {
         var term = createdAppointmentDto.getTerm();
 
         var employee = employeeRepository.getOne(createdAppointmentDto.getEmployeeId());
         var patient = patientRepository.getOne(createdAppointmentDto.getPatientId());
-        var appointment = new Appointment(term, AppointmentType.Examination,null,null);
+        var appointment = new Appointment(term, type,null,null);
 
         if(employee.isOccupied(term))
-            throw new EmployeeOccupiedException(employee);
+            throw new EmployeeOccupiedException();
         if(!patient.canSchedule(appointment))
-            throw new PatientOccupiedException(patient);
+            throw new PatientOccupiedException();
         if(!employee.hasShiftAtPharmacy(term,createdAppointmentDto.getPharmacyId()))
-            throw new EmployeeShiftException(employee);
+            throw new EmployeeShiftException();
 
         var shift = employee.getAdequateShift(term);
         appointment.setPatient(patient);

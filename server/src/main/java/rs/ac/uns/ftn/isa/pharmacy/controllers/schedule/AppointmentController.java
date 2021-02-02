@@ -29,7 +29,7 @@ public class AppointmentController {
     public List<FreeAppointmentDto> getFreeExaminationsByPharmacy(@PathVariable long id) {
         return service
                 .getFreeExaminations(id).stream()
-                .map(a -> AppointmentMapper.objectToDto(a))
+                .map(AppointmentMapper::objectToDto)
                 .collect(Collectors.toList());
     }
 
@@ -42,7 +42,7 @@ public class AppointmentController {
     public List<FreeAppointmentTermDto> getFreeExaminations(@RequestParam long pharmacyId, @RequestParam long dermatologistId) {
         return service.getFreeExaminations(pharmacyId,dermatologistId)
                 .stream()
-                .map(a-> AppointmentTermMapper.objectToDto(a))
+                .map(AppointmentTermMapper::objectToDto)
                 .collect(Collectors.toList());
     }
 

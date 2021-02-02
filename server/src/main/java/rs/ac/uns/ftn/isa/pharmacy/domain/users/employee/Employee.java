@@ -51,12 +51,9 @@ public class Employee {
 
     public boolean hasShiftAtPharmacy(Term term, double pharmacyId) {
         for(var shift:shifts)
-            if (shift.getPharmacy().getId() != pharmacyId)
-                continue;
-            else
+            if (shift.getPharmacy().getId() == pharmacyId)
                 if(term.isInRange(shift.getStart(),shift.getEnd()))
                     return true;
-
         return false;
     }
 

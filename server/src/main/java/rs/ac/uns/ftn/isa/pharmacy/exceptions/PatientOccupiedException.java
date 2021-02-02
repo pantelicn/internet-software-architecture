@@ -6,9 +6,7 @@ import javax.persistence.PersistenceException;
 
 public class PatientOccupiedException extends PersistenceException {
 
-    public PatientOccupiedException(Patient patient){
-        super(String.format("Appointment for a patient %s %s can't be scheduled at a given point of time.",
-                patient.getPerson().getFirstName(),
-                patient.getPerson().getLastName()));
+    public PatientOccupiedException(){
+        super("Appointment for a patient can't be scheduled at a given point of time.");
     }
 }

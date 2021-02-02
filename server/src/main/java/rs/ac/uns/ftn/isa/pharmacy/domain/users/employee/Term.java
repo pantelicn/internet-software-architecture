@@ -47,26 +47,17 @@ public class Term {
     }
 
     public boolean intersects(Term term) {
-        if ((term.getStart().isAfter(this.getStart()) && term.getStart().isBefore(this.getEnd()))
+        return (term.getStart().isAfter(this.getStart()) && term.getStart().isBefore(this.getEnd()))
                 || (term.getEnd().isAfter(this.getStart()) && term.getEnd().isBefore(this.getEnd()))
-                || (term.getStart().isBefore(this.getStart()) && term.getEnd().isAfter(this.getEnd()))) {
-            return true;
-        }
-        return false;
+                || (term.getStart().isBefore(this.getStart()) && term.getEnd().isAfter(this.getEnd()));
     }
 
     public boolean isBefore(Term term) {
-        if (term.getStart().isBefore(this.getStart()) && !intersects(term)) {
-            return true;
-        }
-        return false;
+        return term.getStart().isBefore(this.getStart()) && !intersects(term);
     }
 
     public boolean isAfter(Term term) {
-        if (term.getStart().isAfter(this.getStart()) && !intersects(term)) {
-            return true;
-        }
-        return false;
+        return term.getStart().isAfter(this.getStart()) && !intersects(term);
     }
 
     /**
@@ -82,26 +73,20 @@ public class Term {
      * @return boolean value indicating whether condition is met.
      */
     public boolean isInFuture(Duration time) {
-        if (this.getStart().isBefore(LocalDateTime.now().plus(time))) {
-            return false;
-        }
-        return true;
+        return !this.getStart().isBefore(LocalDateTime.now().plus(time));
     }
 
     @Override
     public boolean equals(Object obj) {
         Term term = (Term)obj;
-        if (term.getStart().equals(this.getStart()) && term.duration.equals(this.duration)) {
-            return true;
-        }
-        return false;
+        return term.getStart().equals(this.getStart()) && term.duration.equals(this.duration);
     }
 
     public boolean isInRange(LocalDateTime start, LocalDateTime end) {
-        if(start.isAfter(this.getStart()) && end.isBefore(this.getEnd()))
+        if(end.isAfter(this.getStart()) && start.isBefore(this.getEnd()))
             return true;
-        else if(start.isEqual(this.getStart()) && end.isBefore(this.getEnd()))
+        else if(start.isEqual(this.getStart()) && end.isAfter(this.getEnd()))
             return true;
-        else return start.isAfter(this.getStart()) && end.isEqual(this.getEnd());
+        else return start.isBefore(this.getStart()) && end.isEqual(this.getEnd());
     }
 }

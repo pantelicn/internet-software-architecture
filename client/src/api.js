@@ -18,11 +18,15 @@ export const api = {
     employees: {
         dermatologists: {
             basicInfo: host + employees + '/dermatologists/basic-info/'
+        },
+        pharmacists: {
+            basicInfo: host + employees + '/pharmacists/basic-info/'
         }
     },
     scheduling: {
         root: host + scheduling,
         predefined: host + scheduling + '/predefined',
-        newExamination: host + scheduling + '/examination'
+        newExamination: host + scheduling + '/examination',
+        newCounseling: host + scheduling + '/counseling'
     }
 }

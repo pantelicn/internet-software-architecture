@@ -2,6 +2,7 @@ import VueRouter from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
 import ExaminationReport from './views/dermatologist/report/ExaminationReport.vue'
 import ScheduleExamination from './views/ScheduleExamination.vue'
+import Counselingreport from './views/pharmacist/report/CounselingReport.vue'
 
 export const router = new VueRouter({
     mode: 'hash',
@@ -19,6 +20,12 @@ export const router = new VueRouter({
             path: '/examination-report',
             name: 'examination-report',
             component: ExaminationReport
+        }
+        ,
+        {
+            path:'/counseling-report',
+            name: 'counseling-report',
+            component: Counselingreport
         }
     ]
 })

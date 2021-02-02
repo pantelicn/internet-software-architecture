@@ -62,7 +62,7 @@
             </select>
         </div>
         <div class="d-flex row pt-4 justify-content-center">
-             <label id="date-time-select-label" class="mt-2">Date and time: </label>
+            <label id="date-time-select-label" class="mt-2">Date and time: </label>
             <DatePicker
                 id="date-picker"
                 timezone="UTC"
@@ -109,108 +109,114 @@
 </template>
 
 <script>
-export function getTomorrowsDate(){
+export function getTomorrowsDate() {
     let date = new Date()
     date.setDate(date.getDate() + 1)
     return date
 }
 import DatePicker from 'v-calendar/lib/components/date-picker.umd'
 import axios from 'axios'
-import { format, addMilliseconds} from 'date-fns'
-import { api } from '../../../api.js'
+import {
+    format,
+    addMilliseconds
+} from 'date-fns'
+import {
+    api
+} from '../../../api.js'
 import moment from 'moment'
 export default {
-    name:"ExaminationReport",
-    data:function(){
-        return{
-            showOptions:true,
-            predefined:false,
-            examCreation:false,
-            minDate:getTomorrowsDate(),
-            date:getTomorrowsDate(),
-            dermatologists:null,
-            freeExaminations:null,
-            selectedDoctor:null,
-            selectedExam:null,
-            selectedDuration:null
-            
-            
+    name: "ExaminationReport",
+    data: function () {
+        return {
+            showOptions: true,
+            predefined: false,
+            examCreation: false,
+            minDate: getTomorrowsDate(),
+            date: getTomorrowsDate(),
+            dermatologists: null,
+            freeExaminations: null,
+            selectedDoctor: null,
+            selectedExam: null,
+            selectedDuration: null
         }
     },
-    components:{DatePicker},
-    methods:{
-        showPredefined:function(){
+    components: {
+        DatePicker
+    },
+    methods: {
+        showPredefined: function () {
             this.showOptions = false
             this.predefined = true
         },
-        showExamCreation:function(){
+        showExamCreation: function () {
             this.showOptions = false
             this.examCreation = true
         },
-        back:function(){
+        back: function () {
             this.showOptions = true
             this.examCreation = false
             this.predefined = false
-            this.selectedDoctor=null
-            this.selectedExam=null
-            this.selectedDuration=null
+            this.selectedDoctor = null
+            this.selectedExam = null
+            this.selectedDuration = null
         },
-        getDermaBasicInfo:function(){
+        getDermaBasicInfo: function () {
             // TODO: Kada implementiras izvestaj namesti da se ne zakucava pharma
             axios.get(api.employees.dermatologists.basicInfo + 1)
-            .then(response=>{
-                this.dermatologists = response.data
-            })
+                .then(response => {
+                    this.dermatologists = response.data
+                })
         },
-        getFreeExaminations:function(){
+        getFreeExaminations: function () {
             // TODO: Kada implementiras izvestaj namesti da se ne zakucava pharma
-            axios.get(api.appointments.free+"?pharmacyId=1&dermatologistId="+this.selectedDoctor)
-            .then(response=>{
-                this.freeExaminations = response.data
-            })
+            axios.get(api.appointments.free + "?pharmacyId=1&dermatologistId=" + this.selectedDoctor)
+                .then(response => {
+                    this.freeExaminations = response.data
+                })
         },
-        dermaSelected:function(event){
+        dermaSelected: function (event) {
             this.selectedDoctor = event.target.value
             this.getFreeExaminations()
 
         },
-        examinationSelected:function(event){
+        examinationSelected: function (event) {
             this.selectedExam = event.target.value
         },
-        durationSelected:function(event){
+        durationSelected: function (event) {
             this.selectedDuration = event.target.value
         },
-        formatExamTime:function(appointment){
-            let date = format(new Date(appointment.start),'MM/dd/yyy')
-            let start = format (new Date(appointment.start),'HH:mm')
+        formatExamTime: function (appointment) {
+            let date = format(new Date(appointment.start), 'MM/dd/yyy')
+            let start = format(new Date(appointment.start), 'HH:mm')
             let duration = moment.duration(appointment.duration)
-            let end = format(addMilliseconds(new Date(appointment.start),duration),'HH:mm')
-             
-            return date + " [" + start + " - " + end+"]"
+            let end = format(addMilliseconds(new Date(appointment.start), duration), 'HH:mm')
+
+            return date + " [" + start + " - " + end + "]"
         },
-        getDurationString:function(){
-            if(this.selectedDuration=="1")
+        getDurationString: function () {
+            if (this.selectedDuration == "1")
                 return "PT1H"
             else
-                return "PT"+this.selectedDuration+"M"
+                return "PT" + this.selectedDuration + "M"
         },
         // TODO: Kada implementiras izvestaj namesti da se ne zakucava pacijent
-        schedulePredefined:function(){
-            let appointmentReservationDto={
+        schedulePredefined: function () {
+            let appointmentReservationDto = {
                 appointmentId: parseInt(this.selectedExam),
                 patientId: 1
             }
-            
-            axios.put(api.scheduling.predefined,appointmentReservationDto)
-            .then(res=>{
-                this.$toast.open('Examination successfully scheduled!')
-            })
-            .catch(err=>{
-                if(err.response.status == 400)
-                    this.$toast.error(err.response.data)
-            })
+
+            axios.put(api.scheduling.predefined, appointmentReservationDto)
+                .then(res => {
+                    this.$toast.open('Examination successfully scheduled!')
+                })
+                .catch(err => {
+                    if (err.response.status == 400)
+                        this.$toast.error(err.response.data)
+                })
         },
-        scheduleNewExamination:function(){
+         // TODO: Kada implementiras izvestaj namesti da se ne zakucava pacijent i pharma
+        scheduleNewExamination: function () {
             let createdAppointmentDto = {
                 pharmacyId: 1,
                 employeeId: this.selectedDoctor,
@@ -218,17 +224,17 @@ export default {
                 start: this.date,
                 duration: this.getDurationString()
             }
-            axios.post(api.scheduling.newExamination,createdAppointmentDto)
-            .then(res=>{
-                this.$toast.open('Examination successfully scheduled!')
-            })
-            .catch(err=>{
-                if(err.response.status == 400)
-                    this.$toast.error(err.response.data)
-            })
+            axios.post(api.scheduling.newExamination, createdAppointmentDto)
+                .then(res => {
+                    this.$toast.open('Examination successfully scheduled!')
+                })
+                .catch(err => {
+                    if (err.response.status == 400)
+                        this.$toast.error(err.response.data)
+                })
         }
     },
-    mounted(){
+    mounted() {
         this.getDermaBasicInfo()
     }
 }
@@ -264,13 +270,6 @@ export default {
 .btn-primary{
     background-color: #42b983 !important;
     border-color:#164731 !important;
-}
-
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .5s;
-}
-.fade-enter, .fade-leave-to {
-  opacity: 0;
 }
 
 </style>
