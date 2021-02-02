@@ -3,6 +3,7 @@ package rs.ac.uns.ftn.isa.pharmacy.dtos;
 import rs.ac.uns.ftn.isa.pharmacy.domain.finance.Price;
 
 public class DrugDto {
+    private long id;
     private String name;
     private long quantity;
     private Price price;
@@ -13,6 +14,14 @@ public class DrugDto {
         this.quantity = quantity;
         this.price = price;
         this.manufacturer = manufacturer;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getName() {
