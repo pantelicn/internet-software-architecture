@@ -21,7 +21,8 @@
                     <b>No drug selected.</b>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success" data-dismiss="modal" @click="reserve">Confirm</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Abort</button>
                 </div>
             </div>
         </div>
@@ -93,8 +94,18 @@ export default {
             this.selectedDrug = drug
             this.quantity = 1
         },
-        reserve: function (quantity) {
-            
+        reserve: function () {
+            let dto = {
+                storedDrugId: this.selectedDrug.id,
+                quantity: this.quantity
+            }
+            axios.post(api.drugs.reserve + '/1', dto)
+            .then(() => {
+                this.$toast.open('Successfully reserved.')
+            })
+            .catch(error => {
+                this.$toast.error(error.response.data)
+            })
         }
     }
 }

@@ -9,7 +9,8 @@ public class DrugDto {
     private Price price;
     private String manufacturer;
 
-    public DrugDto(String name, long quantity, Price price, String manufacturer) {
+    public DrugDto(long id, String name, long quantity, Price price, String manufacturer) {
+        this.id = id;
         this.name = name;
         this.quantity = quantity;
         this.price = price;

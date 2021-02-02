@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import rs.ac.uns.ftn.isa.pharmacy.auth.model.Role;
 import rs.ac.uns.ftn.isa.pharmacy.domain.pharma.Drug;
 import rs.ac.uns.ftn.isa.pharmacy.dtos.DrugDto;
+import rs.ac.uns.ftn.isa.pharmacy.dtos.DrugReservationDto;
+import rs.ac.uns.ftn.isa.pharmacy.mappers.DrugReservationMapper;
 import rs.ac.uns.ftn.isa.pharmacy.mappers.StoredDrugMapper;
 import rs.ac.uns.ftn.isa.pharmacy.services.pharma.DrugService;
 
@@ -52,5 +54,10 @@ public class DrugController {
     @DeleteMapping("{id}")
     public void delete(@PathVariable Long id) {
         service.deleteById(id);
+    }
+
+    @PostMapping("/reserve/{patientId}")
+    public void reserve(@RequestBody DrugReservationDto dto, @PathVariable long patientId){
+        service.reserve(DrugReservationMapper.dtoToObject(dto), patientId);
     }
 }
