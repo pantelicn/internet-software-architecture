@@ -20,10 +20,10 @@ public class Credentials implements UserDetails {
     private String username;
     private String password;
     private String role;
-
     @OneToOne
     private Person person;
     private boolean isActivated;
+    private boolean hasLoggedInBefore;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -55,6 +55,8 @@ public class Credentials implements UserDetails {
         return true;
     }
 
+    // Get set
+
     public String getEmail() {
         return email;
     }
@@ -71,6 +73,11 @@ public class Credentials implements UserDetails {
         this.uid = uid;
     }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    @Override
     public String getPassword() {
         return password;
     }
@@ -101,5 +108,13 @@ public class Credentials implements UserDetails {
 
     public void setActivated(boolean activated) {
         isActivated = activated;
+    }
+
+    public boolean hasLoggedInBefore() {
+        return hasLoggedInBefore;
+    }
+
+    public void setHasLoggedInBefore(boolean hasLoggedInBefore) {
+        this.hasLoggedInBefore = hasLoggedInBefore;
     }
 }
