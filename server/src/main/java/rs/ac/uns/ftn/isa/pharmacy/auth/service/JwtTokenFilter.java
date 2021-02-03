@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import rs.ac.uns.ftn.isa.pharmacy.auth.HttpRequestUtil;
 import rs.ac.uns.ftn.isa.pharmacy.auth.model.exceptions.AuthorizationException;
-import rs.ac.uns.ftn.isa.pharmacy.auth.model.Credentials;
 import rs.ac.uns.ftn.isa.pharmacy.auth.IdentityProvider;
 import rs.ac.uns.ftn.isa.pharmacy.auth.repository.CredentialsRepository;
 
@@ -49,29 +48,25 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             return;
         }
         String jwtToken = headerAuthSplitTokens[1].trim();
-        IdentityProvider requestToken;
+        IdentityProvider authToken;
 
         try {
-            requestToken = jwtService.decrypt(jwtToken);
+            authToken = jwtService.decrypt(jwtToken);
         }
         catch (AuthorizationException e) {
             chain.doFilter(request, response);
             return;
         }
 
-        // Get user identity and set it on the spring security context
-        Credentials userDetails = credentialsRepository
-                .findById(requestToken.getEmail())
-                .orElse(null);
-
         UsernamePasswordAuthenticationToken authentication =
                 new UsernamePasswordAuthenticationToken(
-                        userDetails,
+                        authToken,
                         null,
-                        userDetails == null ? List.of() : userDetails.getAuthorities()
+                        authToken == null ? List.of() : authToken.getAuthorities()
                 );
 
-        HttpRequestUtil.addIdentity(request, requestToken);
+        if (authToken != null)
+            HttpRequestUtil.addIdentity(request, authToken);
 
         authentication.setDetails(
                 new WebAuthenticationDetailsSource().buildDetails(request)
