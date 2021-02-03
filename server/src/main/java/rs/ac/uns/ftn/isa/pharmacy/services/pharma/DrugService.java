@@ -1,6 +1,7 @@
 package rs.ac.uns.ftn.isa.pharmacy.services.pharma;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import rs.ac.uns.ftn.isa.pharmacy.domain.pharma.Drug;
 import rs.ac.uns.ftn.isa.pharmacy.domain.pharma.DrugReservation;
 import rs.ac.uns.ftn.isa.pharmacy.domain.pharma.StoredDrug;
@@ -9,10 +10,13 @@ import rs.ac.uns.ftn.isa.pharmacy.dtos.DrugReservationDto;
 import rs.ac.uns.ftn.isa.pharmacy.exceptions.EntityAlreadyExistsException;
 import rs.ac.uns.ftn.isa.pharmacy.exceptions.EntityNotFoundException;
 import rs.ac.uns.ftn.isa.pharmacy.exceptions.UserAccessException;
+import rs.ac.uns.ftn.isa.pharmacy.repository.PatientRepository;
 import rs.ac.uns.ftn.isa.pharmacy.repository.pharma.DrugRepository;
 import rs.ac.uns.ftn.isa.pharmacy.repository.pharma.DrugReservationRepository;
 import rs.ac.uns.ftn.isa.pharmacy.repository.pharma.StoredDrugRepository;
+import rs.ac.uns.ftn.isa.pharmacy.services.notifiers.EmailService;
 
+import javax.mail.Store;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,14 +26,20 @@ public class DrugService {
     private final DrugRepository drugRepository;
     private final StoredDrugRepository storedDrugRepository;
     private final DrugReservationRepository drugReservationRepository;
+    private final PatientRepository patientRepository;
+    private final EmailService emailService;
 
     public DrugService(DrugRepository drugRepository,
                        StoredDrugRepository storedDrugRepository,
-                       DrugReservationRepository drugReservationRepository
+                       DrugReservationRepository drugReservationRepository,
+                       PatientRepository patientRepository,
+                       EmailService emailService
     ) {
         this.drugRepository = drugRepository;
         this.storedDrugRepository = storedDrugRepository;
         this.drugReservationRepository = drugReservationRepository;
+        this.patientRepository = patientRepository;
+        this.emailService = emailService;
     }
 
     public List<Drug> findAll() {
@@ -37,8 +47,9 @@ public class DrugService {
     }
 
     public Drug findById(Long id) {
-        return drugRepository.findById(id)
+        Drug drug = drugRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(Drug.class.getSimpleName(), id));
+        return drug;
     }
 
     public Drug create(Drug drug) {
@@ -66,16 +77,29 @@ public class DrugService {
     }
 
     public void reserve(DrugReservation drugReservation, long patientId) {
-        var patient = new Patient();
-        patient.setId(patientId);
+        var patient = patientRepository.findById(patientId)
+                .orElseThrow(() -> new EntityNotFoundException(Patient.class.getSimpleName(), patientId));
+        var storedDrug = storedDrugRepository.findById(drugReservation.getStoredDrug().getId())
+                .orElseThrow(() -> new EntityNotFoundException(
+                        StoredDrug.class.getSimpleName(),
+                        drugReservation.getStoredDrug().getId())
+                );
         drugReservation.setPatient(patient);
+        drugReservation.setStoredDrug(storedDrug);
         updateStoredDrugQuantity(drugReservation.getStoredDrug().getId(), -drugReservation.getQuantity());
         try {
-            drugReservationRepository.save(drugReservation);
+            DrugReservation reservation = drugReservationRepository.save(drugReservation);
+            sendEmail(reservation.getId());
         } catch (Exception e) {
             updateStoredDrugQuantity(drugReservation.getStoredDrug().getId(), drugReservation.getQuantity());
             throw e;
         }
+    }
+
+    private void sendEmail(long drugReservationId) {
+        DrugReservation reservation = drugReservationRepository.findById(drugReservationId)
+                .orElseThrow(() -> new EntityNotFoundException(Drug.class.getSimpleName(), drugReservationId));;
+        emailService.sendDrugReservedMessage(reservation);
     }
 
     public void cancelReservation(long drugReservationId, long patientId) {
