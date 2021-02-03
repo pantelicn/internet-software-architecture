@@ -10,7 +10,7 @@ import rs.ac.uns.ftn.isa.pharmacy.dtos.DrugReservationDto;
 import rs.ac.uns.ftn.isa.pharmacy.exceptions.EntityAlreadyExistsException;
 import rs.ac.uns.ftn.isa.pharmacy.exceptions.EntityNotFoundException;
 import rs.ac.uns.ftn.isa.pharmacy.exceptions.UserAccessException;
-import rs.ac.uns.ftn.isa.pharmacy.repository.PatientRepository;
+import rs.ac.uns.ftn.isa.pharmacy.repository.patients.PatientRepository;
 import rs.ac.uns.ftn.isa.pharmacy.repository.pharma.DrugRepository;
 import rs.ac.uns.ftn.isa.pharmacy.repository.pharma.DrugReservationRepository;
 import rs.ac.uns.ftn.isa.pharmacy.repository.pharma.StoredDrugRepository;
