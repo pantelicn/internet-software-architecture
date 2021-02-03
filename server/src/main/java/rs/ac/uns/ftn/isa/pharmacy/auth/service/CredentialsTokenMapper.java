@@ -15,8 +15,8 @@ public class CredentialsTokenMapper {
     public AuthToken createAuthToken(Credentials credentials) {
         AuthToken token = new AuthToken();
         token.setEmail(credentials.getEmail());
-        token.setRole("admin");
         token.setUserId(credentials.getPerson().getId());
+        token.setRole(credentials.getRole());
         return token;
     }
 

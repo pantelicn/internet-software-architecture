@@ -1,5 +1,7 @@
 package rs.ac.uns.ftn.isa.pharmacy.domain.locale;
 
+import rs.ac.uns.ftn.isa.pharmacy.domain.supply.exceptions.InvalidEntityException;
+
 import javax.persistence.*;
 
 @Entity
@@ -10,6 +12,11 @@ public class Country {
     private long id;
     private String name;
     private String code;
+
+    public void validate() throws InvalidEntityException {
+        if (name == null) throw new InvalidEntityException("Country name");
+        if (code == null) throw new InvalidEntityException("Country code");
+    }
 
     public long getId() {
         return id;

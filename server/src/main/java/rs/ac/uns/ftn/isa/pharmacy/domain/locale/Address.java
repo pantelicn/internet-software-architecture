@@ -1,5 +1,7 @@
 package rs.ac.uns.ftn.isa.pharmacy.domain.locale;
 
+import rs.ac.uns.ftn.isa.pharmacy.domain.supply.exceptions.InvalidEntityException;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -15,6 +17,11 @@ public class Address {
     private String streetName;
     private double latitude;
     private double longitude;
+
+    public void validate() throws InvalidEntityException {
+        if (streetName == null) throw new InvalidEntityException("Address street name");
+        city.validate();
+    }
 
     public long getId() {
         return id;

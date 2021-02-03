@@ -1,6 +1,6 @@
 package rs.ac.uns.ftn.isa.pharmacy.domain.users.admin;
 
-import rs.ac.uns.ftn.isa.pharmacy.domain.users.user.Person;
+import rs.ac.uns.ftn.isa.pharmacy.domain.person.Person;
 
 import javax.persistence.*;
 
