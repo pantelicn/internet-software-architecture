@@ -16,9 +16,7 @@ import rs.ac.uns.ftn.isa.pharmacy.repository.pharma.DrugReservationRepository;
 import rs.ac.uns.ftn.isa.pharmacy.repository.pharma.StoredDrugRepository;
 import rs.ac.uns.ftn.isa.pharmacy.services.notifiers.EmailService;
 
-import javax.mail.Store;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class DrugService {
@@ -47,14 +45,12 @@ public class DrugService {
     }
 
     public Drug findById(Long id) {
-        Drug drug = drugRepository.findById(id)
+        return drugRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(Drug.class.getSimpleName(), id));
-        return drug;
     }
 
     public Drug create(Drug drug) {
-        Optional<Drug> existingEntry = drugRepository.findById(drug.getId());
-        if (existingEntry.isPresent()) {
+        if (drugRepository.existsById(drug.getId())) {
             throw new EntityAlreadyExistsException("Drug", drug.getId());
         }
         return drugRepository.save(drug);
