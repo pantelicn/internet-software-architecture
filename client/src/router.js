@@ -4,6 +4,8 @@ import ExaminationReport from './views/dermatologist/report/ExaminationReport.vu
 import CounselingReport from './views/pharmacist/report/CounselingReport.vue'
 import ScheduleExamination from './views/patient/ScheduleExamination.vue'
 import Appointments from './views/patient/Appointments.vue'
+import ExaminedPatients from './views/dermatologist/patients/ExaminedPatients.vue'
+import CounseledPatients from './views/pharmacist/patients/CounseledPatients.vue'
 
 export const router = new VueRouter({
     mode: 'hash',
@@ -24,12 +26,21 @@ export const router = new VueRouter({
             path: '/examination-report',
             name: 'examination-report',
             component: ExaminationReport
-        }
-        ,
+        },
         {
-            path:'/counseling-report',
+            path: '/counseling-report',
             name: 'counseling-report',
             component: CounselingReport
+        },
+        {
+            path: '/examined-patients',
+            name: 'examined-patients',
+            component: ExaminedPatients
+        },
+        {
+            path: '/counseled-patients',
+            name: 'counseled-patients',
+            component: CounseledPatients
         }
     ]
 })

@@ -44,4 +44,9 @@ public class City {
     public void setCountry(Country country) {
         this.country = country;
     }
+
+    @Override
+    public String toString() {
+        return postalCode + " " + name + ", " + country.toString();
+    }
 }

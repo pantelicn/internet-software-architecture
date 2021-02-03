@@ -89,4 +89,8 @@ public class Term {
             return true;
         else return start.isBefore(this.getStart()) && end.isEqual(this.getEnd());
     }
+
+    public boolean isInPast() {
+        return this.getStart().isBefore(LocalDateTime.now());
+    }
 }

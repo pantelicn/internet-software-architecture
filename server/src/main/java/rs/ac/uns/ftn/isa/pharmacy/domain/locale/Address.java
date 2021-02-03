@@ -54,4 +54,9 @@ public class Address {
     public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
+
+    @Override
+    public String toString() {
+        return streetName + ", " + city.toString();
+    }
 }

@@ -12,8 +12,14 @@ import java.util.List;
 public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
 
     @Query("select a from Appointment a where a.type = 1 and a.patient is null")
-    public List<Appointment> findFreeExaminations();
+    List<Appointment> findFreeExaminations();
 
     @Query("select a from Appointment a where a.patient.id = :patientId")
-    public List<Appointment> findAppointmentsByPatient(@Param("patientId") Long patientId);
+    List<Appointment> findAppointmentsByPatient(@Param("patientId") Long patientId);
+
+    @Query("select a from Appointment a where a.patient.id= :patientId and a.type = 1")
+    List<Appointment> findExaminationsByPatient(@Param("patientId") Long patientId);
+
+    @Query("select a from Appointment a where a.patient.id= :patientId and a.type = 0")
+    List<Appointment> findCounselingsByPatient(@Param("patientId") Long patientId);
 }

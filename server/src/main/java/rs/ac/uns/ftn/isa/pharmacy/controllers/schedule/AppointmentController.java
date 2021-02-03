@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import rs.ac.uns.ftn.isa.pharmacy.domain.schedule.Appointment;
 import rs.ac.uns.ftn.isa.pharmacy.dtos.AppointmentDto;
+import rs.ac.uns.ftn.isa.pharmacy.dtos.AppointmentHistoryEntryDto;
 import rs.ac.uns.ftn.isa.pharmacy.dtos.FreeAppointmentTermDto;
 import rs.ac.uns.ftn.isa.pharmacy.mappers.AppointmentMapper;
 import rs.ac.uns.ftn.isa.pharmacy.mappers.AppointmentTermMapper;
@@ -54,12 +55,26 @@ public class AppointmentController {
                 .map(a -> AppointmentMapper.objectToDto(a))
                 .collect(Collectors.toList());
     }
-
     @GetMapping("/cancel/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void cancelAppointment(@PathVariable long id)
     {
         //TODO - Get patient id from header
         service.cancelPatientAppointment(1, id);
+    }
+    @GetMapping("/examinations/patient-history/{patientId}")
+    public List<AppointmentHistoryEntryDto> getExaminationHistory(@PathVariable long patientId){
+        return service.getPastExaminations(patientId)
+                .stream()
+                .map(AppointmentHistoryEntryDto::new)
+                .collect(Collectors.toList());
+    }
+    @GetMapping("/counselings/patient-history")
+    public List<AppointmentHistoryEntryDto> getCounselingHistory(@RequestParam long patientId,@RequestParam long pharmacistId){
+        //TODO - Get pharmacist id from header
+        return service.getPastCounselingsInPharmacy(patientId,pharmacistId)
+                .stream()
+                .map(AppointmentHistoryEntryDto::new)
+                .collect(Collectors.toList());
     }
 }

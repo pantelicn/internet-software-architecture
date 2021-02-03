@@ -4,6 +4,7 @@ import rs.ac.uns.ftn.isa.pharmacy.auth.model.Credentials;
 import rs.ac.uns.ftn.isa.pharmacy.domain.locale.Address;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -12,11 +13,12 @@ public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+    private String pid;
     private String firstName;
     private String lastName;
     private Gender gender;
     private String phoneNumber;
-    private Date dateOfBirth;
+    private LocalDate dateOfBirth;
     @OneToOne
     private Address address;
     @OneToOne
@@ -29,6 +31,14 @@ public class Person {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getPid() {
+        return pid;
+    }
+
+    public void setPid(String pid) {
+        this.pid = pid;
     }
 
     public String getFirstName() {
@@ -63,11 +73,11 @@ public class Person {
         this.phoneNumber = phoneNumber;
     }
 
-    public Date getDateOfBirth() {
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
