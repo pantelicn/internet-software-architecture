@@ -39,6 +39,9 @@ public class Appointment {
     public Boolean overlaps(Term term){
         return this.term.intersects(term) || this.term.equals(term);
     }
+    public Boolean isReserved(){
+        return this.getPatient() != null;
+    }
 
     public long getId() {
         return id;

@@ -76,6 +76,14 @@ public class Term {
         return !this.getStart().isBefore(LocalDateTime.now().plus(time));
     }
 
+    /**
+     * Specific method used for fetching employees upcoming appontments
+     * @return boolean value indicating whether term is in future or not.
+     */
+    public boolean isUpcoming(){
+        return this.getStart().isAfter(LocalDateTime.now());
+    }
+
     @Override
     public boolean equals(Object obj) {
         Term term = (Term)obj;

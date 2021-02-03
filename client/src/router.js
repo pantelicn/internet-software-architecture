@@ -6,6 +6,11 @@ import ScheduleExamination from './views/patient/ScheduleExamination.vue'
 import Appointments from './views/patient/Appointments.vue'
 import ExaminedPatients from './views/dermatologist/patients/ExaminedPatients.vue'
 import CounseledPatients from './views/pharmacist/patients/CounseledPatients.vue'
+import UpcomingExaminations from './views/dermatologist/examinations/UpcomingExaminations.vue'
+import ExamReportStepOne from './views/dermatologist/report/steps/ExamReportStepOne.vue'
+import ExamReportStepTwo from './views/dermatologist/report/steps/ExamReportStepTwo.vue'
+import ExamReportStepThree from './views/dermatologist/report/steps/ExamReportStepThree.vue'
+import ExamReportStepFour from './views/dermatologist/report/steps/ExamReportStepFour.vue'
 
 export const router = new VueRouter({
     mode: 'hash',
@@ -25,7 +30,30 @@ export const router = new VueRouter({
         {
             path: '/examination-report',
             name: 'examination-report',
-            component: ExaminationReport
+            component: ExaminationReport,
+            children: [
+                {
+                    path: '',
+                    name: 'exam-report-step-one',
+                    component: ExamReportStepOne
+                },
+                {
+                    path: 'examination-info',
+                    name: 'exam-report-step-two',
+                    component: ExamReportStepTwo
+                },
+                {
+                    path: 'drug-prescription',
+                    name: 'exam-report-step-three',
+                    component: ExamReportStepThree
+                },
+                {
+                    path: 'exam-scheduling',
+                    name: 'exam-report-step-four',
+                    component: ExamReportStepFour
+                },
+
+            ]
         },
         {
             path: '/counseling-report',
@@ -41,6 +69,11 @@ export const router = new VueRouter({
             path: '/counseled-patients',
             name: 'counseled-patients',
             component: CounseledPatients
+        },
+        {
+            path: '/upcoming-examinations',
+            name: 'upcoming-examinations',
+            component: UpcomingExaminations
         }
     ]
 })

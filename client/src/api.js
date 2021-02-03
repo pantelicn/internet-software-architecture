@@ -14,10 +14,12 @@ export const api = {
         free: host + appointments + '/free-examinations',
         patient: host + appointments + '/patient',
         cancel: host + appointments + '/cancel',
+        upcoming: host + appointments + '/upcoming/',
         history: {
             examinations: host + appointments + '/examinations/patient-history/',
             counselings: host + appointments + '/counselings/patient-history/'
         }
+        
     },
     drugs: {
         root: host + drugs

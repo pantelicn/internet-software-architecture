@@ -6,6 +6,7 @@ import rs.ac.uns.ftn.isa.pharmacy.domain.schedule.Appointment;
 import rs.ac.uns.ftn.isa.pharmacy.dtos.AppointmentDto;
 import rs.ac.uns.ftn.isa.pharmacy.dtos.AppointmentHistoryEntryDto;
 import rs.ac.uns.ftn.isa.pharmacy.dtos.FreeAppointmentTermDto;
+import rs.ac.uns.ftn.isa.pharmacy.dtos.UpcomingAppointmentEntryDto;
 import rs.ac.uns.ftn.isa.pharmacy.mappers.AppointmentMapper;
 import rs.ac.uns.ftn.isa.pharmacy.mappers.AppointmentTermMapper;
 import rs.ac.uns.ftn.isa.pharmacy.services.schedule.AppointmentService;
@@ -75,6 +76,13 @@ public class AppointmentController {
         return service.getPastCounselingsInPharmacy(patientId,pharmacistId)
                 .stream()
                 .map(AppointmentHistoryEntryDto::new)
+                .collect(Collectors.toList());
+    }
+    @GetMapping("/upcoming/{employeeId}")
+    public List<UpcomingAppointmentEntryDto> getUpcomingAppointments(@PathVariable long employeeId){
+        return service.getUpcomingAppointments(employeeId)
+                .stream()
+                .map(UpcomingAppointmentEntryDto::new)
                 .collect(Collectors.toList());
     }
 }

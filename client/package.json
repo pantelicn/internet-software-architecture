@@ -19,7 +19,8 @@
     "v-calendar": "^2.2.2",
     "vue": "^2.6.11",
     "vue-router": "^3.5.0",
-    "vue-toast-notification": "^0.6.0"
+    "vue-toast-notification": "^0.6.0",
+    "vuex": "^3.6.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

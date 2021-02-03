@@ -4,11 +4,14 @@ import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.isa.pharmacy.domain.schedule.Appointment;
 import rs.ac.uns.ftn.isa.pharmacy.exceptions.AppointmentTimeException;
 import rs.ac.uns.ftn.isa.pharmacy.exceptions.EntityNotFoundException;
+import rs.ac.uns.ftn.isa.pharmacy.exceptions.NoUpcomingAppointmentsException;
 import rs.ac.uns.ftn.isa.pharmacy.exceptions.PatientAppointmentException;
 import rs.ac.uns.ftn.isa.pharmacy.repository.employee.EmployeeRepository;
 import rs.ac.uns.ftn.isa.pharmacy.repository.schedule.AppointmentRepository;
 
 import javax.transaction.Transactional;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -69,7 +72,7 @@ public class AppointmentService {
     public List<Appointment> getPastExaminations(long patientId){
         return appointmentRepository.findExaminationsByPatient(patientId)
                 .stream()
-                .filter(e->e.getTerm().isInPast())
+                .filter(e -> e.getTerm().isInPast())
                 .collect(Collectors.toList());
     }
     public List<Appointment> getPastCounselingsInPharmacy(long patientId,long pharmacistId){
@@ -77,8 +80,22 @@ public class AppointmentService {
         return appointmentRepository
                 .findCounselingsByPatient(patientId)
                 .stream()
-                .filter(a->a.getShift().getPharmacy().getId() == pharmacyId)
+                .filter(a -> a.getShift().getPharmacy().getId() == pharmacyId)
                 .collect(Collectors.toList());
+    }
+    public List<Appointment> getUpcomingAppointments(long employeeId) throws NoUpcomingAppointmentsException{
+        var upcomingAppointments= appointmentRepository
+                                                        .findAppointmentsByEmployee(employeeId)
+                                                        .stream()
+                                                        .filter(a -> a.getTerm().isUpcoming() && a.isReserved())
+                                                        .collect(Collectors.toList());
+        validateUpcomingAppointments(upcomingAppointments);
+        return upcomingAppointments;
+    }
+
+    private void validateUpcomingAppointments(List<Appointment> upcomingAppointments) throws NoUpcomingAppointmentsException {
+        if(upcomingAppointments.size() == 0)
+            throw new NoUpcomingAppointmentsException();
     }
 
     private long getPharmacyId(long pharmacistId) {
