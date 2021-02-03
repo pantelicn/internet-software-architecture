@@ -22,7 +22,7 @@ export const api = {
     drugs: {
         root: host + drugs,
         search: host + drugs + '/search',
-        reserve: host + drugs + '/reserve'
+        reservations: host + drugs + '/reservations'
     },
     employees: {
         dermatologists: {

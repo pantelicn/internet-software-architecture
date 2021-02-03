@@ -6,6 +6,7 @@ import ScheduleExamination from './views/patient/ScheduleExamination.vue'
 import ExaminedPatients from './views/dermatologist/patients/ExaminedPatients.vue'
 import CounseledPatients from './views/pharmacist/patients/CounseledPatients.vue'
 import Drugs from './views/patient/Drugs.vue'
+import Appointments from './views/patient/Appointments.vue'
 
 export const router = new VueRouter({
     mode: 'hash',

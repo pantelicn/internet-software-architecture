@@ -1,12 +1,12 @@
 package rs.ac.uns.ftn.isa.pharmacy.services.pharma;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import rs.ac.uns.ftn.isa.pharmacy.domain.pharma.Drug;
 import rs.ac.uns.ftn.isa.pharmacy.domain.pharma.DrugReservation;
 import rs.ac.uns.ftn.isa.pharmacy.domain.pharma.StoredDrug;
 import rs.ac.uns.ftn.isa.pharmacy.domain.users.user.Patient;
 import rs.ac.uns.ftn.isa.pharmacy.dtos.DrugReservationDto;
+import rs.ac.uns.ftn.isa.pharmacy.exceptions.DateException;
 import rs.ac.uns.ftn.isa.pharmacy.exceptions.EntityAlreadyExistsException;
 import rs.ac.uns.ftn.isa.pharmacy.exceptions.EntityNotFoundException;
 import rs.ac.uns.ftn.isa.pharmacy.exceptions.UserAccessException;
@@ -16,6 +16,7 @@ import rs.ac.uns.ftn.isa.pharmacy.repository.pharma.DrugReservationRepository;
 import rs.ac.uns.ftn.isa.pharmacy.repository.pharma.StoredDrugRepository;
 import rs.ac.uns.ftn.isa.pharmacy.services.notifiers.EmailService;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -80,22 +81,19 @@ public class DrugService {
                         StoredDrug.class.getSimpleName(),
                         drugReservation.getStoredDrug().getId())
                 );
+        if (drugReservation.isInPast()) {
+            throw new DateException();
+        }
         drugReservation.setPatient(patient);
         drugReservation.setStoredDrug(storedDrug);
         updateStoredDrugQuantity(drugReservation.getStoredDrug().getId(), -drugReservation.getQuantity());
         try {
             DrugReservation reservation = drugReservationRepository.save(drugReservation);
-            sendEmail(reservation.getId());
+            emailService.sendDrugReservedMessage(reservation);
         } catch (Exception e) {
             updateStoredDrugQuantity(drugReservation.getStoredDrug().getId(), drugReservation.getQuantity());
             throw e;
         }
-    }
-
-    private void sendEmail(long drugReservationId) {
-        DrugReservation reservation = drugReservationRepository.findById(drugReservationId)
-                .orElseThrow(() -> new EntityNotFoundException(Drug.class.getSimpleName(), drugReservationId));;
-        emailService.sendDrugReservedMessage(reservation);
     }
 
     public void cancelReservation(long drugReservationId, long patientId) {
@@ -103,6 +101,9 @@ public class DrugService {
                 .orElseThrow(() -> new EntityNotFoundException(DrugReservation.class.getSimpleName(), drugReservationId));
         if (drugReservation.getPatient().getId() != patientId) {
             throw new UserAccessException();
+        }
+        if (drugReservation.isInPast(1)) {
+            throw new DateException("Reservation cannot be canceled.");
         }
         updateStoredDrugQuantity(drugReservation.getStoredDrug().getId(), drugReservation.getQuantity());
         try {
@@ -118,5 +119,9 @@ public class DrugService {
                 .orElseThrow(() -> new EntityNotFoundException(StoredDrug.class.getSimpleName(), storedDrugId));
         storedDrug.setQuantity(storedDrug.getQuantity() + quantity);
         storedDrugRepository.save(storedDrug);
+    }
+
+    public List<DrugReservation> findPatientReservations(long patientId) {
+        return drugReservationRepository.findAllByPatientId(patientId);
     }
 }
