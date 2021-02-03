@@ -24,14 +24,28 @@ public class OfferController {
         this.offerService = offerService;
     }
 
-    @GetMapping("supplier/{supplierId}")
-    public ResponseEntity<List<Offer>> getBySupplier(@PathVariable long supplierId) {
-        return ResponseEntity.ok(offerService.getBySupplierId(supplierId));
+    @GetMapping
+    @Secured(Role.SUPPLIER)
+    public ResponseEntity<List<Offer>> getBySupplier(HttpServletRequest request) {
+        var identityProvider = HttpRequestUtil.getIdentity(request);
+        return ResponseEntity.ok(offerService.getBySupplierId(identityProvider.getUserId()));
     }
 
     @GetMapping("order/{orderId}")
+    @Secured(Role.PH_ADMIN)
     public ResponseEntity<List<Offer>> getByOrder(@PathVariable long orderId) {
+        // TODO Who can see all offers for one PO? PH_ADMIN or someone else?
+        // Also, should we block other PH_ADMINs from viewing each other's offers?
         return ResponseEntity.ok(offerService.getByPurchaseOrderId(orderId));
+    }
+
+    @GetMapping("status/{status}")
+    @Secured(Role.SUPPLIER)
+    public ResponseEntity<List<Offer>> getByStatus(
+            HttpServletRequest request, @PathVariable Offer.Status status
+    ){
+        var identityProvider = HttpRequestUtil.getIdentity(request);
+        return ResponseEntity.ok(offerService.getByStatus(status, identityProvider.getUserId()));
     }
 
     @PostMapping
@@ -60,15 +74,5 @@ public class OfferController {
         catch (MessageException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
-    }
-
-    @GetMapping("status/{status}")
-    @Secured(Role.SUPPLIER)
-    public ResponseEntity<List<Offer>> getByStatus(
-            HttpServletRequest request, @PathVariable Offer.Status status
-    ){
-        var identityProvider = HttpRequestUtil.getIdentity(request);
-        System.out.println(identityProvider.getUserId());
-        return ResponseEntity.ok(offerService.getByStatus(status, identityProvider.getUserId()));
     }
 }
