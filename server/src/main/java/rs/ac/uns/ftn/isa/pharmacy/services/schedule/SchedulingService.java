@@ -10,7 +10,7 @@ import rs.ac.uns.ftn.isa.pharmacy.exceptions.AppointmentTimeException;
 import rs.ac.uns.ftn.isa.pharmacy.exceptions.EmployeeOccupiedException;
 import rs.ac.uns.ftn.isa.pharmacy.exceptions.EmployeeShiftException;
 import rs.ac.uns.ftn.isa.pharmacy.exceptions.PatientOccupiedException;
-import rs.ac.uns.ftn.isa.pharmacy.repository.PatientRepository;
+import rs.ac.uns.ftn.isa.pharmacy.repository.patients.PatientRepository;
 import rs.ac.uns.ftn.isa.pharmacy.repository.employee.EmployeeRepository;
 import rs.ac.uns.ftn.isa.pharmacy.repository.schedule.AppointmentRepository;
 import rs.ac.uns.ftn.isa.pharmacy.services.notifiers.EmailService;

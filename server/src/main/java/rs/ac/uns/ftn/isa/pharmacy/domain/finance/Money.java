@@ -16,4 +16,5 @@ public class Money {
     public void setAmount(float amount) {
         this.amount = amount;
     }
+
 }

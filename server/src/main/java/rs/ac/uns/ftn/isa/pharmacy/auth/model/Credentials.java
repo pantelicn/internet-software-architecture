@@ -17,6 +17,7 @@ public class Credentials implements UserDetails {
     private String email;
     @Column(unique = true)
     private UUID uid;
+    private String username;
     private String password;
     private String role;
 
@@ -31,7 +32,7 @@ public class Credentials implements UserDetails {
 
     @Override
     public String getUsername() {
-        return email;
+        return username;
     }
 
     @Override

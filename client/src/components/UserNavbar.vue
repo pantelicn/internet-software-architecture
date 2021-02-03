@@ -25,6 +25,7 @@
                         <router-link class="dropdown-item" to="/">Pharmacist counseling</router-link>
                     </div>
                 </li>
+                <router-link to="/patient-drugs" class="nav-link">Drug reservation</router-link>
             </ul>
             <router-link class="nav-item" to="/patient-appointments">Appointments</router-link>
             <div class="nav-item dropdown">
