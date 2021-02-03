@@ -40,9 +40,9 @@ public class OfferService {
     {
         Offer offer = offerMapper.dtoToObject(dto);
         offer.validateBeforeChange();
-        if (offerExists(offer.getPurchaseOrder().getId(), offer.getSupplier().getId()))
+        if (offerExists(offer.getPurchaseOrder().getId(), offer.getSupplier().getPersonId()))
             throw new EntityExistsException("Offer");
-        if (isSupplierStockedUp(offer.getPurchaseOrder().getId(), offer.getSupplier().getId())) {
+        if (isSupplierStockedUp(offer.getPurchaseOrder().getId(), offer.getSupplier().getPersonId())) {
             offer.setStatus(Offer.Status.PENDING);
             offerRepository.save(offer);
         }

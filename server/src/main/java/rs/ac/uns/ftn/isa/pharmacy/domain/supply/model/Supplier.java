@@ -1,26 +1,37 @@
 package rs.ac.uns.ftn.isa.pharmacy.domain.supply.model;
 
+import rs.ac.uns.ftn.isa.pharmacy.domain.users.user.Person;
+
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "supplier")
 public class Supplier {
-    // TODO Supplier must be logged in? Therefore must have an ID token with Http to identify him (not email but number)
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private long personId;
+    @JoinColumn(name = "person_id")
+    @OneToOne()
+    private Person person;
     @OneToMany
     private List<SupplierStock> drugsInStock;
     @OneToMany
     private List<Offer> offers;
 
-    public long getId() {
-        return id;
+    public long getPersonId() {
+        return personId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setPersonId(long personId) {
+        this.personId = personId;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
     public List<SupplierStock> getDrugsInStock() {
