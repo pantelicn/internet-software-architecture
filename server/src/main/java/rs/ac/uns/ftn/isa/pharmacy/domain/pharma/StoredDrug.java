@@ -1,9 +1,9 @@
 package rs.ac.uns.ftn.isa.pharmacy.domain.pharma;
 
 import rs.ac.uns.ftn.isa.pharmacy.domain.finance.Price;
+import rs.ac.uns.ftn.isa.pharmacy.exceptions.QuantityException;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Table(name = "stored_drugs")
@@ -32,6 +32,9 @@ public class StoredDrug {
     }
 
     public void setQuantity(long quantity) {
+        if (quantity < 0) {
+            throw new QuantityException("There is not enough of the stored drug.");
+        }
         this.quantity = quantity;
     }
 

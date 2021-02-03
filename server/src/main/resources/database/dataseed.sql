@@ -26,6 +26,8 @@ values(8,33.33,22.21,"Janka Cmelika 10",1);
 
 insert into isa.pharmacies (id, description, name, rating, address_id)
 values (1, "Tiny Pill", "Tiny Pill", 5, 1);
+insert into isa.pharmacies (id, description, name, rating, address_id)
+values (2, "Zegin", "Zegin", 5, 2);
 
 
 insert into isa.persons (id, pid, date_of_birth, first_name, gender, last_name, phone_number, address_id)
@@ -132,6 +134,7 @@ insert into isa.appointments (id, amount, duration, start, type, patient_id, shi
 values (11, 1000, 1800000000000, "2021-02-15 14:00:00", 1, null, 14);
 insert into isa.appointments (id, amount, duration, start, type, patient_id, shift_id)
 values (12, 1000, 1800000000000, "2021-02-19 13:00:00", 1, null, 16);
+
 insert into isa.appointments (id, amount, duration, start, type, patient_id, shift_id)
 values (13, 1000, 1800000000000, "2021-02-19 14:00:00", 1, null, 16);
 insert into isa.appointments (id, amount, duration, start, type, patient_id, shift_id)
@@ -164,21 +167,16 @@ values (24, "2021-02-27 13:00:00", "2021-02-27 20:00:00", 1,4);
 insert into isa.shifts (id, start, end, pharmacy_id,employee_id)
 values (25, "2021-02-28 13:00:00", "2021-02-28 20:00:00", 1,4);
 
-
-
-
-
-
 insert into isa.drugs (id, additional_notes, drug_type, intake_type, manufacturer, name, requires_prescription)
 values (1, "Ibuprofen", 0, 0, "Bayer", "Brufen", false);
-
 insert into isa.drugs (id, additional_notes, drug_type, intake_type, manufacturer, name, requires_prescription)
 values (2, "", 0, 0, "Bayer", "Strepsils", false);
 
 insert into isa.stored_drugs (id, amount, valid_until, quantity, drug_id, pharmacy_id)
 values (1, 200.5, "2022-03-03 00:00:00", 5, 1, 1);
-
 insert into isa.stored_drugs (id, amount, valid_until, quantity, drug_id, pharmacy_id)
 values (2, 300.0, "2022-03-03 00:00:00", 20, 2, 1);
+insert into isa.stored_drugs (id, amount, valid_until, quantity, drug_id, pharmacy_id)
+values (3, 210, "2022-03-03 00:00:00", 30, 1, 2);
 
 update isa.appointments set patient_id=null where id>1;

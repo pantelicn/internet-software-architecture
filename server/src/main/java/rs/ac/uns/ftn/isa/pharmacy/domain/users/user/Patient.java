@@ -1,5 +1,6 @@
 package rs.ac.uns.ftn.isa.pharmacy.domain.users.user;
 
+import rs.ac.uns.ftn.isa.pharmacy.domain.person.Person;
 import rs.ac.uns.ftn.isa.pharmacy.domain.schedule.Appointment;
 
 import javax.persistence.*;

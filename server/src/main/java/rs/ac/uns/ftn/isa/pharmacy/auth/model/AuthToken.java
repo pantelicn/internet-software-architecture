@@ -1,12 +1,29 @@
 package rs.ac.uns.ftn.isa.pharmacy.auth.model;
 
 
-import java.util.UUID;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import rs.ac.uns.ftn.isa.pharmacy.auth.IdentityProvider;
+
+import java.util.Collection;
+import java.util.List;
 
 public class AuthToken implements IdentityProvider {
     private String email;
     private long userId;
     private String role;
+
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(role));
+    }
+
+    @Override
+    public long getUserId() {
+        return userId;
+    }
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
 
     public String getEmail() {
         return email;
@@ -15,16 +32,10 @@ public class AuthToken implements IdentityProvider {
         this.email = email;
     }
 
-    public long getUserId() {
-        return userId;
-    }
-    public void setUserId(long userId) {
-        this.userId = userId;
-    }
-
     public String getRole() {
         return role;
     }
+
     public void setRole(String role) {
         this.role = role;
     }

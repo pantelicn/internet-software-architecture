@@ -5,13 +5,10 @@ import rs.ac.uns.ftn.isa.pharmacy.domain.schedule.Appointment;
 import rs.ac.uns.ftn.isa.pharmacy.exceptions.AppointmentTimeException;
 import rs.ac.uns.ftn.isa.pharmacy.exceptions.EntityNotFoundException;
 import rs.ac.uns.ftn.isa.pharmacy.exceptions.NoUpcomingAppointmentsException;
-import rs.ac.uns.ftn.isa.pharmacy.exceptions.PatientAppointmentException;
 import rs.ac.uns.ftn.isa.pharmacy.repository.employee.EmployeeRepository;
+import rs.ac.uns.ftn.isa.pharmacy.exceptions.UserAccessException;
 import rs.ac.uns.ftn.isa.pharmacy.repository.schedule.AppointmentRepository;
-
 import javax.transaction.Transactional;
-import java.time.Duration;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -62,7 +59,7 @@ public class AppointmentService {
     public void cancelPatientAppointment(long patientId, long appointmentId) {
         Appointment appointment = findById(appointmentId);
         if (appointment.getPatient().getId() != patientId) {
-            throw new PatientAppointmentException();
+            throw new UserAccessException();
         } else if (!appointment.getTerm().isInFuture()) {
             throw new AppointmentTimeException();
         }

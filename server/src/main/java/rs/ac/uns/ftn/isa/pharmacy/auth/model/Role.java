@@ -6,4 +6,5 @@ public class Role {
     public static final String PATIENT = "ROLE_PATIENT";
     public static final String PHARMACIST = "ROLE_PHARMACIST";
     public static final String DERMATOLOGIST = "ROLE_DERMATOLOGIST";
+    public static final String SUPPLIER = "ROLE_SUPPLIER";
 }

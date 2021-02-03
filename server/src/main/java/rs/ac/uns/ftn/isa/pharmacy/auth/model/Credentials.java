@@ -3,7 +3,7 @@ package rs.ac.uns.ftn.isa.pharmacy.auth.model;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import rs.ac.uns.ftn.isa.pharmacy.domain.users.user.Person;
+import rs.ac.uns.ftn.isa.pharmacy.domain.person.Person;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -20,20 +20,14 @@ public class Credentials implements UserDetails {
     private String username;
     private String password;
     private String role;
-
     @OneToOne
     private Person person;
     private boolean isActivated;
-
+    private boolean hasLoggedInBefore;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role));
-    }
-
-    @Override
-    public String getPassword() {
-        return this.password;
     }
 
     @Override
@@ -58,17 +52,34 @@ public class Credentials implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return this.isActivated;
+        return true;
     }
 
+    // Get set
 
-    // Getters setters
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public UUID getUid() {
+        return uid;
+    }
+
+    public void setUid(UUID uid) {
+        this.uid = uid;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
     }
 
     public void setPassword(String password) {
@@ -83,6 +94,14 @@ public class Credentials implements UserDetails {
         this.role = role;
     }
 
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
     public boolean isActivated() {
         return isActivated;
     }
@@ -91,18 +110,11 @@ public class Credentials implements UserDetails {
         isActivated = activated;
     }
 
-    public UUID getUid() {
-        return uid;
+    public boolean hasLoggedInBefore() {
+        return hasLoggedInBefore;
     }
 
-    public void setUid(UUID uid) {
-        this.uid = uid;
-    }
-    public Person getPerson() {
-        return person;
-    }
-
-    public void setPerson(Person person) {
-        this.person = person;
+    public void setHasLoggedInBefore(boolean hasLoggedInBefore) {
+        this.hasLoggedInBefore = hasLoggedInBefore;
     }
 }

@@ -1,11 +1,11 @@
-package rs.ac.uns.ftn.isa.pharmacy.domain.users.user;
+package rs.ac.uns.ftn.isa.pharmacy.domain.person;
 
 import rs.ac.uns.ftn.isa.pharmacy.auth.model.Credentials;
 import rs.ac.uns.ftn.isa.pharmacy.domain.locale.Address;
+import rs.ac.uns.ftn.isa.pharmacy.domain.users.user.Gender;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
 @Table(name="persons")

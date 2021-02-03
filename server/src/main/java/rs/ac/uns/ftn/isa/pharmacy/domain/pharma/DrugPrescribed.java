@@ -6,6 +6,7 @@ import javax.persistence.*;
 @Table(name = "drug_prescribed")
 public class DrugPrescribed {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     @OneToOne
     private Prescription prescription;

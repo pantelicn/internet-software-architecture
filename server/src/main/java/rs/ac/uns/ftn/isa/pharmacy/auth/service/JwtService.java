@@ -9,7 +9,7 @@ import com.google.gson.Gson;
 import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.isa.pharmacy.auth.model.AuthToken;
 import rs.ac.uns.ftn.isa.pharmacy.auth.model.exceptions.AuthorizationException;
-import rs.ac.uns.ftn.isa.pharmacy.auth.model.IdentityProvider;
+import rs.ac.uns.ftn.isa.pharmacy.auth.IdentityProvider;
 
 
 @SuppressWarnings("all")

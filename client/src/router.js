@@ -3,7 +3,6 @@ import HelloWorld from './components/HelloWorld.vue'
 import ExaminationReport from './views/dermatologist/report/ExaminationReport.vue'
 import CounselingReport from './views/pharmacist/report/CounselingReport.vue'
 import ScheduleExamination from './views/patient/ScheduleExamination.vue'
-import Appointments from './views/patient/Appointments.vue'
 import ExaminedPatients from './views/dermatologist/patients/ExaminedPatients.vue'
 import CounseledPatients from './views/pharmacist/patients/CounseledPatients.vue'
 import UpcomingExaminations from './views/dermatologist/examinations/UpcomingExaminations.vue'
@@ -11,6 +10,7 @@ import ExamReportStepOne from './views/dermatologist/report/steps/ExamReportStep
 import ExamReportStepTwo from './views/dermatologist/report/steps/ExamReportStepTwo.vue'
 import ExamReportStepThree from './views/dermatologist/report/steps/ExamReportStepThree.vue'
 import ExamReportStepFour from './views/dermatologist/report/steps/ExamReportStepFour.vue'
+import Drugs from './views/patient/Drugs.vue'
 
 export const router = new VueRouter({
     mode: 'hash',
@@ -74,6 +74,10 @@ export const router = new VueRouter({
             path: '/upcoming-examinations',
             name: 'upcoming-examinations',
             component: UpcomingExaminations
+		},
+		{
+            path: '/patient-drugs',
+            component: Drugs
         }
     ]
 })
