@@ -1,12 +1,17 @@
 package rs.ac.uns.ftn.isa.pharmacy.auth.model;
 
 
-import java.util.UUID;
+import rs.ac.uns.ftn.isa.pharmacy.auth.IdentityProvider;
 
 public class AuthToken implements IdentityProvider {
     private String email;
     private long userId;
     private String role;
+
+    @Override
+    public long getId() {
+        return userId;
+    }
 
     public String getEmail() {
         return email;

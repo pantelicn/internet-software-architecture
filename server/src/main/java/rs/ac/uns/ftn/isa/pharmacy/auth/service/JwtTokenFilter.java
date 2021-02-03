@@ -9,7 +9,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import rs.ac.uns.ftn.isa.pharmacy.auth.HttpRequestUtil;
 import rs.ac.uns.ftn.isa.pharmacy.auth.model.exceptions.AuthorizationException;
 import rs.ac.uns.ftn.isa.pharmacy.auth.model.Credentials;
-import rs.ac.uns.ftn.isa.pharmacy.auth.model.IdentityProvider;
+import rs.ac.uns.ftn.isa.pharmacy.auth.IdentityProvider;
 import rs.ac.uns.ftn.isa.pharmacy.auth.repository.CredentialsRepository;
 
 import javax.servlet.FilterChain;
@@ -71,7 +71,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                         userDetails == null ? List.of() : userDetails.getAuthorities()
                 );
 
-        HttpRequestUtil.addIdentityClaim(request, requestToken.getEmail());
+        HttpRequestUtil.addIdentity(request, requestToken);
 
         authentication.setDetails(
                 new WebAuthenticationDetailsSource().buildDetails(request)

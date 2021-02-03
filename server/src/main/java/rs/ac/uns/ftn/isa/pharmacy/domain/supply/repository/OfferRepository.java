@@ -11,13 +11,16 @@ import java.util.List;
 public interface OfferRepository extends JpaRepository<Offer, Long> {
 
     @Query(value = "select * from offer where supplier_id = ?1", nativeQuery = true)
-    List<Offer> getBySupplierId(long supplierId);
+    List<Offer> getBySupplier(long supplierId);
 
     @Query(value = "select * from offer where purchase_order_id = ?1", nativeQuery = true)
-    List<Offer> getByPurchaseOrderId(long purchaseOrderId);
+    List<Offer> getByPurchaseOrder(long purchaseOrderId);
 
     @Query(value = "select * from offer where purchase_order_id = ?1 and supplier_id = ?2 limit 1", nativeQuery = true)
-    Offer findByPurchaseOrderAndSupplier(long purchaseOrderId, long supplierId);
+    Offer getByPurchaseOrderAndSupplier(long purchaseOrderId, long supplierId);
+
+    @Query(value = "select o from Offer o where o.status = ?1 and o.supplier.id = ?2")
+    List<Offer> getByStatusAndSupplier(Offer.Status status, long supplierId);
 
 
     // JPQL:

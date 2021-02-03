@@ -60,12 +60,16 @@ public class OfferService {
         offerRepository.save(offer);
     }
 
+    public List<Offer> getByStatus(Offer.Status status, long supplierId) {
+        return offerRepository.getByStatusAndSupplier(status, supplierId);
+    }
+
     private boolean offerExists(long purchaseOrderId, long supplierId) {
         return getOffer(purchaseOrderId, supplierId) != null;
     }
 
     private Offer getOffer(long purchaseOrderId, long supplierId) {
-        return offerRepository.findByPurchaseOrderAndSupplier(purchaseOrderId, supplierId);
+        return offerRepository.getByPurchaseOrderAndSupplier(purchaseOrderId, supplierId);
     }
 
     private boolean isSupplierStockedUp(long purchaseOrderId, long supplierId) {
@@ -82,10 +86,10 @@ public class OfferService {
     }
 
     public List<Offer> getBySupplierId(long supplierId) {
-        return offerRepository.getBySupplierId(supplierId);
+        return offerRepository.getBySupplier(supplierId);
     }
 
     public List<Offer> getByPurchaseOrderId(long purchaseId) {
-        return offerRepository.getByPurchaseOrderId(purchaseId);
+        return offerRepository.getByPurchaseOrder(purchaseId);
     }
 }

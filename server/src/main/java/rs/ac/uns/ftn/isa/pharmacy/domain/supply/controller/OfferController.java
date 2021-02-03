@@ -3,6 +3,8 @@ package rs.ac.uns.ftn.isa.pharmacy.domain.supply.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import rs.ac.uns.ftn.isa.pharmacy.auth.HttpRequestUtil;
+import rs.ac.uns.ftn.isa.pharmacy.auth.IdentityProvider;
 import rs.ac.uns.ftn.isa.pharmacy.domain.supply.dto.OfferRequestDto;
 import rs.ac.uns.ftn.isa.pharmacy.domain.supply.exceptions.MessageException;
 import rs.ac.uns.ftn.isa.pharmacy.domain.supply.model.Offer;
@@ -33,6 +35,10 @@ public class OfferController {
 
     @PostMapping
     public ResponseEntity<?> create(HttpServletRequest request, @RequestBody OfferRequestDto dto) {
+        IdentityProvider identityProvider = HttpRequestUtil.getIdentity(request);
+        if (identityProvider == null)
+            return ResponseEntity.status(401).build();
+        dto.setSupplierId(identityProvider.getId());
         try {
             offerService.create(dto);
             return ResponseEntity.ok().build();
@@ -44,6 +50,10 @@ public class OfferController {
 
     @PutMapping
     public ResponseEntity<?> update(HttpServletRequest request, @RequestBody OfferRequestDto dto) {
+        IdentityProvider identityProvider = HttpRequestUtil.getIdentity(request);
+        if (identityProvider == null)
+            return ResponseEntity.status(401).build();
+        dto.setSupplierId(identityProvider.getId());
         try {
             offerService.update(dto);
             return ResponseEntity.ok().build();
@@ -53,4 +63,13 @@ public class OfferController {
         }
     }
 
+    @GetMapping("status/{status}")
+    public ResponseEntity<List<Offer>> getByStatus(
+            HttpServletRequest request, @PathVariable Offer.Status status
+    ){
+        IdentityProvider identityProvider = HttpRequestUtil.getIdentity(request);
+        if (identityProvider == null)
+            return ResponseEntity.status(401).build();
+        return ResponseEntity.ok(offerService.getByStatus(status, identityProvider.getId()));
+    }
 }
