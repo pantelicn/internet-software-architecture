@@ -15,6 +15,7 @@ public class Patient {
     private Person person;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "patient")
     private List<Appointment> appointments;
+    private int penalties;
 
     public Boolean canSchedule(Appointment appointment){
         for(var patientAppointment:appointments)
@@ -49,5 +50,17 @@ public class Patient {
 
     public void setAppointments(List<Appointment> appointment) {
         this.appointments = appointment;
+    }
+
+    public int getPenalties() {
+        return penalties;
+    }
+
+    public void setPenalties(int penalties) {
+        this.penalties = penalties;
+    }
+
+    public void penalize() {
+        this.penalties += 1;
     }
 }
