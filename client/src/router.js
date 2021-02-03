@@ -11,6 +11,7 @@ import ExamReportStepTwo from './views/dermatologist/report/steps/ExamReportStep
 import ExamReportStepThree from './views/dermatologist/report/steps/ExamReportStepThree.vue'
 import ExamReportStepFour from './views/dermatologist/report/steps/ExamReportStepFour.vue'
 import Drugs from './views/patient/Drugs.vue'
+import Appointments from './views/patient/Appointments.vue'
 
 export const router = new VueRouter({
     mode: 'hash',

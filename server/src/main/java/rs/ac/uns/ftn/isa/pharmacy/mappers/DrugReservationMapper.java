@@ -14,4 +14,16 @@ public class DrugReservationMapper {
         object.setPickUpBefore(dto.getPickUpBefore());
         return object;
     }
+
+    public static DrugReservationDto objectToDto(DrugReservation reservation) {
+        return new DrugReservationDto(
+                reservation.getId(),
+                reservation.getStoredDrug().getDrug().getName(),
+                reservation.getStoredDrug().getDrug().getManufacturer(),
+                reservation.getStoredDrug().getPharmacy().getName(),
+                reservation.getStoredDrug().getPrice(),
+                reservation.getPickUpBefore(),
+                reservation.getQuantity()
+        );
+    }
 }

@@ -65,4 +65,12 @@ public class DrugReservation {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+
+    public boolean isInPast() {
+        return this.pickUpBefore.isBefore(LocalDate.now());
+    }
+
+    public boolean isInPast(int days) {
+        return this.pickUpBefore.isBefore(LocalDate.now().plusDays(days));
+    }
 }

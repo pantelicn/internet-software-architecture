@@ -63,7 +63,7 @@
             </div>
         </div>
     </div>
-    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+    <div class="btn-group btn-group-toggle my-1" data-toggle="buttons">
         <label class="btn btn-info" active>
             <input type="radio" v-model="view" value="reserve" checked> Reserve drug
         </label>
@@ -96,7 +96,45 @@
         </div>
     </div>
     <div v-else>
-
+        <div v-if="reservations.length > 0" class="d-flex justify-content-center p-1">
+            <table class="border border-success">
+                <tr class="border-bottom border-success">
+                    <th>
+                        Id
+                    </th>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Manufacturer
+                    </th>
+                    <th>
+                        Pharmacy
+                    </th>
+                    <th>
+                        Quantity
+                    </th>
+                    <th>
+                        Total
+                    </th>
+                    <th>
+                        Pick up before
+                    </th>
+                    <th></th>
+                <tr>
+                <tr v-for="reservation in reservations" v-bind:key="reservation.reservationId">
+                    <td>{{reservation.reservationId}}</td>
+                    <td>{{reservation.name}}</td>
+                    <td>{{reservation.manufacturer}}</td>
+                    <td>{{reservation.pharmacyName}}</td>
+                    <td>{{reservation.quantity}}</td>
+                    <td>{{formatPrice(reservation.price.amount.amount * reservation.quantity) + reservation.price.amount.currency}}</td>
+                    <td>{{formatDate(reservation.pickUpBefore)}}</td>
+                    <td><button v-if="isCancelable(reservation.pickUpBefore)" class="btn btn-sm btn-success" data-toggle="modal" @click="cancel(reservation.reservationId)">Cancel</button></td>
+                </tr>
+            </table>
+        </div>
+        <div class="m-4" v-else><b>You have no reservations.</b></div>
     </div>
 </div>
 </template>
@@ -105,6 +143,7 @@
 import { api } from '../../api.js'
 import axios from 'axios'
 import DatePicker from 'v-calendar/lib/components/date-picker.umd'
+import { format, isPast, subDays } from 'date-fns'
 
 export default {
     data: function () {
@@ -117,11 +156,15 @@ export default {
             selectedStoredDrug: null,
             quantity: 1,
             minDate: new Date(),
-            date: new Date()
+            date: new Date(),
+            reservations: []
         }
     },
     components: {
         DatePicker
+    },
+    mounted: function () {
+        this.fetchReservations()
     },
     methods: {
         search: function () {
@@ -147,10 +190,21 @@ export default {
                 quantity: this.quantity,
                 pickUpBefore: this.date
             }
-            axios.post(api.drugs.reserve + '/1', dto)
+            axios.post(api.drugs.reservations + '/1', dto)
             .then(() => {
                 this.$toast.open('Successfully reserved.')
                 this.search()
+                this.fetchReservations()
+            })
+            .catch(error => {
+                this.$toast.error(error.response.data)
+            })
+        },
+        cancel: function (reservationId) {
+            axios.delete(api.drugs.reservations + '/' + reservationId)
+            .then(() => {
+                this.fetchReservations()
+                this.$toast.open("Reservation successfully canceled.")
             })
             .catch(error => {
                 this.$toast.error(error.response.data)
@@ -161,6 +215,18 @@ export default {
         },
         formatPrice: function (price) {
             return parseFloat(price).toFixed(2)
+        },
+        formatDate: function (date) {
+            return format(new Date(date), "dd.MM.yyyy.")
+        },
+        fetchReservations: function () {
+            axios.get(api.drugs.reservations + '/1')
+            .then(response => {
+                this.reservations = response.data
+            })
+        },
+        isCancelable: function (date) {
+            return !isPast(subDays(new Date(date), 1))
         }
     }
 }
