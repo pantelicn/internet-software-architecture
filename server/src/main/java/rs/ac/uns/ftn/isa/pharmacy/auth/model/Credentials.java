@@ -3,7 +3,7 @@ package rs.ac.uns.ftn.isa.pharmacy.auth.model;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import rs.ac.uns.ftn.isa.pharmacy.domain.users.user.Person;
+import rs.ac.uns.ftn.isa.pharmacy.domain.person.Person;
 
 import javax.persistence.*;
 import java.util.Collection;

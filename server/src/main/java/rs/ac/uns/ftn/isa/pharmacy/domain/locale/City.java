@@ -1,5 +1,7 @@
 package rs.ac.uns.ftn.isa.pharmacy.domain.locale;
 
+import rs.ac.uns.ftn.isa.pharmacy.domain.supply.exceptions.InvalidEntityException;
+
 import javax.persistence.*;
 
 @Entity
@@ -12,6 +14,12 @@ public class City {
     private String postalCode;
     @ManyToOne
     private Country country;
+
+    public void validate() throws InvalidEntityException {
+        if (name == null) throw new InvalidEntityException("City name");
+        if (postalCode == null) throw new InvalidEntityException("City postal code");
+        country.validate();
+    }
 
     public long getId() {
         return id;
