@@ -53,9 +53,23 @@ public class PersistenceExceptionHandler {
     }
 
     @ResponseBody
-    @ExceptionHandler(PatientAppointmentException.class)
+    @ExceptionHandler(UserAccessException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    String patientAppointmentHandler(PatientAppointmentException e){
+    String patientAppointmentHandler(UserAccessException e){
+        return e.getMessage();
+    }
+
+    @ResponseBody
+    @ExceptionHandler(QuantityException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    String storedDrugQuantityHandler(QuantityException e){
+        return e.getMessage();
+    }
+
+    @ResponseBody
+    @ExceptionHandler(DateException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    String dateHandler(DateException e){
         return e.getMessage();
     }
 }

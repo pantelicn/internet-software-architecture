@@ -20,7 +20,9 @@ export const api = {
         }
     },
     drugs: {
-        root: host + drugs
+        root: host + drugs,
+        search: host + drugs + '/search',
+        reserve: host + drugs + '/reserve'
     },
     employees: {
         dermatologists: {

@@ -5,9 +5,14 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import rs.ac.uns.ftn.isa.pharmacy.auth.model.Role;
 import rs.ac.uns.ftn.isa.pharmacy.domain.pharma.Drug;
+import rs.ac.uns.ftn.isa.pharmacy.dtos.DrugDto;
+import rs.ac.uns.ftn.isa.pharmacy.dtos.DrugReservationDto;
+import rs.ac.uns.ftn.isa.pharmacy.mappers.DrugReservationMapper;
+import rs.ac.uns.ftn.isa.pharmacy.mappers.StoredDrugMapper;
 import rs.ac.uns.ftn.isa.pharmacy.services.pharma.DrugService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("api/drugs")
@@ -29,6 +34,13 @@ public class DrugController {
         return service.findById(id);
     }
 
+    @GetMapping("/search/{name}")
+    public List<DrugDto> search(@PathVariable String name) {
+        return service.search(name).stream()
+                .map(d -> StoredDrugMapper.objectToDto(d))
+                .collect(Collectors.toList());
+    }
+
     @PostMapping
     Drug create(@RequestBody Drug drug) {
         return service.create(drug);
@@ -42,5 +54,10 @@ public class DrugController {
     @DeleteMapping("{id}")
     public void delete(@PathVariable Long id) {
         service.deleteById(id);
+    }
+
+    @PostMapping("/reserve/{patientId}")
+    public void reserve(@RequestBody DrugReservationDto dto, @PathVariable long patientId){
+        service.reserve(DrugReservationMapper.dtoToObject(dto), patientId);
     }
 }
