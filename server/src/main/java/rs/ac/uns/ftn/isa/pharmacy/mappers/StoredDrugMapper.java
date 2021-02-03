@@ -7,10 +7,13 @@ public class StoredDrugMapper {
     public static DrugDto objectToDto(StoredDrug drug) {
         return new DrugDto(
                 drug.getId(),
+                drug.getDrug().getId(),
                 drug.getDrug().getName(),
                 drug.getQuantity(),
                 drug.getPrice(),
-                drug.getDrug().getManufacturer()
+                drug.getDrug().getManufacturer(),
+                drug.getPharmacy().getId(),
+                drug.getPharmacy().getName()
         );
     }
 }

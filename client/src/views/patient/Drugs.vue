@@ -12,9 +12,22 @@
                 <div class="modal-body text-left" v-if="selectedDrug">
                     <b>Drug:</b> {{selectedDrug.name}}<br/><hr>
                     <b>Manufacturer:</b> {{selectedDrug.manufacturer}}<br/><hr>
-                    <b>Price:</b> {{selectedDrug.price.amount.amount + selectedDrug.price.amount.currency}}<br/><hr>
+                    <b>Price:</b> {{formatPrice(selectedDrug.price.amount.amount) + selectedDrug.price.amount.currency}}<br/><hr>
                     <div class="form-inline">
-                        <b class="mr-2">Select quantity:</b><input type="number" class="form-control col-sm-2" v-model="quantity"/>
+                        <b class="mr-2">Select Pharmacy:</b>
+                        <select class="form-control" v-model="selectedDrug">
+                            <option 
+                                v-for="storedDrug in availableStoredDrugs" 
+                                v-bind:key="storedDrug.storedDrugId" 
+                                v-bind:value="storedDrug">
+                                {{storedDrug.pharmacyName}}
+                            </option>
+                        </select>
+                    </div>
+                    <hr>
+                    <div class="form-inline">
+                        <b class="mr-2">Select quantity:</b><input type="number" min="1" v-bind:max="selectedDrug.quantity" class="form-control col-sm-2" v-model="quantity"/>
+                        <div class="ml-2 text-info"><b>{{selectedDrug.quantity}} avaliable</b></div>
                     </div>
                     <hr>
                     <div class="form-inline">
@@ -41,7 +54,10 @@
                     <b>No drug selected.</b>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" data-dismiss="modal" @click="reserve">Confirm</button>
+                    <div v-if="selectedDrug">
+                        <b>Total price:</b> {{formatPrice(selectedDrug.price.amount.amount * quantity) + selectedDrug.price.amount.currency}}
+                        <button type="button" class="btn btn-success" data-dismiss="modal" @click="reserve">Confirm</button>
+                    </div>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Abort</button>
                 </div>
             </div>
@@ -69,16 +85,12 @@
                     <th>
                         Manufacturer
                     </th>
-                    <th>
-                        Price
-                    </th>
                     <th></th>
                 <tr>
-                <tr v-for="drug in drugs" v-bind:key="drug.id">
+                <tr v-for="drug in distinct(drugs)" v-bind:key="drug.id">
                     <td>{{drug.name}}</td>
                     <td>{{drug.manufacturer}}</td>
-                    <td>{{drug.price.amount.amount + drug.price.amount.currency}}</td>
-                    <td><button class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal" @click="select(drug)">Reserve</button></td>
+                    <td><button class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal" @click="select(drug.drugId)">Reserve</button></td>
                 </tr>
             </table>
         </div>
@@ -101,6 +113,8 @@ export default {
             drugs: [],
             searchString: '',
             selectedDrug: null,
+            availableStoredDrugs: [],
+            selectedStoredDrug: null,
             quantity: 1,
             minDate: new Date(),
             date: new Date()
@@ -116,24 +130,37 @@ export default {
                 this.drugs = response.data
             })
         },
-        select: function (drug) {
+        select: function (drugId) {
+            this.availableStoredDrugs = []
+            this.drugs.forEach(drug => {
+                if (drug.drugId == drugId) {
+                    this.availableStoredDrugs.push(drug)
+                }
+            })
+            this.selectedDrug = this.availableStoredDrugs[0]
             this.date = new Date()
-            this.selectedDrug = drug
             this.quantity = 1
         },
         reserve: function () {
             let dto = {
-                storedDrugId: this.selectedDrug.id,
+                storedDrugId: this.selectedDrug.storedDrugId,
                 quantity: this.quantity,
                 pickUpBefore: this.date
             }
             axios.post(api.drugs.reserve + '/1', dto)
             .then(() => {
                 this.$toast.open('Successfully reserved.')
+                this.search()
             })
             .catch(error => {
                 this.$toast.error(error.response.data)
             })
+        },
+        distinct: function (drugs) {
+            return drugs.filter((x, i, a) => a.map(drug => drug.drugId).indexOf(x.drugId) === i)
+        },
+        formatPrice: function (price) {
+            return parseFloat(price).toFixed(2)
         }
     }
 }
