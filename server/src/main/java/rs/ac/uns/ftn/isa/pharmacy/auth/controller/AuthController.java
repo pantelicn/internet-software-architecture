@@ -11,11 +11,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import rs.ac.uns.ftn.isa.pharmacy.auth.HttpRequestUtil;
 import rs.ac.uns.ftn.isa.pharmacy.auth.dto.PassChangeDto;
+import rs.ac.uns.ftn.isa.pharmacy.auth.dto.RegistrationDto;
 import rs.ac.uns.ftn.isa.pharmacy.auth.model.Role;
 import rs.ac.uns.ftn.isa.pharmacy.auth.service.CredentialsService;
 import rs.ac.uns.ftn.isa.pharmacy.auth.service.CredentialsTokenMapper;
 import rs.ac.uns.ftn.isa.pharmacy.auth.service.JwtService;
 import rs.ac.uns.ftn.isa.pharmacy.auth.model.Credentials;
+import rs.ac.uns.ftn.isa.pharmacy.auth.service.RegistrationService;
 import rs.ac.uns.ftn.isa.pharmacy.domain.supply.exceptions.MessageException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,15 +29,18 @@ public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
     private final CredentialsService credentialsService;
+    private final RegistrationService registrationService;
 
     public AuthController(
             AuthenticationManager authenticationManager,
             JwtService jwtService,
-            CredentialsService credentialsService
+            CredentialsService credentialsService,
+            RegistrationService registrationService
     ){
         this.authenticationManager = authenticationManager;
         this.jwtService = jwtService;
         this.credentialsService = credentialsService;
+        this.registrationService = registrationService;
     }
 
     @PostMapping("login")
@@ -61,8 +66,14 @@ public class AuthController {
     }
 
     @PostMapping("register")
-    public ResponseEntity<?> register() {
-        return ResponseEntity.ok().build();
+    public ResponseEntity<?> register(@RequestBody RegistrationDto dto) {
+        try {
+            registrationService.register(dto);
+            return ResponseEntity.ok().build();
+        }
+        catch (MessageException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @GetMapping("logged")

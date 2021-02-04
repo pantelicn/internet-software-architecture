@@ -12,7 +12,7 @@ public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    @ManyToOne
+    @ManyToOne()
     private City city;
     private String streetName;
     private double latitude;
@@ -21,6 +21,10 @@ public class Address {
     public void validate() throws InvalidEntityException {
         if (streetName == null) throw new InvalidEntityException("Address street name");
         city.validate();
+    }
+
+    public void validateSelf() throws InvalidEntityException {
+        if (streetName == null) throw new InvalidEntityException("Address street name");
     }
 
     public long getId() {
