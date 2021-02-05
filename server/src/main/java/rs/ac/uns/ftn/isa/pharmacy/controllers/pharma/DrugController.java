@@ -24,7 +24,6 @@ public class DrugController {
     }
 
     @GetMapping
-    @Secured({Role.SYS_ADMIN, Role.PATIENT})
     public List<Drug> getAll() {
         return service.findAll();
     }
@@ -56,8 +55,22 @@ public class DrugController {
         service.deleteById(id);
     }
 
-    @PostMapping("/reserve/{patientId}")
+    @GetMapping("/reservations/{patientId}")
+    public List<DrugReservationDto> findPatientReservations(@PathVariable long patientId) {
+        var list = service.findPatientReservations(patientId).stream()
+                .map(r -> DrugReservationMapper.objectToDto(r))
+                .collect(Collectors.toList());
+        return list;
+    }
+
+    @PostMapping("/reservations/{patientId}")
     public void reserve(@RequestBody DrugReservationDto dto, @PathVariable long patientId){
         service.reserve(DrugReservationMapper.dtoToObject(dto), patientId);
+    }
+
+    @DeleteMapping("/reservations/{reservationId}")
+    public void cancel(@PathVariable long reservationId) {
+        //TODO - get patient from headers.
+        service.cancelReservation(reservationId, 1);
     }
 }

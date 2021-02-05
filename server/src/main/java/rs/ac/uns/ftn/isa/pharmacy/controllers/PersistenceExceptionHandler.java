@@ -72,4 +72,11 @@ public class PersistenceExceptionHandler {
     String dateHandler(DateException e){
         return e.getMessage();
     }
+
+    @ResponseBody
+    @ExceptionHandler(NoUpcomingAppointmentsException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    String noUpcomingAppointmentsHandler(NoUpcomingAppointmentsException e){
+        return e.getMessage();
+    }
 }

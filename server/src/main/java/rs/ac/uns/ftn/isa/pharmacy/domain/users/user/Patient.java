@@ -1,6 +1,7 @@
 package rs.ac.uns.ftn.isa.pharmacy.domain.users.user;
 
 import rs.ac.uns.ftn.isa.pharmacy.domain.person.Person;
+import rs.ac.uns.ftn.isa.pharmacy.domain.pharma.Drug;
 import rs.ac.uns.ftn.isa.pharmacy.domain.schedule.Appointment;
 
 import javax.persistence.*;
@@ -16,6 +17,9 @@ public class Patient {
     private Person person;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "patient")
     private List<Appointment> appointments;
+    @OneToMany
+    private List<Drug> allergicTo;
+    private int penalties;
 
     public Boolean canSchedule(Appointment appointment){
         for(var patientAppointment:appointments)
@@ -50,5 +54,25 @@ public class Patient {
 
     public void setAppointments(List<Appointment> appointment) {
         this.appointments = appointment;
+    }
+
+    public int getPenalties() {
+        return penalties;
+    }
+
+    public void setPenalties(int penalties) {
+        this.penalties = penalties;
+    }
+
+    public List<Drug> getAllergicTo() {
+        return allergicTo;
+    }
+
+    public void setAllergicTo(List<Drug> allergicTo) {
+        this.allergicTo = allergicTo;
+    }
+
+    public void penalize() {
+        this.penalties += 1;
     }
 }

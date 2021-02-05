@@ -1,5 +1,7 @@
 package rs.ac.uns.ftn.isa.pharmacy.domain.pharma;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -15,7 +17,8 @@ public class Drug {
     private List<String> ingredients;
     private String manufacturer;
     private boolean requiresPrescription;
-    @ManyToMany
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.LAZY)
     private List<Drug> alternatives;
     private String additionalNotes;
 

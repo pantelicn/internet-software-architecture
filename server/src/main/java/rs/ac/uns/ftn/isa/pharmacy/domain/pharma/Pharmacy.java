@@ -1,6 +1,7 @@
 package rs.ac.uns.ftn.isa.pharmacy.domain.pharma;
 
 import rs.ac.uns.ftn.isa.pharmacy.domain.locale.Address;
+import rs.ac.uns.ftn.isa.pharmacy.domain.users.admin.Admin;
 import rs.ac.uns.ftn.isa.pharmacy.domain.users.employee.Shift;
 
 import javax.persistence.*;
@@ -17,6 +18,9 @@ public class Pharmacy {
     private Address address;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pharmacy")
     private List<Shift> shifts;
+    @OneToOne
+    @JoinColumn(name="admin_id")
+    private Admin pharmacyAdmin;
     private String description;
     private double rating;
 
@@ -66,5 +70,13 @@ public class Pharmacy {
 
     public void setShifts(List<Shift> shifts) {
         this.shifts = shifts;
+    }
+
+    public Admin getPharmacyAdmin() {
+        return pharmacyAdmin;
+    }
+
+    public void setPharmacyAdmin(Admin pharmacyAdmin) {
+        this.pharmacyAdmin = pharmacyAdmin;
     }
 }

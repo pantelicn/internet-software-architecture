@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { format, addHours, isPast } from 'date-fns'
+import { format, subHours, isPast } from 'date-fns'
 import { api } from '../api.js'
 import axios from 'axios'
 
@@ -47,7 +47,7 @@ export default {
             })
         },
         isCancelable: function () {
-            return isPast(addHours(new Date(this.appointment.start), 24)) ? false : true
+            return !isPast(subHours(new Date(this.appointment.start), 24))
         }
     }
 }

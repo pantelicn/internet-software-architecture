@@ -1,9 +1,11 @@
 package rs.ac.uns.ftn.isa.pharmacy.domain.users.admin;
 
 import rs.ac.uns.ftn.isa.pharmacy.domain.person.Person;
+import rs.ac.uns.ftn.isa.pharmacy.domain.pharma.Pharmacy;
 
 import javax.persistence.*;
 
+@Entity
 @Table(name="admins")
 public class Admin{
     @Id
@@ -12,6 +14,8 @@ public class Admin{
     @OneToOne
     private Person person;
     private AdminType adminType;
+    @OneToOne(mappedBy = "pharmacyAdmin")
+    private Pharmacy pharmacy;
 
     public AdminType getAdminType() {
         return adminType;

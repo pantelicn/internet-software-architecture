@@ -3,9 +3,7 @@ package rs.ac.uns.ftn.isa.pharmacy.controllers.schedule;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import rs.ac.uns.ftn.isa.pharmacy.domain.schedule.Appointment;
-import rs.ac.uns.ftn.isa.pharmacy.dtos.AppointmentDto;
-import rs.ac.uns.ftn.isa.pharmacy.dtos.AppointmentHistoryEntryDto;
-import rs.ac.uns.ftn.isa.pharmacy.dtos.FreeAppointmentTermDto;
+import rs.ac.uns.ftn.isa.pharmacy.dtos.*;
 import rs.ac.uns.ftn.isa.pharmacy.mappers.AppointmentMapper;
 import rs.ac.uns.ftn.isa.pharmacy.mappers.AppointmentTermMapper;
 import rs.ac.uns.ftn.isa.pharmacy.services.schedule.AppointmentService;
@@ -76,5 +74,26 @@ public class AppointmentController {
                 .stream()
                 .map(AppointmentHistoryEntryDto::new)
                 .collect(Collectors.toList());
+    }
+    @GetMapping("/upcoming/{employeeId}")
+    public List<UpcomingAppointmentEntryDto> getUpcomingAppointments(@PathVariable long employeeId){
+        return service.getUpcomingAppointments(employeeId)
+                .stream()
+                .map(UpcomingAppointmentEntryDto::new)
+                .collect(Collectors.toList());
+    }
+    @PutMapping("/examinations/free-up/{examinationId}")
+    public void freeUpExamination(@PathVariable long examinationId){
+        service.freeUpExamination(examinationId);
+    }
+
+    @PutMapping("/counselings/free-up/{counselingId}")
+    public void freeUpCounseling(@PathVariable long counselingId){
+        service.freeUpCounseling(counselingId);
+    }
+
+    @PutMapping("/appointment-report")
+    public void submitAppointmentReport(@RequestBody ReportSubmissionDto reportSubmissionDto){
+        service.submitAppointmentReport(reportSubmissionDto);
     }
 }

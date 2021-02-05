@@ -1,154 +1,59 @@
 <template>
-<div class="container mt-5" v-if="pharmacists">
-    <div class="col justify-content-md-center">
-        <div class="row">
-            <div class="col-sm-2">
-                <label for="pharmacist-select">Dermatologist:</label>
-            </div>
-            <div class="col-sm-2">
-                <select id="pharmacist-select" @change="pharmacistSelected($event)">
-                    <option selected>Choose a pharmacist...</option>
-                    <option :value="pharmacist.id"
-                    v-for="pharmacist in pharmacists"
-                    :key="pharmacist.id">
-                        {{pharmacist.firstName + " " + pharmacist.lastName}}
-                    </option>
-                </select>
-            </div>
-        </div>
-        <div class="row mt-4">
-            <div class="col-sm-2">
-                <label for="datetime-select">
-                    Date and time:
-                </label>
-            </div>
-            <div class="col-sm-2">
-                <DatePicker
-                    id="date-picker"
-                    timezone="UTC"
-                    :min-date="minDate"
-                    v-model="date"
-                    color="green"
-                    is-dark
-                    mode="dateTime"
-                >
-                    <template v-slot="{ inputValue, inputEvents }">
-                        <input
-                        class="bg-white border px-2 py-1 rounded"
-                        :value="inputValue"
-                        v-on="inputEvents"
-                        />
-                    </template>
-                </DatePicker>
-            </div>
-        </div>
-        <div class="row mt-4">
-            <div class="col-sm-2">
-                <label for="duration">
-                    Duration:
-                </label>
-            </div>
-            <div class="col-sm-2">
-                <select id="duration" @change="durationSelected($event)">
-                    <option selected> Choose a duration... </option>
-                    <option value="15"> 15 minutes </option>
-                    <option value="30"> 30 minutes </option>
-                    <option value="45"> 45 minutes </option>
-                    <option value="1"> 1 hour </option>
-                </select>
-            </div>
-        </div>
-        <div class="row mt-4">
-            <div class="col-sm-4">
-                <button type="button" class="btn btn-primary ml-2"
-                :disabled="selectedPharmacist==null || selectedDuration==null"
-                @click="scheduleNewCounseling">
-                    Schedule
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
+    <b-container v-if="counseling">
+        <b-col>
+            <b-row class="mt-5" align-h="center" size="lg">
+                <h2>Counseling report</h2>
+            </b-row>
+            <b-row class="mt-1 info" align-h="center" >
+                <h6>Patient: {{counseling.patientFullName}}</h6>
+            </b-row>
+            <b-row align-h="center" class="info">
+                <h6>Started at: {{counseling.start}}</h6>
+            </b-row>
+            <b-row align-h="center" class="info">
+                <h6>Ends at: {{counseling.end}}</h6>
+            </b-row>
+            <transition
+                name="fade"
+                mode="out-in"
+            >
+            <router-view/>
+            </transition>
+        </b-col>
+        
+    </b-container>
 </template>
+
 <script>
-import axios from 'axios'
-import {
-    api
-} from '../../../api.js'
-
-export function getTomorrowsDate(){
-    let date = new Date()
-    date.setDate(date.getDate() + 1)
-    return date
-}
-
-import DatePicker from 'v-calendar/lib/components/date-picker.umd'
 export default {
-    name:'CounselingReport',
-    data:function(){
-        return{
-            date:getTomorrowsDate(),
-            minDate:getTomorrowsDate(),
-            pharmacists: null,
-            selectedPharmacist: null,
-            selectedDuration: null
-            
-        }
-    },
-    components:{DatePicker},
-    methods:{
-        getDurationString: function () {
-            if (this.selectedDuration == "1")
-                return "PT1H"
-            else
-                return "PT" + this.selectedDuration + "M"
-        },
-        getPharmacistsBasicInfo: function () {
-            // TODO: Kada implementiras izvestaj namesti da se ne zakucava pharma
-            axios.get(api.employees.pharmacists.basicInfo + 1)
-                .then(response => {
-                    this.pharmacists = response.data
-                })
-        },
-        pharmacistSelected: function (event) {
-            this.selectedPharmacist = event.target.value
-        },
-        durationSelected: function (event) {
-            this.selectedDuration = event.target.value
-        },
-        scheduleNewCounseling: function () {
-            let createdAppointmentDto = {
-                pharmacyId: 1,
-                employeeId: this.selectedPharmacist,
-                patientId: 1,
-                start: this.date,
-                duration: this.getDurationString()
-            }
-            axios.post(api.scheduling.newCounseling, createdAppointmentDto)
-                .then(res => {
-                    this.$toast.open('Examination successfully scheduled!')
-                })
-                .catch(err => {
-                    if (err.response.status == 400)
-                        this.$toast.error(err.response.data)
-                })
+    name: 'CounselingReport',
+    data() {
+        return {
+            counseling:null
         }
     },
     mounted(){
-        this.getPharmacistsBasicInfo();
+        this.counseling=this.$store.state.report.currentAppointment
     }
 }
 </script>
 
 <style scoped>
-
-.btn-primary{
-    background-color: #42b983 !important;
-    border-color:#164731 !important;
+.info{
+    color:rgb(195, 241, 157);
 }
-form {
-    width: 50%;
+.step-elem{
+    background-color: lightgray !important;
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition-duration: 0.3s;
+  transition-property: opacity;
+  transition-timing-function: ease;
 }
 
+.fade-enter,
+.fade-leave-active {
+  opacity: 0
+}
 </style>
