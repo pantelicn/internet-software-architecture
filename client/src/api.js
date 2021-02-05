@@ -1,6 +1,7 @@
 const host = 'http://localhost:8080'
 
 //REST endpoints
+let auth = "/api/auth"
 let appointments = '/api/appointments'
 let drugs = '/api/drugs'
 let employees = '/api/employees'
@@ -9,7 +10,12 @@ let patients = '/api/patients'
 let storedDrugs = '/api/stored-drugs'
 
 
+
 export const api = {
+    auth: { 
+        login: host + auth + '/login'
+    }
+    ,
     appointments: {
         root: host + appointments,
         free: host + appointments + '/free-examinations',
