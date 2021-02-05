@@ -87,6 +87,11 @@ public class AppointmentController {
         service.freeUpExamination(examinationId);
     }
 
+    @PutMapping("/counselings/free-up/{counselingId}")
+    public void freeUpCounseling(@PathVariable long counselingId){
+        service.freeUpCounseling(counselingId);
+    }
+
     @PutMapping("/appointment-report")
     public void submitAppointmentReport(@RequestBody ReportSubmissionDto reportSubmissionDto){
         service.submitAppointmentReport(reportSubmissionDto);

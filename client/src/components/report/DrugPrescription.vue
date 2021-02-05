@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import { api } from '../../../api.js'
+import { api } from '../../api.js'
 import axios from 'axios'
 export default {
     

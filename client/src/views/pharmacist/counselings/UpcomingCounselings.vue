@@ -1,7 +1,7 @@
 <template>
     <b-container>
          <b-row class="mt-5" align-h="center" size="lg">
-            <h2>Upcoming Examinations</h2>
+            <h2>Upcoming Counselings</h2>
         </b-row>
 
         <b-col lg="4" class="my-3 mt-4">
@@ -9,7 +9,7 @@
                 label-size="sm" class="mb-0">
                 <b-input-group size="sm">
                     <b-form-input id="filter-input"
-                    v-model="filter" type="search" placeholder="Patients name or examination id..."
+                    v-model="filter" type="search" placeholder="Patients name or counseling id..."
                     >
                     </b-form-input>
 
@@ -24,10 +24,10 @@
             class="mt-4"
             striped hover
             :dark="true"
-            :items="examinations"
+            :items="counselings"
             :fields="fields"
             show-empty
-            empty-text="You have no upcoming examinations."
+            empty-text="You have no upcoming counselings."
             :filter="filter"
             empty-filtered-text="There are no patients to show."
         >
@@ -38,13 +38,13 @@
             </template>
 
             <template #cell(examHistory)="row">
-                <b-button size="sm" @click="examinationHistory(row.item,$event.target)">
+                <b-button size="sm" @click="counselingHistory(row.item,$event.target)">
                     History
                 </b-button>
             </template>
 
             <template #cell(startExam)="row">
-                <b-button size="sm" @click="commitExamination(row.item,$event.target)">
+                <b-button size="sm" @click="commitCounseling(row.item,$event.target)">
                     Start
                 </b-button>
             </template>
@@ -55,10 +55,10 @@
             <patient-profile-info :patientId="patientProfileModal.patientId">
             </patient-profile-info>
         </b-modal>
-        <b-modal :id="patientExaminationsModal.id" size="lg" :title="patientExaminationsModal.title" ok-only>
+        <b-modal :id="patientCounselingsModal.id" size="lg" :title="patientCounselingsModal.title" ok-only>
             <appointment-history
-            :patientId="patientExaminationsModal.patientId" 
-            appointmentType="examination"></appointment-history>
+            :patientId="patientCounselingsModal.patientId" 
+            appointmentType="counseling"></appointment-history>
         </b-modal>
 
     </b-container>
@@ -72,21 +72,20 @@ import PatientProfileInfo from '../../../components/patient/PatientProfileInfo.v
 import AppointmentHistory from '../../../components/patient/appointments/AppointmentHistory.vue'
 
 export default {
-    name: 'UpcomingExaminations',
+    name: 'UpcomingCounselings',
     components: { PatientProfileInfo, AppointmentHistory},
     data() {
         return {
-            examinations:[],
+            counselings:[],
             fields:[
-                { key: 'appointmentId', label: 'Examination Identifier', sortable: true },
-                { key: 'price', label: 'Price', sortable:true },
+                { key: 'appointmentId', label: 'Counseling Identifier', sortable: true },
                 { key: 'patientFullName', label: 'Patients full name', sortable: true},
-                { key: 'start', label: 'Examination begins at', sortable: true },
-                { key: 'end', label: 'Examination ends at', sortable: true },
+                { key: 'start', label: 'Counseling begins at', sortable: true },
+                { key: 'end', label: 'Counseling ends at', sortable: true },
                 { key: 'pharmacy', label: 'Pharmacy', sortable: true },
                 { key: 'profile', label: 'Patients profile' },
-                { key: 'examHistory', label: 'Patients examination history' },
-                { key: 'startExam', label: 'Start an examination'}
+                { key: 'examHistory', label: 'Patients counseling history' },
+                { key: 'startExam', label: 'Start a counseling'}
                 
             ],
             filter :null,
@@ -96,19 +95,19 @@ export default {
                 patientId: null,
                 title: ''
             },
-            patientExaminationsModal: {
-                id: 'patient-examinations-modal',
+            patientCounselingsModal: {
+                id: 'patient-counselings-modal',
                 patientId: null,
                 title: ''
             }
         }
     },
     methods:{
-        // TODO namesti da se dermatolog ne zakucava
-        fetchUpcomingExaminations(){
-            axios.get(api.appointments.upcoming + 1).then(res=>{
+        // TODO namesti da se farmaceut ne zakucava
+        fetchUpcomingCounselings(){
+            axios.get(api.appointments.upcoming + 3).then(res=>{
                 res.data.forEach(element => {
-                    this.examinations.push({
+                    this.counselings.push({
                         appointmentId : element.appointmentId,
                         price : element.price,
                         patientId : element.patientId,
@@ -126,18 +125,18 @@ export default {
             this.patientProfileModal.title='Patient ' + item.patientFullName
             this.$root.$emit('bv::show::modal',this.patientProfileModal.id,button)
         },
-        examinationHistory:function(item,button){
-            this.patientExaminationsModal.patientId = item.patientId
-            this.patientExaminationsModal.title='Examination history for a patient ' + item.patientFullName
-            this.$root.$emit('bv::show::modal',this.patientExaminationsModal.id,button)
+        counselingHistory:function(item,button){
+            this.patientCounselingsModal.patientId = item.patientId
+            this.patientCounselingsModal.title='Counseling history for a patient ' + item.patientFullName
+            this.$root.$emit('bv::show::modal',this.patientCounselingsModal.id,button)
         },
-        commitExamination:function(item,button){
+        commitCounseling:function(item,button){
             this.$store.commit('setCurrentAppointment',item)
-            this.$router.push('/examination-report/')
+            this.$router.push('/counseling-report/')
         }
     },
     mounted(){
-        this.fetchUpcomingExaminations()
+        this.fetchUpcomingCounselings()
     }
 }
 </script>

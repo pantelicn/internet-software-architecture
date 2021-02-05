@@ -47,7 +47,7 @@ export default {
         },
         //TODO : Skloni pharmacist id kada se iz headera bude izvlacilo
         fetchCounselingHistory:function(){
-            axios.get(api.appointments.history.counselings + "?patientId=" + this.patientId + "&pharmacistId=1")
+            axios.get(api.appointments.history.counselings + "?patientId=" + this.patientId + "&pharmacistId=3")
             .then(res=>{
                 this.fillAppointments(res.data)
             })

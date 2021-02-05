@@ -70,10 +70,10 @@
 
         <b-row align-h="center" class="mt-4" >
             <b-col sm="5">
-                <b-button variant="success" @click="back()"> Go back to an examination information step </b-button>
+                <b-button variant="success" @click="back()"> Go back to an counseling information step </b-button>
             </b-col>
             <b-col sm="5">
-                <b-button variant="success" @click="proceed()"> Proceed to an examination scheduling step </b-button>
+                <b-button variant="success" @click="proceed()"> Proceed to an counseling scheduling step </b-button>
             </b-col>
             
         </b-row>
@@ -87,7 +87,7 @@ import DrugSpecification from '../../../../components/report/DrugSpecification.v
 import DrugPrescription from '../../../../components/report/DrugPrescription.vue'
 
 export default {
-    name: 'ExamReportStepThree',
+    name: 'CounselingReportStepThree',
     components: {DrugSpecification, DrugPrescription},
     data() {
         return {
@@ -115,10 +115,10 @@ export default {
     },
     methods:{
         proceed(){
-            this.$router.push({ name: 'exam-report-step-four' })
+            this.$router.push({ name: 'counseling-report-step-four' })
         },
         back(){
-            this.$router.push({ name: 'exam-report-step-two' })
+            this.$router.push({ name: 'counseling-report-step-two' })
         },
         showDrugSpec(item,button){
             this.drugSpecModal.drug = item

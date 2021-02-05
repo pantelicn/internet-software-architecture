@@ -18,7 +18,8 @@ export const api = {
         upcoming: host + appointments + '/upcoming/',
         appointmentReport: host + appointments + '/appointment-report',
         freeUp: {
-            examination: host + appointments + '/examinations/free-up/'
+            examination: host + appointments + '/examinations/free-up/',
+            counseling: host + appointments + '/counselings/free-up/'
         },
         history: {
             examinations: host + appointments + '/examinations/patient-history/',

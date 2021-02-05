@@ -113,6 +113,16 @@ public class AppointmentService {
         patientRepository.save(patient);
     }
 
+    public void freeUpCounseling(long counselingId) {
+        var patient = appointmentRepository.findById(counselingId)
+                .orElseThrow(() -> new EntityNotFoundException(Appointment.class.getSimpleName(), counselingId))
+                .getPatient();
+
+        patient.penalize();
+        appointmentRepository.deleteById(counselingId);
+        patientRepository.save(patient);
+    }
+
     private void validateUpcomingAppointments(List<Appointment> upcomingAppointments) throws NoUpcomingAppointmentsException {
         if(upcomingAppointments.size() == 0)
             throw new NoUpcomingAppointmentsException();
@@ -168,4 +178,6 @@ public class AppointmentService {
 
         return prescribedDrugs;
     }
+
+
 }

@@ -179,6 +179,11 @@ values (21, "2021-02-15 8:00:00", "2021-02-15 17:00:00", 1,3);
 insert into isa.shifts (id, start, end, pharmacy_id,employee_id)
 values (22, "2021-02-16 8:00:00", "2021-02-16 17:00:00", 1,3);
 
+insert into isa.appointments (id, amount, duration, start, type, patient_id, shift_id)
+values (17, 0, 1800000000000, "2021-02-13 10:00:00", 1, 1, 20);
+insert into isa.appointments (id, amount, duration, start, type, patient_id, shift_id)
+values (18, 0, 1800000000000, "2021-02-13 12:00:00", 1, 2, 20);
+
 insert into isa.shifts (id, start, end, pharmacy_id,employee_id)
 values (23, "2021-02-25 13:00:00", "2021-02-13 20:00:00", 1,4);
 insert into isa.shifts (id, start, end, pharmacy_id,employee_id)
