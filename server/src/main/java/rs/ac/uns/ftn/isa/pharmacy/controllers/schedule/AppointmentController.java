@@ -1,7 +1,9 @@
 package rs.ac.uns.ftn.isa.pharmacy.controllers.schedule;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
+import rs.ac.uns.ftn.isa.pharmacy.auth.model.Role;
 import rs.ac.uns.ftn.isa.pharmacy.domain.schedule.Appointment;
 import rs.ac.uns.ftn.isa.pharmacy.dtos.*;
 import rs.ac.uns.ftn.isa.pharmacy.mappers.AppointmentMapper;
@@ -75,7 +77,9 @@ public class AppointmentController {
                 .map(AppointmentHistoryEntryDto::new)
                 .collect(Collectors.toList());
     }
+
     @GetMapping("/upcoming/{employeeId}")
+    @Secured(Role.DERMATOLOGIST)
     public List<UpcomingAppointmentEntryDto> getUpcomingAppointments(@PathVariable long employeeId){
         return service.getUpcomingAppointments(employeeId)
                 .stream()

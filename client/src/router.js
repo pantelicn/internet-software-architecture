@@ -1,5 +1,6 @@
 import VueRouter from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
+import Login from './views/unauthorized/Login.vue'
 import ExaminationReport from './views/dermatologist/report/ExaminationReport.vue'
 import CounselingReport from './views/pharmacist/report/CounselingReport.vue'
 import ScheduleExamination from './views/patient/ScheduleExamination.vue'
@@ -24,6 +25,10 @@ export const router = new VueRouter({
         {
             path: '/',
             component: HelloWorld
+        },
+        {
+            path: '/login',
+            component:Login
         },
         {
             path: '/patient-schedule',
