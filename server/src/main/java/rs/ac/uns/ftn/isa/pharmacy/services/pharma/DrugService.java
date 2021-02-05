@@ -69,7 +69,7 @@ public class DrugService {
         drugRepository.deleteById(id);
     }
 
-    public List<StoredDrug> search(String name) {
+    public List<StoredDrug> searchByName(String name) {
         return storedDrugRepository.searchByName(name);
     }
 

@@ -1,19 +1,15 @@
 package rs.ac.uns.ftn.isa.pharmacy.mappers;
 
 import rs.ac.uns.ftn.isa.pharmacy.domain.pharma.StoredDrug;
-import rs.ac.uns.ftn.isa.pharmacy.dtos.DrugDto;
+import rs.ac.uns.ftn.isa.pharmacy.dtos.StoredDrugDto;
 
 public class StoredDrugMapper {
-    public static DrugDto objectToDto(StoredDrug drug) {
-        return new DrugDto(
-                drug.getId(),
-                drug.getDrug().getId(),
-                drug.getDrug().getName(),
-                drug.getQuantity(),
-                drug.getPrice(),
-                drug.getDrug().getManufacturer(),
-                drug.getPharmacy().getId(),
-                drug.getPharmacy().getName()
+    public static StoredDrugDto objectToDto(StoredDrug storedDrug) {
+        return new StoredDrugDto(
+                storedDrug.getId(),
+                storedDrug.getPrice(),
+                storedDrug.getDrug(),
+                storedDrug.getPharmacy()
         );
     }
 }

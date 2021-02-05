@@ -14,10 +14,10 @@ public class StoredDrug {
     private long quantity;
     @Embedded
     private Price price;
-    @OneToOne
+    @ManyToOne
     private Drug drug;
     @ManyToOne
-    Pharmacy pharmacy;
+    private Pharmacy pharmacy;
 
     public long getId() {
         return id;
