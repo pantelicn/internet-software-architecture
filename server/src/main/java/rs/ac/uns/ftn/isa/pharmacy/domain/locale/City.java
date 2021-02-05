@@ -18,6 +18,7 @@ public class City {
     public void validate() throws InvalidEntityException {
         if (name == null) throw new InvalidEntityException("City name");
         if (postalCode == null) throw new InvalidEntityException("City postal code");
+        if (country == null) throw new InvalidEntityException("Country");
         country.validate();
     }
 

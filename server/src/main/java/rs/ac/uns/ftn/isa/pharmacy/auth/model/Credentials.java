@@ -1,5 +1,6 @@
 package rs.ac.uns.ftn.isa.pharmacy.auth.model;
 
+import org.hibernate.annotations.Type;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,6 +17,7 @@ public class Credentials implements UserDetails {
     @Id
     private String email;
     @Column(unique = true)
+    @Type(type = "uuid-char")
     private UUID uid;
     private String username;
     private String password;
