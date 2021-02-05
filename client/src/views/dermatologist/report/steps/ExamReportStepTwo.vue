@@ -16,7 +16,7 @@
         </b-row>
         <b-row align-h="center" class="mt-4" >
             <b-col sm="4">
-                <b-button variant="success" @click="proceed()"> Proceed to a drug prescription step </b-button>
+                <b-button :disabled="text==''" variant="success" @click="proceed()"> Proceed to a drug prescription step </b-button>
             </b-col>
         </b-row>
 
@@ -33,9 +33,13 @@ export default {
     },
     methods:{
         proceed(){
+            this.$store.commit('setExaminationInformation', this.text)
             this.$router.push({ name: 'exam-report-step-three' })
         }
-    }
+    },
+    mounted() {
+        this.text = this.$store.state.report.appointmentReport.examinationInformation
+    },
 }
 </script>
 

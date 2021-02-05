@@ -23,6 +23,7 @@
          <b-table
             class="mt-4"
             striped hover
+            :dark="true"
             :items="examinations"
             :fields="fields"
             show-empty
@@ -42,8 +43,8 @@
                 </b-button>
             </template>
 
-            <template #cell(startExam)>
-                <b-button size="sm">
+            <template #cell(startExam)="row">
+                <b-button size="sm" @click="commitExamination(row.item,$event.target)">
                     Start
                 </b-button>
             </template>
@@ -130,6 +131,10 @@ export default {
             this.patientExaminationsModal.title='Examination history for a patient ' + item.patientFullName
             this.$root.$emit('bv::show::modal',this.patientExaminationsModal.id,button)
         },
+        commitExamination:function(item,button){
+            this.$store.commit('setCurrentAppointment',item)
+            this.$router.push('/examination-report/')
+        }
     },
     mounted(){
         this.fetchUpcomingExaminations()
@@ -137,8 +142,5 @@ export default {
 }
 </script>
 
-<style scoped>
-.table{
-    background-color: rgb(147, 151, 147)
-}
+<style>
 </style>

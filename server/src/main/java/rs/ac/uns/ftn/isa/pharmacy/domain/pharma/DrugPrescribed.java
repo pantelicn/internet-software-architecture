@@ -3,16 +3,17 @@ package rs.ac.uns.ftn.isa.pharmacy.domain.pharma;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "drug_prescribed")
+@Table(name = "drugs_prescribed")
 public class DrugPrescribed {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    @OneToOne
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "prescription_id")
     private Prescription prescription;
     @OneToOne
     private Drug drug;
-    private int amount;
+    private int therapyDuration;
 
     public long getId() {
         return id;
@@ -38,11 +39,11 @@ public class DrugPrescribed {
         this.drug = drug;
     }
 
-    public int getAmount() {
-        return amount;
+    public int getTherapyDuration() {
+        return therapyDuration;
     }
 
-    public void setAmount(int amount) {
-        this.amount = amount;
+    public void setTherapyDuration(int therapyDuration) {
+        this.therapyDuration = therapyDuration;
     }
 }

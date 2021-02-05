@@ -9,7 +9,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "appointments")
-@SequenceGenerator(name="appointment_seq", initialValue=100, allocationSize=100)
+@SequenceGenerator(name="appointment_seq", initialValue=100, allocationSize=1)
 public class Appointment {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "appointment_seq")
@@ -25,6 +25,9 @@ public class Appointment {
     @ManyToOne(optional = false, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name="shift_id")
     private Shift shift;
+    @OneToOne(mappedBy = "appointment",cascade = CascadeType.ALL)
+    private AppointmentReport appointmentReport;
+
 
 
     public Appointment(){}
@@ -34,6 +37,7 @@ public class Appointment {
         this.price = new Money();
         this.patient = patient;
         this.shift = shift;
+        this.appointmentReport = null;
     }
 
     public Boolean overlaps(Term term){
@@ -41,6 +45,9 @@ public class Appointment {
     }
     public Boolean isReserved(){
         return this.getPatient() != null;
+    }
+    public Boolean isUpcoming(){
+        return this.getTerm().isUpcoming() && this.isReserved() && this.getAppointmentReport()==null;
     }
 
     public long getId() {
@@ -89,5 +96,13 @@ public class Appointment {
 
     public void setShift(Shift shift) {
         this.shift = shift;
+    }
+
+    public AppointmentReport getAppointmentReport() {
+        return appointmentReport;
+    }
+
+    public void setAppointmentReport(AppointmentReport appointmentReport) {
+        this.appointmentReport = appointmentReport;
     }
 }

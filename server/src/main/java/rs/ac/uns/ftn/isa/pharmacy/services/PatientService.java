@@ -30,4 +30,11 @@ public class PatientService {
         }
         throw new EntityNotFoundException(Patient.class.getSimpleName(), id);
     }
+
+    public boolean isAllergic(long patientId, long drugId) {
+        return repository.getOne(patientId)
+                .getAllergicTo()
+                .stream()
+                .anyMatch(d -> d.getId() == drugId);
+    }
 }

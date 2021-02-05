@@ -24,7 +24,6 @@ public class DrugController {
     }
 
     @GetMapping
-    @Secured({Role.SYS_ADMIN, Role.PATIENT})
     public List<Drug> getAll() {
         return service.findAll();
     }

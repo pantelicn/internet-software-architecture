@@ -3,9 +3,13 @@ package rs.ac.uns.ftn.isa.pharmacy.services.notifiers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import rs.ac.uns.ftn.isa.pharmacy.domain.mail.messages.DrugNonExistentMessage;
 import rs.ac.uns.ftn.isa.pharmacy.domain.mail.messages.DrugReservedMessage;
 import rs.ac.uns.ftn.isa.pharmacy.domain.mail.messages.ExaminationScheduledMessage;
+import rs.ac.uns.ftn.isa.pharmacy.domain.mail.messages.InsufficientDrugQuantityMessage;
+import rs.ac.uns.ftn.isa.pharmacy.domain.mail.messages.dtos.DrugNonExistentMailInfo;
 import rs.ac.uns.ftn.isa.pharmacy.domain.pharma.DrugReservation;
+import rs.ac.uns.ftn.isa.pharmacy.domain.pharma.StoredDrug;
 import rs.ac.uns.ftn.isa.pharmacy.domain.schedule.Appointment;
 
 
@@ -31,6 +35,22 @@ public class EmailService {
                 SENDER_EMAIL,
                 reservation.getPatient().getPerson().getCredentials().getEmail(),
                 "Medication reserved."
+        );
+    }
+    public void sendInsufficientDrugQuantityMessage(StoredDrug storedDrug){
+        var message = new InsufficientDrugQuantityMessage(emailSender,storedDrug);
+        message.send(
+                SENDER_EMAIL,
+                storedDrug.getPharmacy().getPharmacyAdmin().getPerson().getCredentials().getEmail(),
+                "Insufficient drug amount.");
+
+    }
+    public void sendDrugNonExistentMessage(DrugNonExistentMailInfo mailInfo){
+        var message = new DrugNonExistentMessage(emailSender,mailInfo);
+        message.send(
+                SENDER_EMAIL,
+                mailInfo.getAdminMail(),
+                "Drug doesn't exist in our stock."
         );
     }
 

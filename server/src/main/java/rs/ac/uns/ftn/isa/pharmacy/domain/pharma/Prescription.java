@@ -1,19 +1,24 @@
 package rs.ac.uns.ftn.isa.pharmacy.domain.pharma;
 
+import rs.ac.uns.ftn.isa.pharmacy.domain.schedule.AppointmentReport;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@Table(name = "prescription", uniqueConstraints = {})
+@Table(name = "prescriptions")
+@SequenceGenerator(name="prescription_seq", initialValue=100, allocationSize=1)
 public class Prescription {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "prescription_seq")
     private long id;
-    private long personId;
     private LocalDate issueDate;
-    @OneToMany
-    List<DrugPrescribed> drugs;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "appointment_report_id")
+    private AppointmentReport appointmentReport;
+    @OneToMany(mappedBy = "prescription",cascade = CascadeType.ALL)
+    private List<DrugPrescribed> drugs;
 
     public long getId() {
         return id;
@@ -21,14 +26,6 @@ public class Prescription {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public long getPersonId() {
-        return personId;
-    }
-
-    public void setPersonId(long personId) {
-        this.personId = personId;
     }
 
     public LocalDate getIssueDate() {
@@ -39,5 +36,19 @@ public class Prescription {
         this.issueDate = issueDate;
     }
 
+    public AppointmentReport getAppointmentReport() {
+        return appointmentReport;
+    }
 
+    public void setAppointmentReport(AppointmentReport appointmentReport) {
+        this.appointmentReport = appointmentReport;
+    }
+
+    public List<DrugPrescribed> getDrugs() {
+        return drugs;
+    }
+
+    public void setDrugs(List<DrugPrescribed> drugs) {
+        this.drugs = drugs;
+    }
 }

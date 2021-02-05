@@ -6,6 +6,7 @@ let drugs = '/api/drugs'
 let employees = '/api/employees'
 let scheduling = '/api/schedule'
 let patients = '/api/patients'
+let storedDrugs = '/api/stored-drugs'
 
 
 export const api = {
@@ -15,6 +16,10 @@ export const api = {
         patient: host + appointments + '/patient',
         cancel: host + appointments + '/cancel',
         upcoming: host + appointments + '/upcoming/',
+        appointmentReport: host + appointments + '/appointment-report',
+        freeUp: {
+            examination: host + appointments + '/examinations/free-up/'
+        },
         history: {
             examinations: host + appointments + '/examinations/patient-history/',
             counselings: host + appointments + '/counselings/patient-history/'
@@ -25,6 +30,10 @@ export const api = {
         root: host + drugs,
         search: host + drugs + '/search',
         reservations: host + drugs + '/reservations'
+    },
+    storedDrugs: {
+        root: host + storedDrugs,
+        isAvailable : host + storedDrugs + '/is-available'
     },
     employees: {
         dermatologists: {
@@ -43,6 +52,8 @@ export const api = {
     patients: {
         root: host + patients,
         appointed: host + patients + '/appointed-by/',
-        profilePreview: host + patients + '/profile-preview/'
+        profilePreview: host + patients + '/profile-preview/',
+        isAllergic: host + patients + '/is-allergic'
+        
     }
 }

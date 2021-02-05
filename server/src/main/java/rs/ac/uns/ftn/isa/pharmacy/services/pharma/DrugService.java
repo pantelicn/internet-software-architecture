@@ -124,4 +124,8 @@ public class DrugService {
     public List<DrugReservation> findPatientReservations(long patientId) {
         return drugReservationRepository.findAllByPatientId(patientId);
     }
+
+    public List<Drug> getAlternatives(long drugId) {
+        return drugRepository.getOne(drugId).getAlternatives();
+    }
 }

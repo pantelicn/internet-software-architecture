@@ -9,5 +9,11 @@ import java.util.List;
 
 public interface StoredDrugRepository extends JpaRepository<StoredDrug, Long> {
     @Query("select d from StoredDrug d where lower(d.drug.name) like lower(concat('%', :name, '%'))")
-    public List<StoredDrug> searchByName(@Param("name") String name);
+    List<StoredDrug> searchByName(@Param("name") String name);
+
+    @Query("select d.quantity from StoredDrug d where d.pharmacy.id=:pharmacyId and d.drug.id=:drugId")
+    Integer quantityInPharmacy(@Param("pharmacyId") Long pharmacyId, @Param("drugId") Long drugId);
+
+    @Query("select d from StoredDrug d where d.pharmacy.id=:pharmacyId and d.drug.id=:drugId")
+    StoredDrug getOneFromPharmacy(@Param("pharmacyId") Long pharmacyId, @Param("drugId") Long drugId);
 }
