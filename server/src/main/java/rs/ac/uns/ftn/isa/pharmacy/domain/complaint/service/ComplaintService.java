@@ -2,15 +2,19 @@ package rs.ac.uns.ftn.isa.pharmacy.domain.complaint.service;
 
 import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.isa.pharmacy.domain.complaint.dto.ComplaintCreationDto;
-import rs.ac.uns.ftn.isa.pharmacy.domain.complaint.dto.ComplaintMapper;
+import rs.ac.uns.ftn.isa.pharmacy.domain.complaint.dto.UnansweredComplaintDto;
+import rs.ac.uns.ftn.isa.pharmacy.domain.complaint.mapper.ComplaintMapper;
 import rs.ac.uns.ftn.isa.pharmacy.domain.complaint.dto.ResponseCreationDto;
-import rs.ac.uns.ftn.isa.pharmacy.domain.complaint.dto.ResponseMapper;
+import rs.ac.uns.ftn.isa.pharmacy.domain.complaint.mapper.ResponseMapper;
 import rs.ac.uns.ftn.isa.pharmacy.domain.complaint.model.Complaint;
 import rs.ac.uns.ftn.isa.pharmacy.domain.complaint.model.Response;
 import rs.ac.uns.ftn.isa.pharmacy.domain.complaint.repository.ComplaintRepository;
 import rs.ac.uns.ftn.isa.pharmacy.domain.complaint.repository.ResponseRepository;
 import rs.ac.uns.ftn.isa.pharmacy.domain.supply.exceptions.MessageException;
 import rs.ac.uns.ftn.isa.pharmacy.repository.schedule.AppointmentRepository;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ComplaintService {
@@ -61,5 +65,12 @@ public class ComplaintService {
         response.getComplaint().setAnswered(true);
 
         responseRepository.save(response);
+    }
+
+    public List<UnansweredComplaintDto> getAllUnanswered() {
+        return complaintRepository.getAllUnanswered()
+                .stream()
+                .map(complaintMapper::objectToDto)
+                .collect(Collectors.toList());
     }
 }

@@ -1,6 +1,8 @@
-package rs.ac.uns.ftn.isa.pharmacy.domain.complaint.dto;
+package rs.ac.uns.ftn.isa.pharmacy.domain.complaint.mapper;
 
 import org.springframework.stereotype.Component;
+import rs.ac.uns.ftn.isa.pharmacy.domain.complaint.dto.ResponseCreationDto;
+import rs.ac.uns.ftn.isa.pharmacy.domain.complaint.dto.UnansweredComplaintDto;
 import rs.ac.uns.ftn.isa.pharmacy.domain.complaint.model.Complaint;
 import rs.ac.uns.ftn.isa.pharmacy.domain.complaint.model.Response;
 import rs.ac.uns.ftn.isa.pharmacy.domain.complaint.repository.ComplaintRepository;

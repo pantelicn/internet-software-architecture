@@ -2,10 +2,7 @@ package rs.ac.uns.ftn.isa.pharmacy.domain.complaint.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import rs.ac.uns.ftn.isa.pharmacy.auth.HttpRequestUtil;
 import rs.ac.uns.ftn.isa.pharmacy.auth.IdentityProvider;
 import rs.ac.uns.ftn.isa.pharmacy.auth.model.Role;
@@ -24,6 +21,12 @@ public class ComplaintController {
 
     public ComplaintController(ComplaintService complaintService) {
         this.complaintService = complaintService;
+    }
+
+    @GetMapping
+    @Secured(Role.SYS_ADMIN)
+    public ResponseEntity<?> get() {
+        return ResponseEntity.ok(complaintService.getAllUnanswered());
     }
 
     @PostMapping

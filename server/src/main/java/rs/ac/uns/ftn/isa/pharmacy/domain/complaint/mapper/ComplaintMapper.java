@@ -1,6 +1,8 @@
-package rs.ac.uns.ftn.isa.pharmacy.domain.complaint.dto;
+package rs.ac.uns.ftn.isa.pharmacy.domain.complaint.mapper;
 
 import org.springframework.stereotype.Component;
+import rs.ac.uns.ftn.isa.pharmacy.domain.complaint.dto.ComplaintCreationDto;
+import rs.ac.uns.ftn.isa.pharmacy.domain.complaint.dto.UnansweredComplaintDto;
 import rs.ac.uns.ftn.isa.pharmacy.domain.complaint.model.Complaint;
 import rs.ac.uns.ftn.isa.pharmacy.domain.person.Person;
 import rs.ac.uns.ftn.isa.pharmacy.domain.person.repository.PersonRepository;
@@ -52,5 +54,15 @@ public class ComplaintMapper {
         }
 
         return complaint;
+    }
+
+
+    public UnansweredComplaintDto objectToDto(Complaint complaint) {
+        return new UnansweredComplaintDto(
+                complaint.getId(),
+                complaint.getText(),
+                complaint.getType(),
+                complaint.getAuthor().getFirstName() + " " + complaint.getAuthor().getLastName()
+        );
     }
 }
