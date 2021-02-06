@@ -28,4 +28,8 @@ public class EmployeeService {
         }
         return new ArrayList<>(pharmacies);
     }
+
+    public Employee findByPersonId(long id) {
+        return repository.findByPersonId(id);
+    }
 }

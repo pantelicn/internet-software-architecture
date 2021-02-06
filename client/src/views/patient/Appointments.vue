@@ -23,8 +23,7 @@ export default {
     },
     methods: {
         fetchAppointments: function () {
-            //TODO - Get patient id from headers
-            axios.get(api.appointments.patient + '/1')
+            axios.get(api.appointments.patient)
             .then(response => {
                 this.appointments = response.data
             })

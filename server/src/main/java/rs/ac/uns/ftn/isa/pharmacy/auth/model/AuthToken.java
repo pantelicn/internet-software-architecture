@@ -12,6 +12,7 @@ public class AuthToken implements IdentityProvider {
     private String email;
     private long userId;
     private String role;
+    private long roleId;
 
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role));
@@ -38,5 +39,14 @@ public class AuthToken implements IdentityProvider {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    @Override
+    public long getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(long roleId) {
+        this.roleId = roleId;
     }
 }

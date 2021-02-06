@@ -7,5 +7,6 @@ import java.util.Collection;
 public interface IdentityProvider {
     String getEmail();
     long getUserId();
+    long getRoleId();
     Collection<? extends GrantedAuthority> getAuthorities();
 }

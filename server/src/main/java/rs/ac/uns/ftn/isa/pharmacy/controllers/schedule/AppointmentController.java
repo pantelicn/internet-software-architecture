@@ -3,6 +3,8 @@ package rs.ac.uns.ftn.isa.pharmacy.controllers.schedule;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
+import rs.ac.uns.ftn.isa.pharmacy.auth.HttpRequestUtil;
+import rs.ac.uns.ftn.isa.pharmacy.auth.IdentityProvider;
 import rs.ac.uns.ftn.isa.pharmacy.auth.model.Role;
 import rs.ac.uns.ftn.isa.pharmacy.domain.schedule.Appointment;
 import rs.ac.uns.ftn.isa.pharmacy.dtos.*;
@@ -10,6 +12,7 @@ import rs.ac.uns.ftn.isa.pharmacy.mappers.AppointmentMapper;
 import rs.ac.uns.ftn.isa.pharmacy.mappers.AppointmentTermMapper;
 import rs.ac.uns.ftn.isa.pharmacy.services.schedule.AppointmentService;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,10 +51,12 @@ public class AppointmentController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/patient/{id}")
-    public List<AppointmentDto> getPatientExaminations(@PathVariable long id) {
+    @GetMapping("/patient")
+    @Secured(Role.PATIENT)
+    public List<AppointmentDto> getPatientExaminations(HttpServletRequest request) {
+        IdentityProvider identityProvider = HttpRequestUtil.getIdentity(request);
         return service
-                .getPatientAppointments(id).stream()
+                .getPatientAppointments(identityProvider.getRoleId()).stream()
                 .map(a -> AppointmentMapper.objectToDto(a))
                 .collect(Collectors.toList());
     }

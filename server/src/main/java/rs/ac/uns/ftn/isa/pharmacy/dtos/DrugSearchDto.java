@@ -2,7 +2,7 @@ package rs.ac.uns.ftn.isa.pharmacy.dtos;
 
 import rs.ac.uns.ftn.isa.pharmacy.domain.finance.Price;
 
-public class DrugDto {
+public class DrugSearchDto {
     private long storedDrugId;
     private long drugId;
     private String name;
@@ -12,7 +12,7 @@ public class DrugDto {
     private long pharmacyId;
     private String pharmacyName;
 
-    public DrugDto(long storedDrugId, long drugId, String name, long quantity, Price price, String manufacturer, long pharmacyId, String pharmacyName) {
+    public DrugSearchDto(long storedDrugId, long drugId, String name, long quantity, Price price, String manufacturer, long pharmacyId, String pharmacyName) {
         this.storedDrugId = storedDrugId;
         this.drugId = drugId;
         this.name = name;
