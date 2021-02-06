@@ -12,6 +12,7 @@ import rs.ac.uns.ftn.isa.pharmacy.domain.complaint.repository.ComplaintRepositor
 import rs.ac.uns.ftn.isa.pharmacy.domain.complaint.repository.ResponseRepository;
 import rs.ac.uns.ftn.isa.pharmacy.domain.supply.exceptions.MessageException;
 import rs.ac.uns.ftn.isa.pharmacy.repository.schedule.AppointmentRepository;
+import rs.ac.uns.ftn.isa.pharmacy.services.notifiers.EmailService;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,18 +27,22 @@ public class ComplaintService {
     private final ComplaintMapper complaintMapper;
     private final ResponseMapper responseMapper;
 
+    private final EmailService emailService;
+
     public ComplaintService(
             ComplaintRepository complaintRepository,
             ResponseRepository responseRepository,
             AppointmentRepository appointmentRepository,
             ComplaintMapper complaintMapper,
-            ResponseMapper responseMapper
+            ResponseMapper responseMapper,
+            EmailService emailService
     ){
         this.complaintRepository = complaintRepository;
         this.responseRepository = responseRepository;
         this.appointmentRepository = appointmentRepository;
         this.complaintMapper = complaintMapper;
         this.responseMapper = responseMapper;
+        this.emailService = emailService;
     }
 
     public void create(ComplaintCreationDto dto) throws MessageException {
@@ -64,7 +69,8 @@ public class ComplaintService {
         if (response.getComplaint().isAnswered()) throw new MessageException("This complaint was already answered.");
         response.getComplaint().setAnswered(true);
 
-        responseRepository.save(response);
+        Response createdResponse = responseRepository.save(response);
+        emailService.sendResponseNoticeMessage(createdResponse);
     }
 
     public List<UnansweredComplaintDto> getAllUnanswered() {
