@@ -56,7 +56,7 @@ export const api = {
     },
     patients: {
         root: host + patients,
-        appointed: host + patients + '/appointed-by/',
+        appointed: host + patients + '/appointed',
         profilePreview: host + patients + '/profile-preview/',
         isAllergic: host + patients + '/is-allergic'
         

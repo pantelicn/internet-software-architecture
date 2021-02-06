@@ -106,6 +106,8 @@ import {
 import {
     api
 } from '../../../api.js'
+
+import { getRoleId, getRole } from '../../../helpers/jwt.js'
 import moment from 'moment'
 export default {
     name: "ExaminationScheduling",
@@ -144,9 +146,7 @@ export default {
             this.selectedDuration = null
         },
         getFreeExaminations: function () {
-            // TODO: Kada implementiras login namesti da se ne zakucava zaposleni
-            axios.get(api.appointments.free + "?pharmacyId=" + this.currentAppointment.pharmacyId 
-                                            + "&dermatologistId=" + 1)
+            axios.get(api.appointments.free + "?pharmacyId=" + this.currentAppointment.pharmacyId)
                 .then(response => {
                     this.freeExaminations = response.data
                 })
@@ -171,7 +171,7 @@ export default {
             else
                 return "PT" + this.selectedDuration + "M"
         },
-        // TODO: Kada implementiras izvestaj namesti da se ne zakucava pacijent
+
         schedulePredefined: function () {
             let appointmentReservationDto = {
                 appointmentId: parseInt(this.selectedExam),
@@ -189,11 +189,10 @@ export default {
                         this.$toast.error(err.response.data)
                 })
         },
-         // TODO: Kada implementiras login namesti da se ne zakucava zaposleni
         scheduleNewExamination: function () {
             let createdAppointmentDto = {
                 pharmacyId: this.currentAppointment.pharmacyId,
-                employeeId: 1,
+                employeeId: getRoleId(),
                 patientId: this.currentAppointment.patientId,
                 start: this.date,
                 duration: this.getDurationString()

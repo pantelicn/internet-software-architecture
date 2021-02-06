@@ -71,6 +71,7 @@ export function getTomorrowsDate() {
 }
 import axios from 'axios'
 import { api } from '../../api.js'
+import { getRoleId } from '../../helpers/jwt.js'
 
 import DatePicker from 'v-calendar/lib/components/date-picker.umd'
 export default {
@@ -106,9 +107,8 @@ export default {
         }
     },
     methods:{
-        // TODO : ispravi kada namestis cookie
         fetchMyPharmacies(){
-            axios.get(api.employees.myPharmacies + 1)
+            axios.get(api.employees.myPharmacies)
             .then(res => {
                 this.myPharmacies = res.data
                 this.myPharmacies.forEach(element => {
@@ -126,10 +126,9 @@ export default {
             this.info = ''
 
         },
-        // TODO : ispravi kada namestis cookie
         submit(){
             let timeOffRequestDto = {
-                employeeId: 1,
+                employeeId: getRoleId(),
                 pharmacyId: this.select,
                 requestInfo: this.info,
                 start: this.range.start,

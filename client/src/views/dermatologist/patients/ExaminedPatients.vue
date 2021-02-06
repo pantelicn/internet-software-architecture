@@ -111,9 +111,8 @@ export default {
             this.patientExaminationsModal.title='Examination history for a patient ' + item.fullName
             this.$root.$emit('bv::show::modal',this.patientExaminationsModal.id,button)
         },
-        // TODO: namesti da se dermatolog ne zakucava
         fetchAppointedPatients:function(){
-            axios.get(api.patients.appointed + 1).then(res=>{
+            axios.get(api.patients.appointed).then(res=>{
                 res.data.forEach(element => {
                     this.patients.push({
                         id: element.id,

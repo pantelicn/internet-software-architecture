@@ -106,7 +106,7 @@ export default {
     methods:{
         // TODO namesti da se dermatolog ne zakucava
         fetchUpcomingExaminations(){
-            axios.get(api.appointments.upcoming + 1).then(res=>{
+            axios.get(api.appointments.upcoming).then(res=>{
                 res.data.forEach(element => {
                     this.examinations.push({
                         appointmentId : element.appointmentId,
