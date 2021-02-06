@@ -1,8 +1,10 @@
 package rs.ac.uns.ftn.isa.pharmacy.domain.supply.exceptions;
 
+import java.util.function.Supplier;
+
 public class InvalidForeignKeyException extends MessageException {
 
     public InvalidForeignKeyException(String entityName) {
-        this.message = "Foreign key referencing for '" + entityName + "' failed";
+        super("Foreign key referencing for '" + entityName + "' failed");
     }
 }
