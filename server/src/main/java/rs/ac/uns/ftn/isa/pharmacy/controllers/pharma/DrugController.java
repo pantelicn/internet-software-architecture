@@ -9,9 +9,11 @@ import rs.ac.uns.ftn.isa.pharmacy.auth.HttpRequestUtil;
 import rs.ac.uns.ftn.isa.pharmacy.auth.IdentityProvider;
 import rs.ac.uns.ftn.isa.pharmacy.auth.model.Role;
 import rs.ac.uns.ftn.isa.pharmacy.domain.pharma.Drug;
+import rs.ac.uns.ftn.isa.pharmacy.dtos.DrugSearchDto;
 import rs.ac.uns.ftn.isa.pharmacy.dtos.StoredDrugDto;
 import rs.ac.uns.ftn.isa.pharmacy.dtos.DrugReservationDto;
 import rs.ac.uns.ftn.isa.pharmacy.mappers.DrugReservationMapper;
+import rs.ac.uns.ftn.isa.pharmacy.mappers.DrugSearchMapper;
 import rs.ac.uns.ftn.isa.pharmacy.mappers.StoredDrugMapper;
 import rs.ac.uns.ftn.isa.pharmacy.services.pharma.DrugService;
 
@@ -56,6 +58,14 @@ public class DrugController {
         return ResponseEntity.ok(searchResult);
     }
 
+    @GetMapping("/patient-search/{drugName}")
+    @Secured(Role.PATIENT)
+    public List<DrugSearchDto> patientSearch(@PathVariable String drugName) {
+        return drugService.searchByName(drugName).stream()
+                .map(DrugSearchMapper::objectToDto)
+                .collect(Collectors.toList());
+    }
+
     @PostMapping
     Drug create(@RequestBody Drug drug) {
         return drugService.create(drug);
@@ -72,6 +82,7 @@ public class DrugController {
     }
 
     @GetMapping("/reservations")
+    @Secured(Role.PATIENT)
     public List<DrugReservationDto> findPatientReservations(HttpServletRequest request) {
         IdentityProvider identityProvider = HttpRequestUtil.getIdentity(request);
         return drugService.findPatientReservations(identityProvider.getRoleId()).stream()
@@ -80,6 +91,7 @@ public class DrugController {
     }
 
     @PostMapping("/reservations")
+    @Secured(Role.PATIENT)
     public void reserve(HttpServletRequest request, @RequestBody DrugReservationDto dto){
         IdentityProvider identityProvider = HttpRequestUtil.getIdentity(request);
         drugService.reserve(DrugReservationMapper.dtoToObject(dto), identityProvider.getRoleId());
