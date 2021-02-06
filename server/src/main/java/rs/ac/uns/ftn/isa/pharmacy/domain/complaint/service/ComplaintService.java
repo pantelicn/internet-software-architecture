@@ -3,8 +3,12 @@ package rs.ac.uns.ftn.isa.pharmacy.domain.complaint.service;
 import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.isa.pharmacy.domain.complaint.dto.ComplaintCreationDto;
 import rs.ac.uns.ftn.isa.pharmacy.domain.complaint.dto.ComplaintMapper;
+import rs.ac.uns.ftn.isa.pharmacy.domain.complaint.dto.ResponseCreationDto;
+import rs.ac.uns.ftn.isa.pharmacy.domain.complaint.dto.ResponseMapper;
 import rs.ac.uns.ftn.isa.pharmacy.domain.complaint.model.Complaint;
+import rs.ac.uns.ftn.isa.pharmacy.domain.complaint.model.Response;
 import rs.ac.uns.ftn.isa.pharmacy.domain.complaint.repository.ComplaintRepository;
+import rs.ac.uns.ftn.isa.pharmacy.domain.complaint.repository.ResponseRepository;
 import rs.ac.uns.ftn.isa.pharmacy.domain.supply.exceptions.MessageException;
 import rs.ac.uns.ftn.isa.pharmacy.repository.schedule.AppointmentRepository;
 
@@ -12,18 +16,24 @@ import rs.ac.uns.ftn.isa.pharmacy.repository.schedule.AppointmentRepository;
 public class ComplaintService {
 
     private final ComplaintRepository complaintRepository;
+    private final ResponseRepository responseRepository;
     private final AppointmentRepository appointmentRepository;
 
     private final ComplaintMapper complaintMapper;
+    private final ResponseMapper responseMapper;
 
     public ComplaintService(
             ComplaintRepository complaintRepository,
+            ResponseRepository responseRepository,
             AppointmentRepository appointmentRepository,
-            ComplaintMapper complaintMapper
+            ComplaintMapper complaintMapper,
+            ResponseMapper responseMapper
     ){
         this.complaintRepository = complaintRepository;
+        this.responseRepository = responseRepository;
         this.appointmentRepository = appointmentRepository;
         this.complaintMapper = complaintMapper;
+        this.responseMapper = responseMapper;
     }
 
     public void create(ComplaintCreationDto dto) throws MessageException {
@@ -42,5 +52,14 @@ public class ComplaintService {
         }
 
         complaintRepository.save(complaint);
+    }
+
+    public void respond(ResponseCreationDto dto) throws MessageException {
+        Response response = responseMapper.dtoToObject(dto);
+
+        if (response.getComplaint().isAnswered()) throw new MessageException("This complaint was already answered.");
+        response.getComplaint().setAnswered(true);
+
+        responseRepository.save(response);
     }
 }

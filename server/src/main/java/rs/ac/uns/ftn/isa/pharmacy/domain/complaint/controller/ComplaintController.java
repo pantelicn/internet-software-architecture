@@ -10,9 +10,8 @@ import rs.ac.uns.ftn.isa.pharmacy.auth.HttpRequestUtil;
 import rs.ac.uns.ftn.isa.pharmacy.auth.IdentityProvider;
 import rs.ac.uns.ftn.isa.pharmacy.auth.model.Role;
 import rs.ac.uns.ftn.isa.pharmacy.domain.complaint.dto.ComplaintCreationDto;
-import rs.ac.uns.ftn.isa.pharmacy.domain.complaint.model.Complaint;
+import rs.ac.uns.ftn.isa.pharmacy.domain.complaint.dto.ResponseCreationDto;
 import rs.ac.uns.ftn.isa.pharmacy.domain.complaint.service.ComplaintService;
-import rs.ac.uns.ftn.isa.pharmacy.domain.person.Person;
 import rs.ac.uns.ftn.isa.pharmacy.domain.supply.exceptions.MessageException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,6 +33,18 @@ public class ComplaintController {
         dto.setPersonId(identityProvider.getUserId());
         try {
             complaintService.create(dto);
+            return ResponseEntity.ok().build();
+        }
+        catch (MessageException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/respond")
+    @Secured(Role.SYS_ADMIN)
+    public ResponseEntity<?> respond(@RequestBody ResponseCreationDto dto) {
+        try {
+            complaintService.respond(dto);
             return ResponseEntity.ok().build();
         }
         catch (MessageException e) {
