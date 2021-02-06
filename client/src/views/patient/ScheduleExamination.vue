@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import AppointmentCalendar from '../../components/AppointmentCalendar.vue'
+import AppointmentCalendar from '../../components/patient/appointments/AppointmentCalendar.vue'
 import DatePicker from 'v-calendar/lib/components/date-picker.umd'
 import { format, startOfWeek, endOfWeek, subWeeks, addWeeks, isSameDay } from 'date-fns'
 import axios from 'axios'
