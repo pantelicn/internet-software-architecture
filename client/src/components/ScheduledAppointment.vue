@@ -1,12 +1,12 @@
 <template>
 <div class="container my-1">
     <div class="row border border-success rounded">
-        <div v-if="appointment.type == 'Examination'" class="bg-success rounded-left p-3">Dermatologist examination</div>
-        <div v-else class="bg-info rounded-left p-3">Pharmacist counseling</div>
+        <div v-if="appointment.type == 'Examination'" class="bg-success rounded-left col-3 p-3">Dermatologist examination</div>
+        <div v-else class="bg-info rounded-left col-3 p-3">Pharmacist counseling</div>
         <div class="bg-dark rounded-left text-success p-3 ml-1">Time:</div>
-        <div class="col p-3"> {{formatTime(appointment.start)}} </div>
+        <div class="col-1 p-3"> {{formatTime(appointment.start)}} </div>
         <div class="bg-dark rounded-left text-success p-3 ml-1">Date:</div>
-        <div class="col p-3">{{formatDate(appointment.start)}}</div>
+        <div class="col col-1 py-3 mr-2">{{formatDate(appointment.start)}}</div>
         <div class="bg-dark rounded-left text-success p-3 ml-1">Doctor:</div>
         <div class="col-md-3 p-3">
             {{appointment.employeeName}}
