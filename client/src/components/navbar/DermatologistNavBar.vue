@@ -22,7 +22,7 @@
                     <b-dropdown-item to="/dermatologist/time-off">Request time off</b-dropdown-item>
                     <b-dropdown-item href="#">Calendar</b-dropdown-item>
                     <b-dropdown-divider></b-dropdown-divider>
-                    <b-dropdown-item href="#">Sign Out</b-dropdown-item>
+                    <b-dropdown-item @click="logout()">Sign Out</b-dropdown-item>
                 </b-nav-item-dropdown>
             </b-navbar-nav>     
         </b-collapse>
@@ -31,7 +31,15 @@
 </template>
 
 <script>
+import { clearJwt } from '../../helpers/jwt.js'
 export default {
-    name:'DermatologistNavBar'
+    name:'DermatologistNavBar',
+    methods: {
+        logout(){
+            clearJwt()
+            this.$router.push({ name: 'login' })
+
+        }
+    },
 }
 </script>

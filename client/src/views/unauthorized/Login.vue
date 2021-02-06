@@ -55,6 +55,7 @@
 <script>
 import axios from 'axios'
 import { api } from '../../api.js'
+import { setJwt,getRole } from '../../helpers/jwt.js'
 export default {
     name: 'Login',
     computed:{
@@ -74,7 +75,7 @@ export default {
     },
     methods:{
         reroute(){
-            let role = this.$store.state.auth.loggedPerson.role
+            let role = getRole()
             if(role == "ROLE_PHARMACIST"){
                 this.$router.push('/pharmacist/')
             }
@@ -88,8 +89,7 @@ export default {
                 password: this.password
             }
             axios.post(api.auth.login,credentials).then(res => {
-                this.$store.commit('setJwt',res.headers['authorization'])
-                this.$store.commit('setLoggedPerson')
+                setJwt(res.headers['authorization'])
                 this.reroute()
                 
             })

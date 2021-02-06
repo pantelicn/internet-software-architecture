@@ -82,7 +82,7 @@ public class AppointmentController {
                 .map(AppointmentHistoryEntryDto::new)
                 .collect(Collectors.toList());
     }
-
+    @Secured({Role.DERMATOLOGIST,Role.PHARMACIST})
     @GetMapping("/upcoming/{employeeId}")
     public List<UpcomingAppointmentEntryDto> getUpcomingAppointments(@PathVariable long employeeId){
         return service.getUpcomingAppointments(employeeId)
@@ -90,6 +90,7 @@ public class AppointmentController {
                 .map(UpcomingAppointmentEntryDto::new)
                 .collect(Collectors.toList());
     }
+    @Secured({Role.DERMATOLOGIST})
     @PutMapping("/examinations/free-up/{examinationId}")
     public void freeUpExamination(@PathVariable long examinationId){
         service.freeUpExamination(examinationId);

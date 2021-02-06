@@ -21,6 +21,7 @@ const reportModule = {
             state.appointmentReport.prescribedDrugs = []
         },
         clearAppointmentReport(state){
+            state.currentAppointment = null
             state.appointmentReport.examinationInformation = ''
             state.appointmentReport.prescribedDrugs = []
 

@@ -34,6 +34,20 @@ export default {
     },
     mounted(){
         this.counseling=this.$store.state.report.currentAppointment
+
+        if(this.counseling == null){
+            this.$router.push({name: 'upcoming-counselings'})
+        }
+    },
+    beforeRouteEnter (to, from, next) {
+        if(from.name !== 'upcoming-counselings')
+            next({ name: 'upcoming-counselings' })
+        else
+            next()
+    },
+    beforeRouteLeave (to, from, next) {
+        this.$store.commit('clearAppointmentReport')
+        next()
     }
 }
 </script>

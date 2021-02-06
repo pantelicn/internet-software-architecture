@@ -2,6 +2,7 @@ package rs.ac.uns.ftn.isa.pharmacy.services.employee;
 
 import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.isa.pharmacy.domain.pharma.Pharmacy;
+import rs.ac.uns.ftn.isa.pharmacy.domain.users.employee.Employee;
 import rs.ac.uns.ftn.isa.pharmacy.domain.users.employee.Shift;
 import rs.ac.uns.ftn.isa.pharmacy.repository.employee.EmployeeRepository;
 

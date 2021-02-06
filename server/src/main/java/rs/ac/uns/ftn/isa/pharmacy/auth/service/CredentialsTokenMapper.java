@@ -6,8 +6,8 @@ import rs.ac.uns.ftn.isa.pharmacy.auth.model.Credentials;
 import rs.ac.uns.ftn.isa.pharmacy.auth.model.Role;
 import rs.ac.uns.ftn.isa.pharmacy.domain.users.employee.Employee;
 import rs.ac.uns.ftn.isa.pharmacy.domain.users.user.Patient;
-import rs.ac.uns.ftn.isa.pharmacy.services.PatientService;
 import rs.ac.uns.ftn.isa.pharmacy.services.employee.EmployeeService;
+import rs.ac.uns.ftn.isa.pharmacy.services.patients.PatientService;
 
 @Service
 public class CredentialsTokenMapper {
