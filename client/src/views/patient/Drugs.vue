@@ -168,7 +168,7 @@ export default {
     },
     methods: {
         search: function () {
-            axios.get(api.drugs.search + '/' + this.searchString)
+            axios.get(api.drugs.patientSearch + '/' + this.searchString)
             .then(response => {
                 this.drugs = response.data
             })
@@ -190,7 +190,7 @@ export default {
                 quantity: this.quantity,
                 pickUpBefore: this.date
             }
-            axios.post(api.drugs.reservations + '/1', dto)
+            axios.post(api.drugs.reservations, dto)
             .then(() => {
                 this.$toast.open('Successfully reserved.')
                 this.search()
@@ -220,7 +220,7 @@ export default {
             return format(new Date(date), "dd.MM.yyyy.")
         },
         fetchReservations: function () {
-            axios.get(api.drugs.reservations + '/1')
+            axios.get(api.drugs.reservations)
             .then(response => {
                 this.reservations = response.data
             })

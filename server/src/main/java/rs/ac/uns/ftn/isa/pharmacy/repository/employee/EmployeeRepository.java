@@ -16,4 +16,6 @@ public interface EmployeeRepository extends JpaRepository<Employee,Long> {
     @Modifying
     @Query(value ="select emp from Employee emp where emp.employeeType=0")
     List<Employee> getPharmacist();
+
+    Employee findByPersonId(long personId);
 }

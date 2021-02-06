@@ -32,17 +32,20 @@ public class AuthController {
     private final JwtService jwtService;
     private final CredentialsService credentialsService;
     private final RegistrationService registrationService;
+    private final CredentialsTokenMapper credentialsTokenMapper;
 
     public AuthController(
             AuthenticationManager authenticationManager,
             JwtService jwtService,
             CredentialsService credentialsService,
-            RegistrationService registrationService
+            RegistrationService registrationService,
+            CredentialsTokenMapper credentialsTokenMapper
     ){
         this.authenticationManager = authenticationManager;
         this.jwtService = jwtService;
         this.credentialsService = credentialsService;
         this.registrationService = registrationService;
+        this.credentialsTokenMapper = credentialsTokenMapper;
     }
 
     @PostMapping("login")
@@ -59,7 +62,7 @@ public class AuthController {
             return ResponseEntity.ok()
                     .header(
                         HttpHeaders.AUTHORIZATION,
-                        jwtService.encrypt(CredentialsTokenMapper.getInstance().createAuthToken(credentials))
+                        jwtService.encrypt(credentialsTokenMapper.createAuthToken(credentials))
                     ).build();
         }
         catch (BadCredentialsException ex) {

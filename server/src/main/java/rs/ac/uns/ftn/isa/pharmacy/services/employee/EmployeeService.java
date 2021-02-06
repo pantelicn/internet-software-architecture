@@ -31,4 +31,8 @@ public class EmployeeService {
                     filteredDermatologists.add(dermatologist);
         return filteredDermatologists;
     }
+
+    public Employee findByPersonId(long id) {
+        return repository.findByPersonId(id);
+    }
 }

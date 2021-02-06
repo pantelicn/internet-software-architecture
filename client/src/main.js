@@ -10,6 +10,9 @@ import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import 'vue-toast-notification/dist/theme-sugar.css';
+import interceptorsSetup from './helpers/interceptors.js'
+
+interceptorsSetup()
 
 
 Vue.use(VueRouter)

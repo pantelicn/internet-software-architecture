@@ -37,4 +37,8 @@ public class PatientService {
                 .stream()
                 .anyMatch(d -> d.getId() == drugId);
     }
+
+    public Patient findByPersonId(long id) {
+        return repository.findByPersonId(id);
+    }
 }

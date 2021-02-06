@@ -16,4 +16,6 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
             "left join Shift shift on shift.id=appointment.shift.id " +
             "where shift.employee.id= ?1")
     List<Patient> getAppointedBy(long employeeId);
+
+    Patient findByPersonId(long personId);
 }
