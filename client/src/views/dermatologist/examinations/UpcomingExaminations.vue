@@ -133,7 +133,7 @@ export default {
         },
         commitExamination:function(item,button){
             this.$store.commit('setCurrentAppointment',item)
-            this.$router.push('/examination-report/')
+            this.$router.push('/dermatologist/examination-report/')
         }
     },
     mounted(){

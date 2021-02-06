@@ -13,6 +13,7 @@ import rs.ac.uns.ftn.isa.pharmacy.repository.employee.EmployeeRepository;
 import rs.ac.uns.ftn.isa.pharmacy.exceptions.UserAccessException;
 import rs.ac.uns.ftn.isa.pharmacy.repository.patients.PatientRepository;
 import rs.ac.uns.ftn.isa.pharmacy.repository.pharma.DrugRepository;
+import rs.ac.uns.ftn.isa.pharmacy.repository.pharma.StoredDrugRepository;
 import rs.ac.uns.ftn.isa.pharmacy.repository.schedule.AppointmentRepository;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -25,12 +26,14 @@ public class AppointmentService {
     private final EmployeeRepository employeeRepository;
     private final PatientRepository patientRepository;
     private final DrugRepository drugRepository;
+    private final StoredDrugRepository storedDrugRepository;
 
-    public AppointmentService(AppointmentRepository appointmentRepository, EmployeeRepository employeeRepository, PatientRepository patientRepository, DrugRepository drugRepository) {
+    public AppointmentService(AppointmentRepository appointmentRepository, EmployeeRepository employeeRepository, PatientRepository patientRepository, DrugRepository drugRepository, StoredDrugRepository storedDrugRepository) {
         this.appointmentRepository = appointmentRepository;
         this.employeeRepository = employeeRepository;
         this.patientRepository = patientRepository;
         this.drugRepository = drugRepository;
+        this.storedDrugRepository = storedDrugRepository;
     }
 
     public List<Appointment> findAll() {
@@ -147,8 +150,18 @@ public class AppointmentService {
 
         mapPrescription(reportSubmissionDto, prescription, appointmentReport);
         appointment.setAppointmentReport(appointmentReport);
-
+        updateDrugQuantity(reportSubmissionDto,appointment);
         appointmentRepository.save(appointment);
+    }
+
+    private void updateDrugQuantity(ReportSubmissionDto reportSubmissionDto,Appointment appointment) {
+        for( var prescribedDrug : reportSubmissionDto.getPrescribedDrugs()){
+            var storedDrug = storedDrugRepository
+                    .getOneFromPharmacy(appointment.getShift().getPharmacy().getId(), prescribedDrug.getDrugId());
+            storedDrug.decrementQuantity();
+            storedDrugRepository.save(storedDrug);
+
+        }
     }
 
     private void mapPrescription(ReportSubmissionDto reportSubmissionDto, Prescription prescription, AppointmentReport appointmentReport) {

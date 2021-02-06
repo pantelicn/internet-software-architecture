@@ -132,7 +132,7 @@ export default {
         },
         commitCounseling:function(item,button){
             this.$store.commit('setCurrentAppointment',item)
-            this.$router.push('/counseling-report/')
+            this.$router.push('pharmacist/counseling-report/')
         }
     },
     mounted(){

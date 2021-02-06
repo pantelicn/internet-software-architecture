@@ -18,6 +18,8 @@ public class Pharmacy {
     private Address address;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pharmacy")
     private List<Shift> shifts;
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "pharmacy")
+    private List<TimeOffRequest> timeOffRequests;
     @OneToOne
     @JoinColumn(name="admin_id")
     private Admin pharmacyAdmin;
@@ -78,5 +80,13 @@ public class Pharmacy {
 
     public void setPharmacyAdmin(Admin pharmacyAdmin) {
         this.pharmacyAdmin = pharmacyAdmin;
+    }
+
+    public List<TimeOffRequest> getTimeOffRequests() {
+        return timeOffRequests;
+    }
+
+    public void setTimeOffRequests(List<TimeOffRequest> timeOffRequests) {
+        this.timeOffRequests = timeOffRequests;
     }
 }

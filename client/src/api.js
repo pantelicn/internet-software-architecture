@@ -8,6 +8,7 @@ let employees = '/api/employees'
 let scheduling = '/api/schedule'
 let patients = '/api/patients'
 let storedDrugs = '/api/stored-drugs'
+let timeOff = '/api/time-off'
 
 
 
@@ -43,12 +44,8 @@ export const api = {
         isAvailable : host + storedDrugs + '/is-available'
     },
     employees: {
-        dermatologists: {
-            basicInfo: host + employees + '/dermatologists/basic-info/'
-        },
-        pharmacists: {
-            basicInfo: host + employees + '/pharmacists/basic-info/'
-        }
+        employeeId : host + employees + '/employee-id/',
+        myPharmacies: host + employees + '/my-pharmacies/'
     },
     scheduling: {
         root: host + scheduling,
@@ -62,5 +59,8 @@ export const api = {
         profilePreview: host + patients + '/profile-preview/',
         isAllergic: host + patients + '/is-allergic'
         
+    },
+    timeOff: {
+        root: host + timeOff
     }
 }

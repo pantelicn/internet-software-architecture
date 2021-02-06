@@ -73,6 +73,15 @@ export default {
         }
     },
     methods:{
+        reroute(){
+            let role = this.$store.state.auth.loggedPerson.role
+            if(role == "ROLE_PHARMACIST"){
+                this.$router.push('/pharmacist/')
+            }
+            else if(role == "ROLE_DERMATOLOGIST"){
+                this.$router.push('/dermatologist/')
+            }
+        },
         login(){
             let credentials = {
                 email: this.email,
@@ -81,10 +90,12 @@ export default {
             axios.post(api.auth.login,credentials).then(res => {
                 this.$store.commit('setJwt',res.headers['authorization'])
                 this.$store.commit('setLoggedPerson')
+                this.reroute()
+                
             })
             .catch(err => {
                 if(err.response.status == 401){
-                    this.$toast.error('User with given credentials doesn\'t exists ');
+                    this.$toast.error('User with given credentials doesn\'t exist');
                     this.email = ''
                     this.password = ''
                 }

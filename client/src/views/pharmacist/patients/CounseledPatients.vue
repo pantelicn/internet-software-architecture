@@ -21,6 +21,7 @@
         <b-table 
             class="mt-2" 
             striped hover 
+            :dark="true"
             :items="patients" 
             :fields="fields"
             :filter="filter"
@@ -131,8 +132,5 @@ export default {
 </script>
 
 <style scoped>
-.table{
-    background-color: rgb(147, 151, 147)
-}
 
 </style>

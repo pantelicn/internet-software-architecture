@@ -1,17 +1,12 @@
 <template>
   <div id="app">
-    <UserNavbar/>
     <router-view/>
   </div>
 </template>
 
 <script>
-import UserNavbar from './components/UserNavbar.vue'
 export default {
   name: 'App',
-  components: {
-    UserNavbar
-  }
 }
 </script>
 
@@ -28,5 +23,11 @@ export default {
 
 #app a {
   color: #42b983;
+}
+#app .dropdown-menu{
+    background-color: #393f45 !important;
+}
+#app .dropdown-divider {
+    border-color : rgb(58, 92, 75) !important;
 }
 </style>

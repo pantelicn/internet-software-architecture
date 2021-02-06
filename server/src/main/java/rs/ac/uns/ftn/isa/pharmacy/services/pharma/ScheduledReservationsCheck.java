@@ -4,7 +4,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import rs.ac.uns.ftn.isa.pharmacy.domain.pharma.DrugReservation;
 import rs.ac.uns.ftn.isa.pharmacy.repository.pharma.DrugReservationRepository;
-import rs.ac.uns.ftn.isa.pharmacy.services.PatientService;
+import rs.ac.uns.ftn.isa.pharmacy.services.patients.PatientService;
 
 import java.time.LocalDate;
 import java.util.List;

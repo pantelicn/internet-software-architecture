@@ -79,7 +79,6 @@ public class AppointmentController {
     }
 
     @GetMapping("/upcoming/{employeeId}")
-    @Secured(Role.DERMATOLOGIST)
     public List<UpcomingAppointmentEntryDto> getUpcomingAppointments(@PathVariable long employeeId){
         return service.getUpcomingAppointments(employeeId)
                 .stream()

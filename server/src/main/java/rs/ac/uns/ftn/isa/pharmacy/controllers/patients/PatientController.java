@@ -4,11 +4,10 @@ package rs.ac.uns.ftn.isa.pharmacy.controllers.patients;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import rs.ac.uns.ftn.isa.pharmacy.domain.pharma.Drug;
 import rs.ac.uns.ftn.isa.pharmacy.dtos.PatientBasicInfoDto;
 import rs.ac.uns.ftn.isa.pharmacy.dtos.PatientProfilePreviewDto;
 import rs.ac.uns.ftn.isa.pharmacy.mappers.PatientBasicInfoMapper;
-import rs.ac.uns.ftn.isa.pharmacy.services.PatientService;
+import rs.ac.uns.ftn.isa.pharmacy.services.patients.PatientService;
 import rs.ac.uns.ftn.isa.pharmacy.services.pharma.DrugService;
 
 import java.util.List;
