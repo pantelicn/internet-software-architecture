@@ -4,8 +4,11 @@ import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.isa.pharmacy.auth.dto.PassChangeDto;
 import rs.ac.uns.ftn.isa.pharmacy.auth.model.Credentials;
 import rs.ac.uns.ftn.isa.pharmacy.auth.repository.CredentialsRepository;
+import rs.ac.uns.ftn.isa.pharmacy.domain.supply.exceptions.EntityNotFoundException;
 import rs.ac.uns.ftn.isa.pharmacy.domain.supply.exceptions.IncorrectPasswordException;
 import rs.ac.uns.ftn.isa.pharmacy.domain.supply.exceptions.PasswordTooShortException;
+
+import java.util.UUID;
 
 @Service
 public class CredentialsService {
@@ -36,6 +39,13 @@ public class CredentialsService {
         if (!credentials.getPassword().contentEquals(dto.getOldPassword()))
             throw new IncorrectPasswordException();
         credentials.setPassword(dto.getNewPassword());
+        credentialsRepository.save(credentials);
+    }
+
+    public void activate(UUID uuid) throws EntityNotFoundException {
+        Credentials credentials = credentialsRepository.getByUuid(uuid.toString());
+        if (credentials == null) throw new EntityNotFoundException("Account");
+        credentials.setActivated(true);
         credentialsRepository.save(credentials);
     }
 }

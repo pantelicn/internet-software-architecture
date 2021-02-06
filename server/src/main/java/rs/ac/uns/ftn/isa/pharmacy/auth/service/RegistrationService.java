@@ -5,14 +5,13 @@ import rs.ac.uns.ftn.isa.pharmacy.auth.dto.RegistrationDto;
 import rs.ac.uns.ftn.isa.pharmacy.auth.model.Credentials;
 import rs.ac.uns.ftn.isa.pharmacy.auth.model.Role;
 import rs.ac.uns.ftn.isa.pharmacy.auth.repository.CredentialsRepository;
-import rs.ac.uns.ftn.isa.pharmacy.domain.locale.Address;
-import rs.ac.uns.ftn.isa.pharmacy.domain.locale.repository.AddressRepository;
 import rs.ac.uns.ftn.isa.pharmacy.domain.locale.repository.CityRepository;
 import rs.ac.uns.ftn.isa.pharmacy.domain.person.Person;
 import rs.ac.uns.ftn.isa.pharmacy.domain.person.repository.PersonRepository;
 import rs.ac.uns.ftn.isa.pharmacy.domain.supply.exceptions.EntityExistsException;
 import rs.ac.uns.ftn.isa.pharmacy.domain.supply.exceptions.EntityNotFoundException;
 import rs.ac.uns.ftn.isa.pharmacy.domain.supply.exceptions.InvalidEntityException;
+import rs.ac.uns.ftn.isa.pharmacy.services.notifiers.EmailService;
 
 import java.util.UUID;
 
@@ -21,19 +20,19 @@ public class RegistrationService {
 
     private final CredentialsRepository credentialsRepository;
     private final PersonRepository personRepository;
-    private final AddressRepository addressRepository;
     private final CityRepository cityRepository;
+    private final EmailService emailService;
 
     public RegistrationService(
             CredentialsRepository credentialsRepository,
             PersonRepository personRepository,
-            AddressRepository addressRepository,
-            CityRepository cityRepository
+            CityRepository cityRepository,
+            EmailService emailService
     ){
         this.credentialsRepository = credentialsRepository;
         this.personRepository = personRepository;
-        this.addressRepository = addressRepository;
         this.cityRepository = cityRepository;
+        this.emailService = emailService;
     }
 
     public void register(RegistrationDto dto)
@@ -45,11 +44,10 @@ public class RegistrationService {
             Person person = mapToPerson(dto);
 
             credentials.setPerson(person);
+            person.setCredentials(credentials);
 
-            Address savedAddress = addressRepository.saveAndFlush(person.getAddress());
-            person.setAddress(savedAddress);
-            personRepository.saveAndFlush(person);
-            credentialsRepository.save(credentials);
+            personRepository.save(person);
+            emailService.sendActivationMessage(credentials);
         }
         else throw new EntityExistsException("Account");
     }

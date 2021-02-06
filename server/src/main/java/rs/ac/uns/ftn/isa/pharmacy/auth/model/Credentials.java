@@ -1,5 +1,6 @@
 package rs.ac.uns.ftn.isa.pharmacy.auth.model;
 
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.Type;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -22,7 +23,7 @@ public class Credentials implements UserDetails {
     private String username;
     private String password;
     private String role;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     private Person person;
     private boolean isActivated;
     private boolean hasLoggedInBefore;
@@ -54,7 +55,7 @@ public class Credentials implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return isActivated;
     }
 
     // Get set
