@@ -41,6 +41,7 @@ public class AuthToken implements IdentityProvider {
         this.role = role;
     }
 
+    @Override
     public long getRoleId() {
         return roleId;
     }

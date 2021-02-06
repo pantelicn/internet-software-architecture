@@ -71,22 +71,24 @@ public class DrugController {
         drugService.deleteById(id);
     }
 
-    @GetMapping("/reservations/{patientId}")
-    public List<DrugReservationDto> findPatientReservations(@PathVariable long patientId) {
-        return drugService.findPatientReservations(patientId).stream()
+    @GetMapping("/reservations")
+    public List<DrugReservationDto> findPatientReservations(HttpServletRequest request) {
+        IdentityProvider identityProvider = HttpRequestUtil.getIdentity(request);
+        return drugService.findPatientReservations(identityProvider.getRoleId()).stream()
                 .map(DrugReservationMapper::objectToDto)
                 .collect(Collectors.toList());
     }
 
-    @PostMapping("/reservations/{patientId}")
-    public void reserve(@RequestBody DrugReservationDto dto, @PathVariable long patientId){
-        drugService.reserve(DrugReservationMapper.dtoToObject(dto), patientId);
+    @PostMapping("/reservations")
+    public void reserve(HttpServletRequest request, @RequestBody DrugReservationDto dto){
+        IdentityProvider identityProvider = HttpRequestUtil.getIdentity(request);
+        drugService.reserve(DrugReservationMapper.dtoToObject(dto), identityProvider.getRoleId());
     }
 
     @DeleteMapping("/reservations/{reservationId}")
     @Secured(Role.PATIENT)
     public void cancel(HttpServletRequest request, @PathVariable long reservationId) {
         IdentityProvider identityProvider = HttpRequestUtil.getIdentity(request);
-        drugService.cancelReservation(reservationId, identityProvider.getUserId());
+        drugService.cancelReservation(reservationId, identityProvider.getRoleId());
     }
 }
