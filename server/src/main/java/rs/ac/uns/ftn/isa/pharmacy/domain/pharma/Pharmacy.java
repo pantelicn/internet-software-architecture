@@ -1,5 +1,6 @@
 package rs.ac.uns.ftn.isa.pharmacy.domain.pharma;
 
+import rs.ac.uns.ftn.isa.pharmacy.domain.finance.Money;
 import rs.ac.uns.ftn.isa.pharmacy.domain.locale.Address;
 import rs.ac.uns.ftn.isa.pharmacy.domain.users.admin.Admin;
 import rs.ac.uns.ftn.isa.pharmacy.domain.users.employee.Shift;
@@ -23,6 +24,8 @@ public class Pharmacy {
     private Admin pharmacyAdmin;
     private String description;
     private double rating;
+    @Embedded
+    private Money counselingPrice;
 
     public long getId() {
         return id;
@@ -78,5 +81,13 @@ public class Pharmacy {
 
     public void setPharmacyAdmin(Admin pharmacyAdmin) {
         this.pharmacyAdmin = pharmacyAdmin;
+    }
+
+    public Money getCounselingPrice() {
+        return counselingPrice;
+    }
+
+    public void setCounselingPrice(Money appointmentPrice) {
+        this.counselingPrice = appointmentPrice;
     }
 }

@@ -62,10 +62,11 @@ public class AppointmentController {
     }
     @GetMapping("/cancel/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void cancelAppointment(@PathVariable long id)
+    @Secured(Role.PATIENT)
+    public void cancelAppointment(HttpServletRequest request, @PathVariable long id)
     {
-        //TODO - Get patient id from header
-        service.cancelPatientAppointment(1, id);
+        IdentityProvider identityProvider = HttpRequestUtil.getIdentity(request);
+        service.cancelPatientAppointment(identityProvider.getRoleId(), id);
     }
     @GetMapping("/examinations/patient-history/{patientId}")
     public List<AppointmentHistoryEntryDto> getExaminationHistory(@PathVariable long patientId){

@@ -101,4 +101,10 @@ public class Term {
     public boolean isInPast() {
         return this.getStart().isBefore(LocalDateTime.now());
     }
+
+    public boolean contains(Term term) {
+        return
+            (this.start.isBefore(term.getStart()) || this.start.isEqual(term.getStart()))
+            && (this.getEnd().isAfter(term.getEnd()) || this.getEnd().isEqual(term.getEnd()));
+    }
 }

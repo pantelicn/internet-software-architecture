@@ -16,6 +16,7 @@ public class Employee {
     private EmployeeType employeeType;
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST},mappedBy = "employee")
     private List<Shift> shifts;
+    private double rating;
 
     public long getId() {
         return id;
@@ -70,5 +71,15 @@ public class Employee {
             if(term.isInRange(shift.getStart(),shift.getEnd()))
                 return shift;
         return null;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        if (rating < 0 || rating > 5)
+            throw new IllegalArgumentException("Invalid employee rating.");
+        this.rating = rating;
     }
 }
