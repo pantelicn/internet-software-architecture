@@ -21,7 +21,7 @@
 
 <script>
 import { format, subHours, isPast } from 'date-fns'
-import { api } from '../api.js'
+import { api } from '../../../api.js'
 import axios from 'axios'
 
 export default {

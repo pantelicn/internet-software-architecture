@@ -23,6 +23,7 @@
     "vue-google-autocomplete": "^1.1.0",
     "vue-place-autocomplete": "^0.5.3",
     "vue-router": "^3.5.0",
+    "vue-star-rating": "^1.7.0",
     "vue-toast-notification": "^0.6.0",
     "vuex": "^3.6.2"
   },

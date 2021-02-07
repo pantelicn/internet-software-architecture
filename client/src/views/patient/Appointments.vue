@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import ScheduledAppointment from '../../components/ScheduledAppointment.vue'
+import ScheduledAppointment from '../../components/patient/appointments/ScheduledAppointment.vue'
 import axios from 'axios'
 import { api } from '../../api.js'
 

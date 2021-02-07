@@ -5,6 +5,7 @@ import rs.ac.uns.ftn.isa.pharmacy.domain.pharma.DrugPrescribed;
 import rs.ac.uns.ftn.isa.pharmacy.domain.pharma.Prescription;
 import rs.ac.uns.ftn.isa.pharmacy.domain.schedule.Appointment;
 import rs.ac.uns.ftn.isa.pharmacy.domain.schedule.AppointmentReport;
+import rs.ac.uns.ftn.isa.pharmacy.domain.schedule.AppointmentType;
 import rs.ac.uns.ftn.isa.pharmacy.dtos.ReportSubmissionDto;
 import rs.ac.uns.ftn.isa.pharmacy.exceptions.AppointmentTimeException;
 import rs.ac.uns.ftn.isa.pharmacy.exceptions.EntityNotFoundException;
@@ -77,8 +78,12 @@ public class AppointmentService {
         } else if (!appointment.getTerm().isInFuture()) {
             throw new AppointmentTimeException();
         }
-        appointment.setPatient(null);
-        appointmentRepository.save(appointment);
+        if(appointment.getType() == AppointmentType.Examination) {
+            appointment.setPatient(null);
+            appointmentRepository.save(appointment);
+        } else {
+            appointmentRepository.deleteById(appointment.getId());
+        }
     }
     public List<Appointment> getPastExaminations(long patientId){
         return appointmentRepository.findExaminationsByPatient(patientId)

@@ -1,5 +1,6 @@
 package rs.ac.uns.ftn.isa.pharmacy.domain.person;
 
+import org.hibernate.annotations.Cascade;
 import rs.ac.uns.ftn.isa.pharmacy.auth.model.Credentials;
 import rs.ac.uns.ftn.isa.pharmacy.domain.locale.Address;
 import rs.ac.uns.ftn.isa.pharmacy.domain.users.user.Gender;
@@ -19,9 +20,9 @@ public class Person {
     private Gender gender;
     private String phoneNumber;
     private LocalDate dateOfBirth;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     private Address address;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     private Credentials credentials;
 
 

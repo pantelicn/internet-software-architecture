@@ -19,9 +19,11 @@ import rs.ac.uns.ftn.isa.pharmacy.auth.service.CredentialsTokenMapper;
 import rs.ac.uns.ftn.isa.pharmacy.auth.service.JwtService;
 import rs.ac.uns.ftn.isa.pharmacy.auth.model.Credentials;
 import rs.ac.uns.ftn.isa.pharmacy.auth.service.RegistrationService;
+import rs.ac.uns.ftn.isa.pharmacy.domain.supply.exceptions.EntityNotFoundException;
 import rs.ac.uns.ftn.isa.pharmacy.domain.supply.exceptions.MessageException;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "api/auth")
@@ -97,6 +99,18 @@ public class AuthController {
             return ResponseEntity.ok().build();
         }
         catch (MessageException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/activate/{stringUuid}")
+    public ResponseEntity<?> activateAccount(@PathVariable String stringUuid) {
+        try {
+            UUID uuid = UUID.fromString(stringUuid);
+            credentialsService.activate(uuid);
+            return ResponseEntity.ok().build();
+        }
+        catch (EntityNotFoundException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }

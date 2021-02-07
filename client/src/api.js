@@ -10,6 +10,7 @@ let patients = '/api/patients'
 let person = '/api/person'
 let storedDrugs = '/api/stored-drugs'
 let timeOff = '/api/time-off'
+let pharmacies = '/api/pharmacies'
 
 
 
@@ -55,7 +56,9 @@ export const api = {
         root: host + scheduling,
         predefined: host + scheduling + '/predefined',
         newExamination: host + scheduling + '/examination',
-        newCounseling: host + scheduling + '/counseling'
+        newCounseling: host + scheduling + '/counseling',
+        patientCounseling: host + scheduling + '/counseling/patient',
+        findPharmacists: host + scheduling + '/counseling/pharmacists'
     },
     patients: {
         root: host + patients,
@@ -71,5 +74,8 @@ export const api = {
     },
     timeOff: {
         root: host + timeOff
+    },
+    pharmacies: {
+        root: host + pharmacies
     }
 }

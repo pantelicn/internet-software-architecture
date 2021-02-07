@@ -25,4 +25,10 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
 
     @Query("select a from Appointment a where a.shift.employee.id =:employeeId")
     List<Appointment> findAppointmentsByEmployee(@Param("employeeId") Long employeeId);
+
+    @Query("select count(a.id) from Appointment a where a.shift.employee.id =:employeeId and a.patient.id =:patientId")
+    int countByPatientAndEmployee(@Param("employeeId") long employeeId, @Param("patientId") long patientId);
+
+    @Query("select count(a.id) from Appointment a where a.shift.pharmacy.id =:pharmacyId and a.patient.id =:patientId")
+    int countByPatientAndPharmacy(@Param("pharmacyId") long pharmacyId, @Param("patientId") long patientId);
 }

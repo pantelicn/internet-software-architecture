@@ -19,6 +19,7 @@ public class Employee {
     private List<Shift> shifts;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "employee")
     private List<TimeOffRequest> timeOffRequests;
+    private double rating;
 
     public long getId() {
         return id;
@@ -81,5 +82,15 @@ public class Employee {
             if(term.isInRange(shift.getStart(),shift.getEnd()))
                 return shift;
         return null;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        if (rating < 0 || rating > 5)
+            throw new IllegalArgumentException("Invalid employee rating.");
+        this.rating = rating;
     }
 }

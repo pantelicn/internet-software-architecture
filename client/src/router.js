@@ -24,6 +24,8 @@ import TimeOffRequest from './views/timeoff/TimeOffRequest.vue'
 import Profile from './views/person/Profile.vue'
 import Drugs from './views/patient/Drugs.vue'
 import Appointments from './views/patient/Appointments.vue'
+import ScheduleCounseling from './views/patient/ScheduleCounseling.vue'
+import Pharmacies from './views/patient/Pharmacies.vue'
 
 const router = new VueRouter({
     mode: 'hash',
@@ -188,6 +190,22 @@ const router = new VueRouter({
 		{
             path: '/patient-drugs',
             component: Drugs
+        },
+        {
+            path: '/patient-schedule/examination/:id',
+            component: ScheduleExamination
+        },
+        {
+            path: '/patient-schedule/counseling',
+            component: ScheduleCounseling
+        },
+        {
+            path: '/patient-appointments',
+            component: Appointments
+        },
+        {
+            path: '/pharmacies',
+            component: Pharmacies
         }
     ]
 })

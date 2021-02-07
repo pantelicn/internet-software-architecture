@@ -4,7 +4,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import rs.ac.uns.ftn.isa.pharmacy.domain.schedule.Appointment;
 import rs.ac.uns.ftn.isa.pharmacy.domain.schedule.AppointmentType;
+import rs.ac.uns.ftn.isa.pharmacy.domain.users.employee.Employee;
+import rs.ac.uns.ftn.isa.pharmacy.domain.users.employee.Shift;
+import rs.ac.uns.ftn.isa.pharmacy.domain.users.employee.Term;
 import rs.ac.uns.ftn.isa.pharmacy.dtos.CreatedAppointmentDto;
+import rs.ac.uns.ftn.isa.pharmacy.dtos.PharmacistCounselingDto;
 import rs.ac.uns.ftn.isa.pharmacy.dtos.PredefinedAppointmentReservationDto;
 import rs.ac.uns.ftn.isa.pharmacy.exceptions.AppointmentTimeException;
 import rs.ac.uns.ftn.isa.pharmacy.exceptions.EmployeeOccupiedException;
@@ -16,6 +20,10 @@ import rs.ac.uns.ftn.isa.pharmacy.repository.schedule.AppointmentRepository;
 import rs.ac.uns.ftn.isa.pharmacy.services.notifiers.EmailService;
 
 import javax.persistence.PersistenceException;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Service
@@ -67,5 +75,26 @@ public class SchedulingService {
         appointment.setShift(shift);
         appointment = appointmentRepository.save(appointment);
         emailService.sendExaminationScheduledMessage(appointment);
+    }
+
+    public List<Shift> findAvailableShiftsForCounseling(LocalDateTime dateTime) {
+        var term = new Term(dateTime, Duration.ofMinutes(30));
+        var shifts = new ArrayList<Shift>();
+        for(var employee: employeeRepository.getPharmacist()) {
+            if(!employee.isOccupied(term)) {
+                var shift = getShift(employee, term);
+                if (shift != null)
+                    shifts.add(shift);
+            }
+        }
+        return shifts;
+    }
+
+    private Shift getShift(Employee employee, Term term) {
+        for (var shift: employee.getShifts()) {
+            if (shift.asTerm().contains(term))
+                return shift;
+        }
+        return null;
     }
 }
