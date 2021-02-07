@@ -195,6 +195,9 @@ values (24, "2021-02-27 13:00:00", "2021-02-27 20:00:00", 1,4);
 insert into isa.shifts (id, start, end, pharmacy_id,employee_id)
 values (25, "2021-02-28 13:00:00", "2021-02-28 20:00:00", 1,4);
 
+insert into isa.shifts (id, start, end, pharmacy_id,employee_id)
+values (26, "2021-02-15 8:00:00", "2021-02-15 17:00:00", 1,4);
+
 insert into isa.drugs (id, additional_notes, drug_type, intake_type, manufacturer, name, requires_prescription)
 values (1, "Gel namenjen za masnu kožu", 4, 5, "MiksaMed", "Dermoidealia gel", false);
 insert into isa.drug_ingredients (drug_id,ingredients) values (1,"Glycerin");
