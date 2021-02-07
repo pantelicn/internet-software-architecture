@@ -30,7 +30,8 @@
                                         v-for="pharmacist in selectedPharmacists" 
                                         v-bind:key="pharmacist.id" 
                                         v-bind:class="{ 'bg-success': pharmacist.id == selectedPharmacist.id }"
-                                        @click="selectedPharmacist = pharmacist">
+                                        @click="selectedPharmacist = pharmacist"
+                                        style="cursor: pointer;">
                                         <td>
                                             {{pharmacist.name}}
                                             {{pharmacist.lastName}}
@@ -92,10 +93,10 @@
                 <th class="p-2 mx-2">
                     Address
                 </th>
-                <th class="p-2 mx-2">
+                <th class="p-2 mx-2" @click="sortByPharmacyRating" style="cursor: pointer;">
                     Rating
                 </th>
-                <th class="p-2 mx-2">
+                <th class="p-2 mx-2" @click="sortByPrice" style="cursor: pointer;">
                     Counseling price
                 </th>
                 <th class="p-2 mx-2"></th>
@@ -135,7 +136,11 @@ export default {
             minDate: addHours(new Date(), 24),
             pharmacists: [],
             selectedPharmacists: [],
-            selectedPharmacist: ''
+            selectedPharmacist: '',
+            nameAscending: false,
+            ratingAscending: false,
+            pharmacyRatingAscending: false,
+            priceAscending: false
         }
     },
     components: {
@@ -151,6 +156,9 @@ export default {
             axios.post(api.scheduling.patientCounseling, dto)
             .then(() => {
                 this.$toast.open("Counseling successfully scheduled.")
+                this.pharmacists = []
+                this.selectedPharmacists = []
+                this.selectedPharmacist = ''
             })
             .catch(error => {
                 this.$toast.error(error.response.data)
@@ -185,10 +193,42 @@ export default {
             return parseFloat(price).toFixed(2)
         },
         sortByName: function () {
-
+            this.selectedPharmacists.sort((p1, p2) => {
+                if (this.nameAscending)
+                    return (p2.name + p2.lastName).localeCompare(p1.name + p1.lastName)
+                return (p1.name + p1.lastName).localeCompare(p2.name + p2.lastName)
+            })
+            this.nameAscending = !this.nameAscending
         },
         sortByRating: function () {
-
+            this.selectedPharmacists.sort((p1, p2) => {
+                if (p1.rating < p2.rating)
+                    return this.ratingAscending ? -1 : 1
+                else if (p1.rating > p2.rating)
+                    return this.ratingAscending ? 1 : -1
+                return 0
+            })
+            this.ratingAscending = !this.ratingAscending
+        },
+        sortByPrice: function () {
+            this.pharmacists.sort((p1, p2) => {
+                if (p1.counselingPrice.amount < p2.counselingPrice.amount)
+                    return this.priceAscending ? -1 : 1
+                else if (p1.counselingPrice.amount > p2.counselingPrice.amount)
+                    return this.priceAscending ? 1 : -1
+                return 0
+            })
+            this.priceAscending = !this.priceAscending
+        },
+        sortByPharmacyRating: function () {
+            this.pharmacists.sort((p1, p2) => {
+                if (p1.pharmacyRating < p2.pharmacyRating)
+                    return this.pharmacyRatingAscending ? -1 : 1
+                else if (p1.pharmacyRating > p2.pharmacyRating)
+                    return this.pharmacyRatingAscending ? 1 : -1
+                return 0
+            })
+            this.pharmacyRatingAscending = !this.pharmacyRatingAscending
         }
     }
 }
