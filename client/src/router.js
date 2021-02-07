@@ -19,6 +19,7 @@ import CounselingReportStepFour from './views/pharmacist/report/steps/Counseling
 import Drugs from './views/patient/Drugs.vue'
 import Appointments from './views/patient/Appointments.vue'
 import ScheduleCounseling from './views/patient/ScheduleCounseling.vue'
+import Pharmacies from './views/patient/Pharmacies.vue'
 
 export const router = new VueRouter({
     mode: 'hash',
@@ -32,7 +33,7 @@ export const router = new VueRouter({
             component:Login
         },
         {
-            path: '/patient-schedule/examination',
+            path: '/patient-schedule/examination/:id',
             component: ScheduleExamination
         },
         {
@@ -122,6 +123,10 @@ export const router = new VueRouter({
 		{
             path: '/patient-drugs',
             component: Drugs
+        },
+        {
+            path: '/pharmacies',
+            component: Pharmacies
         }
     ]
 })

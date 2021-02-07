@@ -32,6 +32,7 @@ public class SchedulingController {
 
     @PutMapping("/predefined")
     public ResponseEntity<?> schedulePredefinedAppointment(@RequestBody PredefinedAppointmentReservationDto appointmentReservation){
+        //TODO - za pacijenta njegov id treba da se vadi iz headera
         schedulingService.schedulePredefinedAppointment(appointmentReservation);
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }

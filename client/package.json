@@ -20,6 +20,7 @@
     "v-calendar": "^2.2.2",
     "vue": "^2.6.11",
     "vue-router": "^3.5.0",
+    "vue-star-rating": "^1.7.0",
     "vue-toast-notification": "^0.6.0",
     "vuex": "^3.6.2"
   },

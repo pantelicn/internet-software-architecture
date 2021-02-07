@@ -8,6 +8,7 @@ let employees = '/api/employees'
 let scheduling = '/api/schedule'
 let patients = '/api/patients'
 let storedDrugs = '/api/stored-drugs'
+let pharmacies = '/api/pharmacies'
 
 
 
@@ -65,5 +66,8 @@ export const api = {
         profilePreview: host + patients + '/profile-preview/',
         isAllergic: host + patients + '/is-allergic'
         
+    },
+    pharmacies: {
+        root: host + pharmacies
     }
 }

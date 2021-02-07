@@ -88,8 +88,7 @@ export default {
         }
     },
     mounted: function () {
-        //TODO - Get pharmacy id dynamically
-        axios.get(api.appointments.root + '/1')
+        axios.get(api.appointments.root + '/' + this.$route.params.id)
         .then(response => {
             this.freeAppointments = response.data
         })
