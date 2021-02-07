@@ -114,7 +114,7 @@ public class DrugService {
         }
     }
 
-    private void updateStoredDrugQuantity(long storedDrugId, int quantity) {
+    public void updateStoredDrugQuantity(long storedDrugId, int quantity) {
         var storedDrug = storedDrugRepository.findById(storedDrugId)
                 .orElseThrow(() -> new EntityNotFoundException(StoredDrug.class.getSimpleName(), storedDrugId));
         storedDrug.setQuantity(storedDrug.getQuantity() + quantity);
@@ -127,5 +127,9 @@ public class DrugService {
 
     public List<Drug> getAlternatives(long drugId) {
         return drugRepository.getOne(drugId).getAlternatives();
+    }
+
+    public List<DrugReservation> findExpired(LocalDate now) {
+        return drugReservationRepository.findExpired(now);
     }
 }

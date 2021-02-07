@@ -11,11 +11,11 @@ import java.util.List;
 
 @Component
 public class ScheduledReservationsCheck {
-    private final DrugReservationRepository drugReservationRepository;
+    private final DrugService drugService;
     private final PatientService patientService;
 
-    public ScheduledReservationsCheck(DrugReservationRepository drugReservationRepository, PatientService patientService) {
-        this.drugReservationRepository = drugReservationRepository;
+    public ScheduledReservationsCheck(DrugService drugService, PatientService patientService) {
+        this.drugService = drugService;
         this.patientService = patientService;
     }
 
@@ -26,11 +26,12 @@ public class ScheduledReservationsCheck {
     }
 
     private void penalize() {
-        List<DrugReservation> expiredReservations = drugReservationRepository.findExpired(LocalDate.now());
+        List<DrugReservation> expiredReservations = drugService.findExpired(LocalDate.now());
         for (var reservation: expiredReservations) {
             reservation.getPatient().penalize();
             patientService.update(reservation.getPatient(), reservation.getPatient().getId());
-            drugReservationRepository.deleteById(reservation.getId());
+            drugService.deleteById(reservation.getId());
+            drugService.updateStoredDrugQuantity(reservation.getStoredDrug().getId(), reservation.getQuantity());
         }
         System.out.println(expiredReservations.size() + " penalties given.");
     }
