@@ -56,6 +56,7 @@ export const api = {
         predefined: host + scheduling + '/predefined',
         newExamination: host + scheduling + '/examination',
         newCounseling: host + scheduling + '/counseling',
+        patientCounseling: host + scheduling + '/counseling/patient',
         findPharmacists: host + scheduling + '/counseling/pharmacists'
     },
     patients: {

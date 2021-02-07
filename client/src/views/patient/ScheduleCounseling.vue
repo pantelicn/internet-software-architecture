@@ -143,10 +143,18 @@ export default {
     },
     methods: {
         schedule: function () {
-            axios.post()
-            .then(response => {
+            let dto = {
+                pharmacyId: this.selectedPharmacist.pharmacyId,
+                employeeId: this.selectedPharmacist.id,
+                start: this.date,
+            }
+            axios.post(api.scheduling.patientCounseling, dto)
+            .then(() => {
+                this.$toast.open("Counseling successfully scheduled.")
             })
-            .catch()
+            .catch(error => {
+                this.$toast.error(error.response.data)
+            })
         },
         select: function (pharmacyId) {
             this.selectedPharmacists = []
