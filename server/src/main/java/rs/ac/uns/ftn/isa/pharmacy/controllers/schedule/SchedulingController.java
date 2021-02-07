@@ -13,7 +13,6 @@ import rs.ac.uns.ftn.isa.pharmacy.dtos.PharmacistCounselingDto;
 import rs.ac.uns.ftn.isa.pharmacy.dtos.PredefinedAppointmentReservationDto;
 import rs.ac.uns.ftn.isa.pharmacy.mappers.PharmacistCounselingMapper;
 import rs.ac.uns.ftn.isa.pharmacy.services.schedule.SchedulingService;
-
 import javax.servlet.http.HttpServletRequest;
 import java.time.Duration;
 import java.time.LocalDateTime;
