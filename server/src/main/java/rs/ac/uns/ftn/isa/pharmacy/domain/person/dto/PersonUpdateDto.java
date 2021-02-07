@@ -3,13 +3,17 @@ package rs.ac.uns.ftn.isa.pharmacy.domain.person.dto;
 import rs.ac.uns.ftn.isa.pharmacy.domain.locale.Address;
 import rs.ac.uns.ftn.isa.pharmacy.domain.users.user.Gender;
 
+import java.time.LocalDate;
+
 public class PersonUpdateDto {
     private String firstName;
     private String lastName;
     private Gender gender;
     private String phoneNumber;
     private Address address;
-    private long personId;
+    private LocalDate dateOfBirth;
+    private String pid;
+    private long id;
 
     public String getFirstName() {
         return firstName;
@@ -51,11 +55,27 @@ public class PersonUpdateDto {
         this.address = address;
     }
 
-    public long getPersonId() {
-        return personId;
+    public long getId() {
+        return id;
     }
 
-    public void setPersonId(long personId) {
-        this.personId = personId;
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public LocalDate getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(LocalDate dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public String getPid() {
+        return pid;
+    }
+
+    public void setPid(String pid) {
+        this.pid = pid;
     }
 }

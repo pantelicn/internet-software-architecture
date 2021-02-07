@@ -16,11 +16,11 @@
             <b-navbar-nav class="ml-auto">
                 <b-nav-item-dropdown right>
                     <template #button-content>
-                        Pharmacist name
+                        Pharmacist {{name.firstName + " " + name.lastName}}
                     </template>
-                    <b-dropdown-item href="#">Profile</b-dropdown-item>
+                    <b-dropdown-item to="/pharmacist/my-profile">Profile</b-dropdown-item>
                     <b-dropdown-divider></b-dropdown-divider>
-                    <b-dropdown-item href="#">Request time off</b-dropdown-item>
+                    <b-dropdown-item to="/pharmacist/time-off">Request time off</b-dropdown-item>
                     <b-dropdown-item href="#">Calendar</b-dropdown-item>
                     <b-dropdown-divider></b-dropdown-divider>
                     <b-dropdown-item @click="logout()">Sign Out</b-dropdown-item>
@@ -33,14 +33,29 @@
 
 <script>
 import { clearJwt } from '../../helpers/jwt.js'
+import axios from 'axios'
+import { api } from '../../api.js'
 export default {
     name:'PharmacistNavBar',
+    data() {
+        return {
+            name:null
+        }
+    },
     methods: {
         logout(){
             clearJwt()
             this.$router.push({ name: 'login' })
-
+        },
+        getName(){
+            axios.get(api.person.name)
+            .then(res => {
+                this.name = res.data
+            })
         }
     },
+    mounted(){
+        this.getName()
+    }
 }
 </script>

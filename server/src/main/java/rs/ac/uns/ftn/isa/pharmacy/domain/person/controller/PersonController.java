@@ -1,6 +1,5 @@
 package rs.ac.uns.ftn.isa.pharmacy.domain.person.controller;
 
-import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -10,13 +9,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import rs.ac.uns.ftn.isa.pharmacy.auth.HttpRequestUtil;
 import rs.ac.uns.ftn.isa.pharmacy.auth.model.Role;
-import rs.ac.uns.ftn.isa.pharmacy.domain.person.Person;
 import rs.ac.uns.ftn.isa.pharmacy.domain.person.dto.PersonUpdateDto;
 import rs.ac.uns.ftn.isa.pharmacy.domain.person.service.PersonService;
 import rs.ac.uns.ftn.isa.pharmacy.domain.supply.exceptions.EntityNotFoundException;
 import rs.ac.uns.ftn.isa.pharmacy.domain.supply.exceptions.MessageException;
 import rs.ac.uns.ftn.isa.pharmacy.dtos.CredentialsDto;
 import rs.ac.uns.ftn.isa.pharmacy.dtos.PersonDto;
+import rs.ac.uns.ftn.isa.pharmacy.dtos.PersonNameDto;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -45,12 +44,23 @@ public class PersonController {
         }
     }
 
+    @GetMapping("/name")
+    @Secured({Role.SUPPLIER,Role.PATIENT,Role.PHARMACIST,Role.DERMATOLOGIST})
+    public ResponseEntity<?> getFullName(HttpServletRequest request){
+        var identityProvider = HttpRequestUtil.getIdentity(request);
+        try {
+            var personNameDto = new PersonNameDto(personService.get(identityProvider.getUserId()));
+            return ResponseEntity.ok(personNameDto);
+        }catch (EntityNotFoundException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 
     @PutMapping
     @Secured({Role.SUPPLIER, Role.PATIENT, Role.DERMATOLOGIST, Role.PHARMACIST})
     public ResponseEntity<?> update(HttpServletRequest request, @RequestBody PersonUpdateDto dto) {
         var identityProvider = HttpRequestUtil.getIdentity(request);
-        dto.setPersonId(identityProvider.getUserId());
+        dto.setId(identityProvider.getUserId());
         try {
             personService.update(dto);
             return ResponseEntity.ok().build();

@@ -22,12 +22,12 @@ public class PersonService {
         var person = personRepository.
                 findById(personId).
                 orElseThrow(() -> new EntityNotFoundException(Person.class.getSimpleName()));
-        var personCredentials = updateCredentials(person,credentialsDto);
+        var personCredentials = mapCredentials(person,credentialsDto);
         person.setCredentials(personCredentials);
         personRepository.save(person);
     }
 
-    public Credentials updateCredentials(Person person, CredentialsDto credentialsDto){
+    public Credentials mapCredentials(Person person, CredentialsDto credentialsDto){
         var personCredentials = person.getCredentials();
         personCredentials.setEmail(credentialsDto.getEmail());
         personCredentials.setPassword(credentialsDto.getPassword());
@@ -42,7 +42,7 @@ public class PersonService {
     }
 
     public void update(PersonUpdateDto dto) throws EntityNotFoundException, InvalidEntityException {
-        var optionalPerson = personRepository.findById(dto.getPersonId());
+        var optionalPerson = personRepository.findById(dto.getId());
         if (optionalPerson.isEmpty())
             throw new EntityNotFoundException("Person");
         var person = optionalPerson.get();
@@ -59,6 +59,8 @@ public class PersonService {
         if (dto.getLastName() != null) person.setLastName(dto.getLastName());
         if (dto.getGender() != null) person.setGender(dto.getGender());
         if (dto.getPhoneNumber() != null) person.setPhoneNumber(dto.getPhoneNumber());
+        if (dto.getPid() != null) person.setPid(dto.getPid());
+        if (dto.getDateOfBirth() != null) person.setDateOfBirth(dto.getDateOfBirth());
         if (dto.getAddress() != null) {
             dto.getAddress().validate();
 
@@ -71,4 +73,5 @@ public class PersonService {
             person.getAddress().getCity().getCountry().setCode(dto.getAddress().getCity().getCountry().getCode());
         }
     }
+
 }

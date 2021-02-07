@@ -1,4 +1,5 @@
 <template>
+
   <div id="app">
     <router-view/>
   </div>
@@ -7,6 +8,11 @@
 <script>
 export default {
   name: 'App',
+  mounted() {
+        let placesImport = document.createElement('script');
+            placesImport.setAttribute('src', "https://maps.googleapis.com/maps/api/js?key=AIzaSyAT-T7ngofAB9KXFewCksAfTWiuqx8-WCk&libraries=places")
+            document.head.appendChild(placesImport)
+    }
 }
 </script>
 
@@ -24,7 +30,7 @@ export default {
 #app a {
   color: #42b983;
 }
-#app .dropdown-menu{
+#app .dropdown-menu-right{
     background-color: #393f45 !important;
 }
 #app hr {

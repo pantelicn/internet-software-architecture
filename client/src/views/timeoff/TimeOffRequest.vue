@@ -71,7 +71,7 @@ export function getTomorrowsDate() {
 }
 import axios from 'axios'
 import { api } from '../../api.js'
-import { getRoleId } from '../../helpers/jwt.js'
+import { getRoleId, getRole } from '../../helpers/jwt.js'
 
 import DatePicker from 'v-calendar/lib/components/date-picker.umd'
 export default {
@@ -119,12 +119,11 @@ export default {
                 });
             })
         },
-        refreshData(){
-            this.selected = this.select
-            this.range.start = getTomorrowsDate(),
-            this.range.end = getTomorrowsDate(),
-            this.info = ''
-
+        reroute(){
+            if(getRole() == "ROLE_PHARMACIST")
+                this.$router.push({ name: 'upcoming-counselings' })
+            else if(getRole() == "ROLE_DERMATOLOGIST")
+                this.$router.push({ name: "upcoming-examinations"})
         },
         submit(){
             let timeOffRequestDto = {
@@ -137,7 +136,7 @@ export default {
             
             axios.post(api.timeOff.root,timeOffRequestDto).then(res => {
                 this.$toast.open('Time off request successfully submitted!')
-                this.refreshData()
+                this.reroute()
             })
         }
     },

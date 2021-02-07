@@ -21,6 +21,7 @@ import CounselingReportStepTwo from './views/pharmacist/report/steps/CounselingR
 import CounselingReportStepThree from './views/pharmacist/report/steps/CounselingReportStepThree.vue'
 import CounselingReportStepFour from './views/pharmacist/report/steps/CounselingReportStepFour.vue'
 import TimeOffRequest from './views/timeoff/TimeOffRequest.vue'
+import Profile from './views/person/Profile.vue'
 import Drugs from './views/patient/Drugs.vue'
 import Appointments from './views/patient/Appointments.vue'
 
@@ -68,6 +69,12 @@ const router = new VueRouter({
                     name: 'dermatologist-time-off',
                     component: TimeOffRequest,
                     meta: { requiresDermaAuth: true}
+                },
+                {
+                    path: 'my-profile',
+                    name: 'dermatologist-profile',
+                    component: Profile,
+                    meta: { requiresDermaAuth: true }
                 },
                 {
                     path: 'examination-report',
@@ -121,6 +128,18 @@ const router = new VueRouter({
                     path: 'counseled-patients',
                     name: 'counseled-patients',
                     component: CounseledPatients,
+                    meta: { requiresPharmaAuth: true }
+                },
+                {
+                    path: 'time-off',
+                    name: 'pharmacist-time-off',
+                    component: TimeOffRequest,
+                    meta: { requiresPharmaAuth: true}
+                },
+                {
+                    path: 'my-profile',
+                    name: 'pharmacist-profile',
+                    component: Profile,
                     meta: { requiresPharmaAuth: true }
                 },
                 {
