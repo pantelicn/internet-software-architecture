@@ -26,6 +26,7 @@ public class Credentials implements UserDetails {
     private Person person;
     private boolean isActivated;
     private boolean hasLoggedInBefore;
+    public static int MIN_PASSWORD_LEN = 6;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

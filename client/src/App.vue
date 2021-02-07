@@ -27,7 +27,10 @@ export default {
 #app .dropdown-menu{
     background-color: #393f45 !important;
 }
-#app .dropdown-divider {
+#app hr {
     border-color : rgb(58, 92, 75) !important;
+}
+#app .modal-footer{
+  border-top:1px solid #4f5357 !important;
 }
 </style>

@@ -60,13 +60,15 @@ update isa.persons set credentials_email="mail1@gmail.com" where id=3;
 insert into isa.persons (id,pid, date_of_birth, first_name, gender, last_name, phone_number, address_id)
 values (4,"021099110218", "1992-01-12 8:00:00", "Sage", 0, "Finley", "0632312312", 5);
 insert into isa.credentials (email,username,is_activated,has_logged_in_before,password,role,uid,person_id) 
-values ("sagefinley@gmail.com","sagefinley",1,1,"password","ROLE_DERMATOLOGIST",'6f922cc2-a137-4be5-9f34-9d38a252b948',6);
+values ("sagefinley@gmail.com","sagefinley",1,0,"password","ROLE_DERMATOLOGIST",'6f922cc2-a137-4be5-9f34-9d38a252b948',4);
 update isa.persons set credentials_email="sagefinley@gmail.com" where id=4;
 insert into isa.employees(id,employee_type,person_id) values (1,1,4);
 
-
 insert into isa.persons (id, pid, date_of_birth, first_name, gender, last_name, phone_number, address_id)
 values (5,"031099310218", "1992-09-09 8:00:00", "Mackenzie", 0, "Ashton", "0612935123", 6);
+insert into isa.credentials (email,username,is_activated,has_logged_in_before,password,role,uid,person_id) 
+values ("mickeyashton@gmail.com","mickeyashton",1,1,"password","ROLE_PHARMACIST",'6f192cc2-a137-4be5-9f34-9d38a252b948',5);
+update isa.persons set credentials_email="mickeyashton@gmail.com" where id=5;
 insert into isa.employees(id,employee_type,person_id) values (2,1,5);
 
 insert into isa.persons (id, pid, date_of_birth, first_name, gender, last_name, phone_number, address_id)

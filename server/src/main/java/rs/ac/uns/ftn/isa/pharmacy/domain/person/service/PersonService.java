@@ -1,11 +1,13 @@
 package rs.ac.uns.ftn.isa.pharmacy.domain.person.service;
 
 import org.springframework.stereotype.Service;
+import rs.ac.uns.ftn.isa.pharmacy.auth.model.Credentials;
 import rs.ac.uns.ftn.isa.pharmacy.domain.person.Person;
 import rs.ac.uns.ftn.isa.pharmacy.domain.person.dto.PersonUpdateDto;
 import rs.ac.uns.ftn.isa.pharmacy.domain.person.repository.PersonRepository;
 import rs.ac.uns.ftn.isa.pharmacy.domain.supply.exceptions.EntityNotFoundException;
 import rs.ac.uns.ftn.isa.pharmacy.domain.supply.exceptions.InvalidEntityException;
+import rs.ac.uns.ftn.isa.pharmacy.dtos.CredentialsDto;
 
 @Service
 public class PersonService {
@@ -14,6 +16,29 @@ public class PersonService {
 
     public PersonService(PersonRepository personRepository) {
         this.personRepository = personRepository;
+    }
+
+    public void updateCredentials(CredentialsDto credentialsDto, long personId) throws EntityNotFoundException {
+        var person = personRepository.
+                findById(personId).
+                orElseThrow(() -> new EntityNotFoundException(Person.class.getSimpleName()));
+        var personCredentials = updateCredentials(person,credentialsDto);
+        person.setCredentials(personCredentials);
+        personRepository.save(person);
+    }
+
+    public Credentials updateCredentials(Person person, CredentialsDto credentialsDto){
+        var personCredentials = person.getCredentials();
+        personCredentials.setEmail(credentialsDto.getEmail());
+        personCredentials.setPassword(credentialsDto.getPassword());
+        personCredentials.setUsername(credentialsDto.getUsername());
+        return personCredentials;
+    }
+
+    public Person get(long personId) throws EntityNotFoundException {
+        return personRepository
+                .findById(personId)
+                .orElseThrow(() -> new EntityNotFoundException(Person.class.getSimpleName()));
     }
 
     public void update(PersonUpdateDto dto) throws EntityNotFoundException, InvalidEntityException {

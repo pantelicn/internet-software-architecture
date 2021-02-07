@@ -14,7 +14,9 @@ let timeOff = '/api/time-off'
 
 export const api = {
     auth: { 
-        login: host + auth + '/login'
+        login: host + auth + '/login', 
+        hasLoggedBefore: host + auth + '/logged',
+        changePassword: host + auth + '/change-password'
     }
     ,
     appointments: {

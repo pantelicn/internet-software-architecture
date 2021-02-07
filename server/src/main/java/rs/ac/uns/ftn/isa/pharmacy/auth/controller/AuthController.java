@@ -10,6 +10,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import rs.ac.uns.ftn.isa.pharmacy.auth.HttpRequestUtil;
+import rs.ac.uns.ftn.isa.pharmacy.auth.IdentityProvider;
 import rs.ac.uns.ftn.isa.pharmacy.auth.dto.PassChangeDto;
 import rs.ac.uns.ftn.isa.pharmacy.auth.dto.RegistrationDto;
 import rs.ac.uns.ftn.isa.pharmacy.auth.model.Role;
@@ -54,9 +55,6 @@ public class AuthController {
                             new UsernamePasswordAuthenticationToken(loginDto.email, loginDto.password)
                     );
             Credentials credentials = (Credentials) authenticate.getPrincipal();
-
-            credentialsService.logLogin(loginDto.email);
-
             return ResponseEntity.ok()
                     .header(
                         HttpHeaders.AUTHORIZATION,
@@ -80,18 +78,22 @@ public class AuthController {
     }
 
     @GetMapping("logged")
-    @Secured(Role.SUPPLIER)
+    @Secured({Role.SUPPLIER, Role.DERMATOLOGIST, Role.PHARMACIST})
     public ResponseEntity<?> hasLoggedInBefore(HttpServletRequest request) {
         var identityProvider = HttpRequestUtil.getIdentity(request);
         return ResponseEntity.ok(credentialsService.hasLoggedIn(identityProvider.getEmail()));
     }
 
     @PostMapping("change-password")
-    @Secured({Role.SUPPLIER})
+    @Secured({Role.SUPPLIER, Role.DERMATOLOGIST, Role.PHARMACIST})
     public ResponseEntity<?> changePassword(HttpServletRequest request, @RequestBody PassChangeDto dto) {
         var identityProvider = HttpRequestUtil.getIdentity(request);
         try {
             credentialsService.changePassword(identityProvider.getEmail(), dto);
+
+            if(!credentialsService.hasLoggedIn(identityProvider.getEmail()))
+                credentialsService.logLogin(identityProvider.getEmail());
+
             return ResponseEntity.ok().build();
         }
         catch (MessageException e) {

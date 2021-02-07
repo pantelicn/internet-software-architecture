@@ -1,22 +1,13 @@
 package rs.ac.uns.ftn.isa.pharmacy.auth.dto;
 
 public class PassChangeDto {
-    private String oldPassword;
-    private String newPassword;
+    private String password;
 
-    public String getOldPassword() {
-        return oldPassword;
+    public String getPassword() {
+        return password;
     }
 
-    public void setOldPassword(String oldPassword) {
-        this.oldPassword = oldPassword;
-    }
-
-    public String getNewPassword() {
-        return newPassword;
-    }
-
-    public void setNewPassword(String newPassword) {
-        this.newPassword = newPassword;
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
