@@ -4,6 +4,10 @@ import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.isa.pharmacy.pharma.domain.Drug;
 import rs.ac.uns.ftn.isa.pharmacy.pharma.domain.DrugReservation;
 import rs.ac.uns.ftn.isa.pharmacy.pharma.domain.StoredDrug;
+import rs.ac.uns.ftn.isa.pharmacy.pharma.dtos.DrugCreationDto;
+import rs.ac.uns.ftn.isa.pharmacy.supply.exceptions.EntityExistsException;
+import rs.ac.uns.ftn.isa.pharmacy.supply.exceptions.InvalidEntityException;
+import rs.ac.uns.ftn.isa.pharmacy.supply.exceptions.MessageException;
 import rs.ac.uns.ftn.isa.pharmacy.users.user.Patient;
 import rs.ac.uns.ftn.isa.pharmacy.pharma.exceptions.DateException;
 import rs.ac.uns.ftn.isa.pharmacy.exceptions.EntityAlreadyExistsException;
@@ -17,6 +21,7 @@ import rs.ac.uns.ftn.isa.pharmacy.mail.services.EmailService;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DrugService {
@@ -40,11 +45,23 @@ public class DrugService {
                 .orElseThrow(() -> new EntityNotFoundException(Drug.class.getSimpleName(), id));
     }
 
-    public Drug create(Drug drug) {
-        if (drugRepository.existsById(drug.getId())) {
-            throw new EntityAlreadyExistsException("Drug", drug.getId());
+    public Drug create(DrugCreationDto dto) throws MessageException {
+        if (dto.getDrug() == null) throw new InvalidEntityException("Drug");
+        dto.getDrug().validate();
+
+        if (drugRepository.existsById(dto.getDrug().getId()))
+            throw new EntityExistsException(dto.getDrug().getName());
+
+        if (dto.getDrug().getAlternatives() != null) {
+            for (var alt : dto.getDrug().getAlternatives()) {
+                Optional<Drug> optionalDrug = drugRepository.findById(alt.getId());
+                if (optionalDrug.isEmpty())
+                    throw new MessageException("Alternative mentioned is nonexistent [" + alt.getId() + "].");
+                dto.getDrug().getAlternatives().add(optionalDrug.get());
+            }
         }
-        return drugRepository.save(drug);
+
+        return drugRepository.save(dto.getDrug());
     }
 
     public Drug update(Drug newDrug, Long id) {

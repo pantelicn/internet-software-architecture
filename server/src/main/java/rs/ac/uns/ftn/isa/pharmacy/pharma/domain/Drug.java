@@ -1,6 +1,7 @@
 package rs.ac.uns.ftn.isa.pharmacy.pharma.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import rs.ac.uns.ftn.isa.pharmacy.supply.exceptions.InvalidEntityException;
 
 import javax.persistence.*;
 import java.util.List;
@@ -21,6 +22,15 @@ public class Drug {
     @ManyToMany(fetch = FetchType.LAZY)
     private List<Drug> alternatives;
     private String additionalNotes;
+
+    public void validate() throws InvalidEntityException {
+        if (name == null) throw new InvalidEntityException("Name");
+        if (drugType == null) throw new InvalidEntityException("Drug type");
+        if (intakeType == null) throw new InvalidEntityException("Intake type");
+        if (ingredients == null || ingredients.isEmpty()) throw new InvalidEntityException("Ingredients");
+        if (manufacturer == null) throw new InvalidEntityException("Manufacturer");
+        if (additionalNotes == null) throw new InvalidEntityException("Additional notes");
+    }
 
     public enum IntakeType {
         CAPSULE, POWDER, OINTMENT, TABLET, PASTE, GEL, SYRUP, SOLUTION
