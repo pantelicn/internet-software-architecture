@@ -36,9 +36,21 @@
                     <router-link class="dropdown-item" to="/patient/profile">Profile</router-link>
                     <router-link class="dropdown-item" to="/">Penalties</router-link>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Log out</a>
+                    <a class="dropdown-item" href="#" @click="logout">Log out</a>
                 </div>
             </div>
         </div>
     </nav>
 </template>
+
+<script>
+import { clearJwt } from '../../helpers/jwt.js'
+export default {
+    methods: {
+        logout: function () {
+            clearJwt()
+            this.$router.push({ name: 'login' })
+        },
+    }
+}
+</script>

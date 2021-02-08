@@ -82,6 +82,9 @@ export default {
             else if(role == "ROLE_DERMATOLOGIST"){
                 this.$router.push('/dermatologist/')
             }
+            else if(role == "ROLE_PATIENT") {
+                this.$router.push('/patient')
+            }
         },
         login(){
             let credentials = {

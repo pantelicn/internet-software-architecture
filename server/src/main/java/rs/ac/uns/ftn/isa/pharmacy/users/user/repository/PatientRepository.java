@@ -18,4 +18,8 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
     List<Patient> getAppointedBy(long employeeId);
 
     Patient findByPersonId(long personId);
+
+    @Modifying
+    @Query("update Patient p set p.penalties = 0 where p.penalties > 0")
+    void eraseAllPenalties();
 }

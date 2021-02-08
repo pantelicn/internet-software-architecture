@@ -192,6 +192,7 @@ const router = new VueRouter({
         {
             path: '/patient',
             component: PatientHome,
+            meta: { requiresPatientAuth: true },
             children: [
                 {
                     path: '',
@@ -229,7 +230,8 @@ router.beforeEach((to, from, next) => {
                 next({ name: 'upcoming-examinations' })
             }else if( getRole() === 'ROLE_PHARMACIST')
                 next({ name: 'upcoming-counselings' })
-            
+            else if (getRole() === 'ROLE_PATIENT')
+                next({ path: '/patient'})
         }else next()
 
     }
@@ -241,6 +243,11 @@ router.beforeEach((to, from, next) => {
     }
     else if( to.matched.some( record => record.meta.requiresPharmaAuth )){
         if( getRole() !== 'ROLE_PHARMACIST')
+            next({ name: 'insufficient-permissions' })
+        else next()
+    }
+    else if(to.matched.some(record => record.meta.requiresPatientAuth)) {
+        if (getRole() !== 'ROLE_PATIENT')
             next({ name: 'insufficient-permissions' })
         else next()
     }
