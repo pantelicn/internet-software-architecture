@@ -1,6 +1,7 @@
 package rs.ac.uns.ftn.isa.pharmacy.services.patients;
 
 import org.springframework.stereotype.Service;
+import rs.ac.uns.ftn.isa.pharmacy.domain.pharma.Drug;
 import rs.ac.uns.ftn.isa.pharmacy.domain.users.user.Patient;
 import rs.ac.uns.ftn.isa.pharmacy.exceptions.EntityNotFoundException;
 import rs.ac.uns.ftn.isa.pharmacy.repository.patients.PatientRepository;
@@ -40,5 +41,12 @@ public class PatientService {
 
     public Patient findByPersonId(long id) {
         return repository.findByPersonId(id);
+    }
+
+    public void updateAllergies(List<Drug> drugs, long patientId) {
+        Patient patient = repository.findById(patientId)
+                .orElseThrow(() -> new EntityNotFoundException(Patient.class.getSimpleName(), patientId));
+        patient.setAllergicTo(drugs);
+        repository.save(patient);
     }
 }

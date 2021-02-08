@@ -50,7 +50,7 @@ export default {
     },
     methods: {
         schedule: function (pharmacyId) {
-            this.$router.push('/patient-schedule/examination/' + pharmacyId)
+            this.$router.push('/patient/schedule/examination/' + pharmacyId)
         },
         sortByName: function () {
             this.pharmacies.sort((p1, p2) => {
