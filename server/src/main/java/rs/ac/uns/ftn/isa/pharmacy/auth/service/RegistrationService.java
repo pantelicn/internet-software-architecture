@@ -12,6 +12,7 @@ import rs.ac.uns.ftn.isa.pharmacy.supply.exceptions.EntityExistsException;
 import rs.ac.uns.ftn.isa.pharmacy.supply.exceptions.EntityNotFoundException;
 import rs.ac.uns.ftn.isa.pharmacy.supply.exceptions.InvalidEntityException;
 import rs.ac.uns.ftn.isa.pharmacy.mail.services.EmailService;
+import rs.ac.uns.ftn.isa.pharmacy.users.user.Patient;
 
 import java.util.UUID;
 
@@ -35,19 +36,26 @@ public class RegistrationService {
         this.emailService = emailService;
     }
 
-    public void register(RegistrationDto dto)
+    public Person registerPatient(RegistrationDto dto)
+            throws EntityExistsException, EntityNotFoundException, InvalidEntityException
+    {
+        return register(dto, Role.PATIENT);
+    }
+
+    public Person register(RegistrationDto dto, String role)
             throws InvalidEntityException, EntityExistsException, EntityNotFoundException
     {
         validateClientData(dto);
         if (credentialsRepository.findById(dto.getEmail()).isEmpty()) {
-            Credentials credentials = mapToCredentials(dto);
+            Credentials credentials = mapToCredentials(dto, role);
             Person person = mapToPerson(dto);
 
             credentials.setPerson(person);
             person.setCredentials(credentials);
 
-            personRepository.save(person);
+            Person savedPerson = personRepository.saveAndFlush(person);
             emailService.sendActivationMessage(credentials);
+            return savedPerson;
         }
         else throw new EntityExistsException("Account");
     }
@@ -65,15 +73,15 @@ public class RegistrationService {
         return person;
     }
 
-    private Credentials mapToCredentials(RegistrationDto dto) {
+    private Credentials mapToCredentials(RegistrationDto dto, String role) {
         Credentials credentials = new Credentials();
 
         credentials.setActivated(false);
-        credentials.setHasLoggedInBefore(false);
+        credentials.setHasChangedInitialPassword(false);
         credentials.setUid(UUID.randomUUID());
         credentials.setEmail(dto.getEmail());
         credentials.setPassword(dto.getPassword());
-        credentials.setRole(Role.PATIENT);
+        credentials.setRole(role);
 
         return credentials;
     }

@@ -25,7 +25,8 @@ public class Credentials implements UserDetails {
     @OneToOne(cascade = CascadeType.PERSIST)
     private Person person;
     private boolean isActivated;
-    private boolean hasLoggedInBefore;
+    private boolean hasChangedInitialPassword;
+
     public static int MIN_PASSWORD_LEN = 6;
 
     @Override
@@ -114,10 +115,10 @@ public class Credentials implements UserDetails {
     }
 
     public boolean hasLoggedInBefore() {
-        return hasLoggedInBefore;
+        return hasChangedInitialPassword;
     }
 
-    public void setHasLoggedInBefore(boolean hasLoggedInBefore) {
-        this.hasLoggedInBefore = hasLoggedInBefore;
+    public void setHasChangedInitialPassword(boolean hasChangedInitialPassword) {
+        this.hasChangedInitialPassword = hasChangedInitialPassword;
     }
 }

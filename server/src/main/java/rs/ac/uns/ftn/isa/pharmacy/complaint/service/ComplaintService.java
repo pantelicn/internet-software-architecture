@@ -49,7 +49,6 @@ public class ComplaintService {
         Complaint complaint = complaintMapper.dtoToObject(dto);
 
         if (complaint.getType() == Complaint.Type.EMPLOYEE_COMPLAINT) {
-            System.out.println("Looking for PE: " + complaint.getAuthor().getId() + " " + complaint.getEmployee().getId());
             if (appointmentRepository.countByPatientAndEmployee(
                     complaint.getEmployee().getId(), complaint.getAuthor().getId()) == 0)
                 throw new MessageException("You have not yet had appointments with this employee.");

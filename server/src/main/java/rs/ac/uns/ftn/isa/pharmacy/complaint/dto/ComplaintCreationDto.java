@@ -4,7 +4,7 @@ import rs.ac.uns.ftn.isa.pharmacy.complaint.model.Complaint;
 
 public class ComplaintCreationDto {
     private String text;
-    private long personId;
+    private long patientId;
     private long employeeId;
     private long pharmacyId;
     private Complaint.Type type;
@@ -17,12 +17,12 @@ public class ComplaintCreationDto {
         this.text = text;
     }
 
-    public long getPersonId() {
-        return personId;
+    public long getPatientId() {
+        return patientId;
     }
 
-    public void setPersonId(long personId) {
-        this.personId = personId;
+    public void setPatientId(long patientId) {
+        this.patientId = patientId;
     }
 
     public long getEmployeeId() {

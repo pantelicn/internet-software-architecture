@@ -9,6 +9,7 @@ import rs.ac.uns.ftn.isa.pharmacy.auth.HttpRequestUtil;
 import rs.ac.uns.ftn.isa.pharmacy.auth.IdentityProvider;
 import rs.ac.uns.ftn.isa.pharmacy.auth.model.Role;
 import rs.ac.uns.ftn.isa.pharmacy.pharma.domain.Drug;
+import rs.ac.uns.ftn.isa.pharmacy.pharma.dtos.DrugCreationDto;
 import rs.ac.uns.ftn.isa.pharmacy.pharma.dtos.DrugSearchDto;
 import rs.ac.uns.ftn.isa.pharmacy.pharma.dtos.StoredDrugDto;
 import rs.ac.uns.ftn.isa.pharmacy.pharma.dtos.DrugReservationDto;
@@ -16,6 +17,7 @@ import rs.ac.uns.ftn.isa.pharmacy.pharma.mappers.DrugReservationMapper;
 import rs.ac.uns.ftn.isa.pharmacy.pharma.mappers.DrugSearchMapper;
 import rs.ac.uns.ftn.isa.pharmacy.pharma.mappers.StoredDrugMapper;
 import rs.ac.uns.ftn.isa.pharmacy.pharma.services.DrugService;
+import rs.ac.uns.ftn.isa.pharmacy.supply.exceptions.MessageException;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -66,8 +68,15 @@ public class DrugController {
     }
 
     @PostMapping
-    Drug create(@RequestBody Drug drug) {
-        return drugService.create(drug);
+    @Secured(Role.SYS_ADMIN)
+    public ResponseEntity<?> create(@RequestBody DrugCreationDto dto) {
+        try {
+            drugService.create(dto);
+            return ResponseEntity.ok().build();
+        }
+        catch (MessageException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @PutMapping("{id}")

@@ -1,28 +1,21 @@
 package rs.ac.uns.ftn.isa.pharmacy.pharma.dtos;
 
+
+import rs.ac.uns.ftn.isa.pharmacy.finance.Money;
 import rs.ac.uns.ftn.isa.pharmacy.locale.domain.Address;
 
-public class PharmacyDto {
-    private long id;
+public class PharmacyCreationDto {
     private String name;
     private Address address;
-    private double rating;
     private String description;
+    private Money counselingPrice;
 
-    public PharmacyDto(long id, String name, Address address, double rating, String description) {
-        this.id = id;
-        this.name = name;
-        this.address = address;
-        this.rating = rating;
-        this.description = description;
+    public Money getCounselingPrice() {
+        return counselingPrice;
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
+    public void setCounselingPrice(Money counselingPrice) {
+        this.counselingPrice = counselingPrice;
     }
 
     public String getName() {
@@ -39,14 +32,6 @@ public class PharmacyDto {
 
     public void setAddress(Address address) {
         this.address = address;
-    }
-
-    public double getRating() {
-        return rating;
-    }
-
-    public void setRating(double rating) {
-        this.rating = rating;
     }
 
     public String getDescription() {

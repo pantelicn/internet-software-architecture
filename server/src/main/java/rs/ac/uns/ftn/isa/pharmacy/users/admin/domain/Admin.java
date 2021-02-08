@@ -40,4 +40,12 @@ public class Admin{
     public void setPerson(Person person) {
         this.person = person;
     }
+
+    public Pharmacy getPharmacy() {
+        return pharmacy;
+    }
+
+    public void setPharmacy(Pharmacy pharmacy) {
+        this.pharmacy = pharmacy;
+    }
 }

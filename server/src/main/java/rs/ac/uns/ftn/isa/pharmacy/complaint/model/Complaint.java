@@ -1,9 +1,9 @@
 package rs.ac.uns.ftn.isa.pharmacy.complaint.model;
 
-import rs.ac.uns.ftn.isa.pharmacy.users.person.domain.Person;
 import rs.ac.uns.ftn.isa.pharmacy.pharma.domain.Pharmacy;
 import rs.ac.uns.ftn.isa.pharmacy.supply.exceptions.InvalidEntityException;
 import rs.ac.uns.ftn.isa.pharmacy.users.employee.domain.Employee;
+import rs.ac.uns.ftn.isa.pharmacy.users.user.Patient;
 
 import javax.persistence.*;
 
@@ -16,7 +16,7 @@ public class Complaint {
     private long id;
     private String text;
     @OneToOne
-    private Person author;
+    private Patient author;
     private Complaint.Type type;
     private boolean answered;
 
@@ -58,11 +58,11 @@ public class Complaint {
         this.text = text;
     }
 
-    public Person getAuthor() {
+    public Patient getAuthor() {
         return author;
     }
 
-    public void setAuthor(Person author) {
+    public void setAuthor(Patient author) {
         this.author = author;
     }
 
