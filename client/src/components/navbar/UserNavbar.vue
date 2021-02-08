@@ -12,8 +12,8 @@
                         Schedule
                     </a>
                     <div class="dropdown-menu bg-dark" aria-labelledby="navbar-dropdown">
-                        <router-link to="/pharmacies" class="dropdown-item">Dermatologist examination</router-link>
-                        <router-link class="dropdown-item" to="/patient-schedule/counseling">Pharmacist counseling</router-link>
+                        <router-link to="/patient" class="dropdown-item">Dermatologist examination</router-link>
+                        <router-link class="dropdown-item" to="/patient/schedule/counseling">Pharmacist counseling</router-link>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
@@ -25,9 +25,9 @@
                         <router-link class="dropdown-item" to="/">Pharmacist counseling</router-link>
                     </div>
                 </li>
-                <router-link to="/patient-drugs" class="nav-link">Drug reservation</router-link>
+                <router-link to="/patient/drugs" class="nav-link">Drug reservation</router-link>
             </ul>
-            <router-link class="nav-item" to="/patient-appointments">Appointments</router-link>
+            <router-link class="nav-item" to="/patient/appointments">Appointments</router-link>
             <div class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="navbar-dropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     User

@@ -26,6 +26,7 @@ import Drugs from './views/patient/Drugs.vue'
 import Appointments from './views/patient/Appointments.vue'
 import ScheduleCounseling from './views/patient/ScheduleCounseling.vue'
 import Pharmacies from './views/patient/Pharmacies.vue'
+import PatientHome from './views/patient/PatientHome.vue'
 
 const router = new VueRouter({
     mode: 'hash',
@@ -180,32 +181,30 @@ const router = new VueRouter({
             ]
         },
         {
-            path: '/patient-schedule',
-            component: ScheduleExamination
-        },
-        {
-            path: '/patient-appointments',
-            component: Appointments
-        },
-		{
-            path: '/patient-drugs',
-            component: Drugs
-        },
-        {
-            path: '/patient-schedule/examination/:id',
-            component: ScheduleExamination
-        },
-        {
-            path: '/patient-schedule/counseling',
-            component: ScheduleCounseling
-        },
-        {
-            path: '/patient-appointments',
-            component: Appointments
-        },
-        {
-            path: '/pharmacies',
-            component: Pharmacies
+            path: '/patient',
+            component: PatientHome,
+            children: [
+                {
+                    path: '',
+                    component: Pharmacies
+                },
+                {
+                    path: 'appointments',
+                    component: Appointments
+                },
+                {
+                    path: 'drugs',
+                    component: Drugs
+                },
+                {
+                    path: 'schedule/examination/:id',
+                    component: ScheduleExamination
+                },
+                {
+                    path: 'schedule/counseling',
+                    component: ScheduleCounseling
+                },
+            ]
         }
     ]
 })
