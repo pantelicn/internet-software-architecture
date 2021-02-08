@@ -36,7 +36,7 @@ public class PersonController {
         var identityProvider = HttpRequestUtil.getIdentity(request);
 
         try{
-            personService.updateCredentials(credentialsDto, identityProvider.getUserId());
+            personService.updateCredentials(credentialsDto, identityProvider.getPersonId());
             return ResponseEntity.ok().build();
         }
         catch (EntityNotFoundException e){
@@ -49,7 +49,7 @@ public class PersonController {
     public ResponseEntity<?> getFullName(HttpServletRequest request){
         var identityProvider = HttpRequestUtil.getIdentity(request);
         try {
-            var personNameDto = new PersonNameDto(personService.get(identityProvider.getUserId()));
+            var personNameDto = new PersonNameDto(personService.get(identityProvider.getPersonId()));
             return ResponseEntity.ok(personNameDto);
         }catch (EntityNotFoundException e){
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -60,7 +60,7 @@ public class PersonController {
     @Secured({Role.SUPPLIER, Role.PATIENT, Role.DERMATOLOGIST, Role.PHARMACIST})
     public ResponseEntity<?> update(HttpServletRequest request, @RequestBody PersonUpdateDto dto) {
         var identityProvider = HttpRequestUtil.getIdentity(request);
-        dto.setId(identityProvider.getUserId());
+        dto.setId(identityProvider.getPersonId());
         try {
             personService.update(dto);
             return ResponseEntity.ok().build();
@@ -74,7 +74,7 @@ public class PersonController {
     public ResponseEntity<?> get (HttpServletRequest request){
         var identityProvider = HttpRequestUtil.getIdentity(request);
         try{
-            var person = personService.get(identityProvider.getUserId());
+            var person = personService.get(identityProvider.getPersonId());
             return ResponseEntity.ok(new PersonDto(person));
         }
         catch (EntityNotFoundException e){

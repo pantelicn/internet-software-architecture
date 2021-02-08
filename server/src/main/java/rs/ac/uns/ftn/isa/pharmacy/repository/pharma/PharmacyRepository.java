@@ -12,4 +12,7 @@ public interface PharmacyRepository extends JpaRepository<Pharmacy,Long> {
 
     @Query("select p.pharmacyAdmin from Pharmacy p where p.id=:pharmacyId")
     Admin getPharmacyAdmin(@Param("pharmacyId") long pharmacyId);
+
+    @Query(value = "select p from Pharmacy p where p.pharmacyAdmin.id = ?1")
+    Pharmacy getByAdmin(long adminId);
 }
