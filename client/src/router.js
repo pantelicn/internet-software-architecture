@@ -29,6 +29,7 @@ import ScheduleCounseling from './views/patient/ScheduleCounseling.vue'
 import Pharmacies from './views/patient/Pharmacies.vue'
 import PatientHome from './views/patient/PatientHome.vue'
 import PatientProfile from './views/patient/PatientProfile.vue'
+import UnauthDrugs from './views/unauthorized/UnauthDrugs.vue'
 
 const router = new VueRouter({
     mode: 'hash',
@@ -43,6 +44,14 @@ const router = new VueRouter({
                     path: '',
                     name: 'login',
                     component: Login
+                },
+                {
+                    path: 'pharmacies',
+                    component: Pharmacies
+                },
+                {
+                    path: 'drugs',
+                    component: UnauthDrugs
                 }
             ],
         },
