@@ -117,7 +117,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .modal-footer{
     border-top:1px solid #4f5357 !important;
 }
