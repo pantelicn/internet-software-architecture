@@ -33,7 +33,7 @@ public class ComplaintController {
     @Secured(Role.PATIENT)
     public ResponseEntity<?> create(HttpServletRequest request, @RequestBody ComplaintCreationDto dto) {
         IdentityProvider identityProvider = HttpRequestUtil.getIdentity(request);
-        dto.setPersonId(identityProvider.getUserId());
+        dto.setPersonId(identityProvider.getPersonId());
         try {
             complaintService.create(dto);
             return ResponseEntity.ok().build();

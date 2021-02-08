@@ -9,6 +9,8 @@ import rs.ac.uns.ftn.isa.pharmacy.domain.mail.messages.*;
 import rs.ac.uns.ftn.isa.pharmacy.domain.mail.messages.dtos.DrugNonExistentMailInfo;
 import rs.ac.uns.ftn.isa.pharmacy.domain.pharma.DrugReservation;
 import rs.ac.uns.ftn.isa.pharmacy.domain.pharma.StoredDrug;
+import rs.ac.uns.ftn.isa.pharmacy.domain.promotion.model.Promotion;
+import rs.ac.uns.ftn.isa.pharmacy.domain.promotion.model.Subscription;
 import rs.ac.uns.ftn.isa.pharmacy.domain.schedule.Appointment;
 
 
@@ -69,5 +71,14 @@ public class EmailService {
     public void sendActivationMessage(Credentials credentials) {
         var message = new ActivationMessage(emailSender, credentials);
         message.send(SENDER_EMAIL, credentials.getEmail(), "Activation");
+    }
+
+    public void sendPromotionMessage(Promotion promotion, Subscription subscription) {
+        var message = new PromotionMessage(emailSender, promotion);
+        message.send(
+                SENDER_EMAIL,
+                subscription.getPerson().getCredentials().getEmail(),
+                "New promotion by " + promotion.getPharmacy().getName()
+        );
     }
 }

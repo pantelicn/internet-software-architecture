@@ -4,39 +4,53 @@ import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.isa.pharmacy.auth.model.AuthToken;
 import rs.ac.uns.ftn.isa.pharmacy.auth.model.Credentials;
 import rs.ac.uns.ftn.isa.pharmacy.auth.model.Role;
+import rs.ac.uns.ftn.isa.pharmacy.domain.pharma.Pharmacy;
 import rs.ac.uns.ftn.isa.pharmacy.domain.users.employee.Employee;
 import rs.ac.uns.ftn.isa.pharmacy.domain.users.user.Patient;
+import rs.ac.uns.ftn.isa.pharmacy.repository.pharma.PharmacyRepository;
 import rs.ac.uns.ftn.isa.pharmacy.services.PatientService;
 import rs.ac.uns.ftn.isa.pharmacy.services.employee.EmployeeService;
 
 @Service
 public class CredentialsTokenMapper {
-    private PatientService patientService;
-    private EmployeeService employeeService;
+    private final PatientService patientService;
+    private final EmployeeService employeeService;
+    private final PharmacyRepository pharmacyRepository;
 
-    public CredentialsTokenMapper(PatientService patientService, EmployeeService employeeService) {
+    public CredentialsTokenMapper(
+            PatientService patientService,
+            EmployeeService employeeService,
+            PharmacyRepository pharmacyRepository
+    ){
         this.patientService = patientService;
         this.employeeService = employeeService;
+        this.pharmacyRepository = pharmacyRepository;
     }
 
     public AuthToken createAuthToken(Credentials credentials) {
         AuthToken token = new AuthToken();
         token.setEmail(credentials.getEmail());
-        token.setUserId(credentials.getPerson().getId());
+        token.setPersonId(credentials.getPerson().getId());
         token.setRole(credentials.getRole());
         AttachRoleId(token, credentials);
         return token;
     }
 
     private void AttachRoleId(AuthToken token, Credentials credentials) {
-        if (credentials.getRole().equals(Role.PATIENT)) {
-            Patient patient = patientService.findByPersonId(credentials.getPerson().getId());
-            token.setRoleId(patient.getId());
-        }
-        else if (credentials.getRole().equals(Role.DERMATOLOGIST)
-                || credentials.getRole().equals(Role.PHARMACIST)){
-            Employee employee = employeeService.findByPersonId(credentials.getPerson().getId());
-            token.setRoleId(employee.getId());
+        switch (credentials.getRole()) {
+            case Role.PATIENT:
+                Patient patient = patientService.findByPersonId(credentials.getPerson().getId());
+                token.setRoleId(patient.getId());
+                break;
+            case Role.DERMATOLOGIST:
+            case Role.PHARMACIST:
+                Employee employee = employeeService.findByPersonId(credentials.getPerson().getId());
+                token.setRoleId(employee.getId());
+                break;
+            case Role.PH_ADMIN:
+                Pharmacy pharmacy = pharmacyRepository.getByAdmin(credentials.getPerson().getId());
+                token.setRoleId(pharmacy.getId());
+                break;
         }
     }
 

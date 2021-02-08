@@ -28,7 +28,7 @@ public class OfferController {
     @Secured(Role.SUPPLIER)
     public ResponseEntity<List<Offer>> getBySupplier(HttpServletRequest request) {
         var identityProvider = HttpRequestUtil.getIdentity(request);
-        return ResponseEntity.ok(offerService.getBySupplierId(identityProvider.getUserId()));
+        return ResponseEntity.ok(offerService.getBySupplierId(identityProvider.getPersonId()));
     }
 
     @GetMapping("order/{orderId}")
@@ -45,14 +45,14 @@ public class OfferController {
             HttpServletRequest request, @PathVariable Offer.Status status
     ){
         var identityProvider = HttpRequestUtil.getIdentity(request);
-        return ResponseEntity.ok(offerService.getByStatus(status, identityProvider.getUserId()));
+        return ResponseEntity.ok(offerService.getByStatus(status, identityProvider.getPersonId()));
     }
 
     @PostMapping
     @Secured(Role.SUPPLIER)
     public ResponseEntity<?> create(HttpServletRequest request, @RequestBody OfferRequestDto dto) {
         var identityProvider = HttpRequestUtil.getIdentity(request);
-        dto.setSupplierId(identityProvider.getUserId());
+        dto.setSupplierId(identityProvider.getPersonId());
         try {
             offerService.create(dto);
             return ResponseEntity.ok().build();
@@ -66,7 +66,7 @@ public class OfferController {
     @Secured(Role.SUPPLIER)
     public ResponseEntity<?> update(HttpServletRequest request, @RequestBody OfferRequestDto dto) {
         var identityProvider = HttpRequestUtil.getIdentity(request);
-        dto.setSupplierId(identityProvider.getUserId());
+        dto.setSupplierId(identityProvider.getPersonId());
         try {
             offerService.update(dto);
             return ResponseEntity.ok().build();

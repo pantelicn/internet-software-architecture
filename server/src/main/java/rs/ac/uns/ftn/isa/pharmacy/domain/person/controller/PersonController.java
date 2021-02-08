@@ -28,7 +28,7 @@ public class PersonController {
     @Secured({Role.SUPPLIER, Role.PATIENT})
     public ResponseEntity<?> update(HttpServletRequest request, @RequestBody PersonUpdateDto dto) {
         var identityProvider = HttpRequestUtil.getIdentity(request);
-        dto.setPersonId(identityProvider.getUserId());
+        dto.setPersonId(identityProvider.getPersonId());
         try {
             personService.update(dto);
             return ResponseEntity.ok().build();

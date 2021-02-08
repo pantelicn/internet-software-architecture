@@ -10,7 +10,7 @@ import java.util.List;
 
 public class AuthToken implements IdentityProvider {
     private String email;
-    private long userId;
+    private long personId;
     private String role;
     private long roleId;
 
@@ -19,11 +19,11 @@ public class AuthToken implements IdentityProvider {
     }
 
     @Override
-    public long getUserId() {
-        return userId;
+    public long getPersonId() {
+        return personId;
     }
-    public void setUserId(long userId) {
-        this.userId = userId;
+    public void setPersonId(long personId) {
+        this.personId = personId;
     }
 
     public String getEmail() {
