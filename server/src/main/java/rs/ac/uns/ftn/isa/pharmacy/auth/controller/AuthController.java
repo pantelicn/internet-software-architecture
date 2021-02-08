@@ -10,7 +10,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import rs.ac.uns.ftn.isa.pharmacy.auth.HttpRequestUtil;
-import rs.ac.uns.ftn.isa.pharmacy.auth.IdentityProvider;
 import rs.ac.uns.ftn.isa.pharmacy.auth.dto.PassChangeDto;
 import rs.ac.uns.ftn.isa.pharmacy.auth.dto.RegistrationDto;
 import rs.ac.uns.ftn.isa.pharmacy.auth.model.Role;
@@ -19,8 +18,8 @@ import rs.ac.uns.ftn.isa.pharmacy.auth.service.CredentialsTokenMapper;
 import rs.ac.uns.ftn.isa.pharmacy.auth.service.JwtService;
 import rs.ac.uns.ftn.isa.pharmacy.auth.model.Credentials;
 import rs.ac.uns.ftn.isa.pharmacy.auth.service.RegistrationService;
-import rs.ac.uns.ftn.isa.pharmacy.domain.supply.exceptions.EntityNotFoundException;
-import rs.ac.uns.ftn.isa.pharmacy.domain.supply.exceptions.MessageException;
+import rs.ac.uns.ftn.isa.pharmacy.supply.exceptions.EntityNotFoundException;
+import rs.ac.uns.ftn.isa.pharmacy.supply.exceptions.MessageException;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.UUID;

@@ -4,12 +4,12 @@ import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.isa.pharmacy.auth.model.AuthToken;
 import rs.ac.uns.ftn.isa.pharmacy.auth.model.Credentials;
 import rs.ac.uns.ftn.isa.pharmacy.auth.model.Role;
-import rs.ac.uns.ftn.isa.pharmacy.domain.pharma.Pharmacy;
-import rs.ac.uns.ftn.isa.pharmacy.domain.users.employee.Employee;
-import rs.ac.uns.ftn.isa.pharmacy.domain.users.user.Patient;
-import rs.ac.uns.ftn.isa.pharmacy.repository.pharma.PharmacyRepository;
-import rs.ac.uns.ftn.isa.pharmacy.services.employee.EmployeeService;
-import rs.ac.uns.ftn.isa.pharmacy.services.patients.PatientService;
+import rs.ac.uns.ftn.isa.pharmacy.pharma.domain.Pharmacy;
+import rs.ac.uns.ftn.isa.pharmacy.users.employee.domain.Employee;
+import rs.ac.uns.ftn.isa.pharmacy.users.user.Patient;
+import rs.ac.uns.ftn.isa.pharmacy.pharma.repository.PharmacyRepository;
+import rs.ac.uns.ftn.isa.pharmacy.users.employee.services.EmployeeService;
+import rs.ac.uns.ftn.isa.pharmacy.users.user.services.PatientService;
 
 @Service
 public class CredentialsTokenMapper {

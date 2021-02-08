@@ -201,7 +201,7 @@ export default {
             })
         },
         cancel: function (reservationId) {
-            axios.delete(api.drugs.reservations + '/' + reservationId)
+            axios.delete(api.drugs.reservations + reservationId)
             .then(() => {
                 this.fetchReservations()
                 this.$toast.open("Reservation successfully canceled.")
