@@ -1,14 +1,14 @@
-package rs.ac.uns.ftn.isa.pharmacy.domain.pharma.mapper;
+package rs.ac.uns.ftn.isa.pharmacy.pharma.mappers;
 
 import org.springframework.stereotype.Component;
-import rs.ac.uns.ftn.isa.pharmacy.domain.person.Person;
-import rs.ac.uns.ftn.isa.pharmacy.domain.person.repository.PersonRepository;
-import rs.ac.uns.ftn.isa.pharmacy.domain.pharma.Pharmacy;
-import rs.ac.uns.ftn.isa.pharmacy.domain.pharma.dto.PharmacyAdminCreationDto;
-import rs.ac.uns.ftn.isa.pharmacy.domain.supply.exceptions.InvalidForeignKeyException;
-import rs.ac.uns.ftn.isa.pharmacy.domain.users.admin.Admin;
-import rs.ac.uns.ftn.isa.pharmacy.domain.users.admin.AdminType;
-import rs.ac.uns.ftn.isa.pharmacy.repository.pharma.PharmacyRepository;
+import rs.ac.uns.ftn.isa.pharmacy.pharma.domain.Pharmacy;
+import rs.ac.uns.ftn.isa.pharmacy.pharma.dtos.PharmacyAdminCreationDto;
+import rs.ac.uns.ftn.isa.pharmacy.pharma.repository.PharmacyRepository;
+import rs.ac.uns.ftn.isa.pharmacy.supply.exceptions.InvalidForeignKeyException;
+import rs.ac.uns.ftn.isa.pharmacy.users.admin.domain.Admin;
+import rs.ac.uns.ftn.isa.pharmacy.users.admin.domain.AdminType;
+import rs.ac.uns.ftn.isa.pharmacy.users.person.repository.PersonRepository;
+
 
 import java.util.Optional;
 

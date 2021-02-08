@@ -1,4 +1,4 @@
-package rs.ac.uns.ftn.isa.pharmacy.domain.pharma.dto;
+package rs.ac.uns.ftn.isa.pharmacy.pharma.dtos;
 
 import rs.ac.uns.ftn.isa.pharmacy.auth.dto.RegistrationDto;
 

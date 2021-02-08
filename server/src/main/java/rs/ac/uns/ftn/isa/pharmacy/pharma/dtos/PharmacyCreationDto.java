@@ -1,4 +1,4 @@
-package rs.ac.uns.ftn.isa.pharmacy.pharma.dto;
+package rs.ac.uns.ftn.isa.pharmacy.pharma.dtos;
 
 
 import rs.ac.uns.ftn.isa.pharmacy.finance.Money;

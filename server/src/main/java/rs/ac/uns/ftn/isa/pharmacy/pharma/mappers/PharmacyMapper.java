@@ -1,10 +1,10 @@
-package rs.ac.uns.ftn.isa.pharmacy.pharma.mapper;
+package rs.ac.uns.ftn.isa.pharmacy.pharma.mappers;
 
 import org.springframework.stereotype.Component;
 import rs.ac.uns.ftn.isa.pharmacy.locale.domain.City;
 import rs.ac.uns.ftn.isa.pharmacy.locale.repository.CityRepository;
 import rs.ac.uns.ftn.isa.pharmacy.pharma.domain.Pharmacy;
-import rs.ac.uns.ftn.isa.pharmacy.pharma.dto.PharmacyCreationDto;
+import rs.ac.uns.ftn.isa.pharmacy.pharma.dtos.PharmacyCreationDto;
 import rs.ac.uns.ftn.isa.pharmacy.pharma.dtos.PharmacyDetailsDto;
 import rs.ac.uns.ftn.isa.pharmacy.supply.exceptions.InvalidEntityException;
 import rs.ac.uns.ftn.isa.pharmacy.supply.exceptions.InvalidForeignKeyException;
