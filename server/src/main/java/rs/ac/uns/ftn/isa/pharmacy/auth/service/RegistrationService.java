@@ -36,11 +36,17 @@ public class RegistrationService {
     }
 
     public Person register(RegistrationDto dto)
+            throws EntityExistsException, EntityNotFoundException, InvalidEntityException
+    {
+        return register(dto, Role.PATIENT);
+    }
+
+    public Person register(RegistrationDto dto, String role)
             throws InvalidEntityException, EntityExistsException, EntityNotFoundException
     {
         validateClientData(dto);
         if (credentialsRepository.findById(dto.getEmail()).isEmpty()) {
-            Credentials credentials = mapToCredentials(dto);
+            Credentials credentials = mapToCredentials(dto, role);
             Person person = mapToPerson(dto);
 
             credentials.setPerson(person);
@@ -66,7 +72,7 @@ public class RegistrationService {
         return person;
     }
 
-    private Credentials mapToCredentials(RegistrationDto dto) {
+    private Credentials mapToCredentials(RegistrationDto dto, String role) {
         Credentials credentials = new Credentials();
 
         credentials.setActivated(false);
@@ -74,7 +80,7 @@ public class RegistrationService {
         credentials.setUid(UUID.randomUUID());
         credentials.setEmail(dto.getEmail());
         credentials.setPassword(dto.getPassword());
-        credentials.setRole(Role.PATIENT);
+        credentials.setRole(role);
 
         return credentials;
     }

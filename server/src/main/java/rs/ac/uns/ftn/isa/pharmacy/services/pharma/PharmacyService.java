@@ -1,6 +1,7 @@
 package rs.ac.uns.ftn.isa.pharmacy.services.pharma;
 
 import org.springframework.stereotype.Service;
+import rs.ac.uns.ftn.isa.pharmacy.auth.model.Role;
 import rs.ac.uns.ftn.isa.pharmacy.auth.service.RegistrationService;
 import rs.ac.uns.ftn.isa.pharmacy.domain.person.Person;
 import rs.ac.uns.ftn.isa.pharmacy.domain.pharma.Pharmacy;
@@ -52,7 +53,7 @@ public class PharmacyService {
     }
 
     public void addAdmin(PharmacyAdminCreationDto dto) throws MessageException {
-        Person createdPerson = registrationService.register(dto.getRegistrationDto());
+        Person createdPerson = registrationService.register(dto.getRegistrationDto(), Role.PH_ADMIN);
 
         Admin admin = phAdminMapper.dtoToObject(dto);
         if (admin.getPharmacy().getPharmacyAdmin() != null)
