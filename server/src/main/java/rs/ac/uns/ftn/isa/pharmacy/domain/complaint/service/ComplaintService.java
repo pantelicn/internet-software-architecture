@@ -10,6 +10,7 @@ import rs.ac.uns.ftn.isa.pharmacy.domain.complaint.model.Complaint;
 import rs.ac.uns.ftn.isa.pharmacy.domain.complaint.model.Response;
 import rs.ac.uns.ftn.isa.pharmacy.domain.complaint.repository.ComplaintRepository;
 import rs.ac.uns.ftn.isa.pharmacy.domain.complaint.repository.ResponseRepository;
+import rs.ac.uns.ftn.isa.pharmacy.domain.schedule.Appointment;
 import rs.ac.uns.ftn.isa.pharmacy.domain.supply.exceptions.MessageException;
 import rs.ac.uns.ftn.isa.pharmacy.repository.schedule.AppointmentRepository;
 import rs.ac.uns.ftn.isa.pharmacy.services.notifiers.EmailService;
@@ -49,7 +50,6 @@ public class ComplaintService {
         Complaint complaint = complaintMapper.dtoToObject(dto);
 
         if (complaint.getType() == Complaint.Type.EMPLOYEE_COMPLAINT) {
-            System.out.println("Looking for PE: " + complaint.getAuthor().getId() + " " + complaint.getEmployee().getId());
             if (appointmentRepository.countByPatientAndEmployee(
                     complaint.getEmployee().getId(), complaint.getAuthor().getId()) == 0)
                 throw new MessageException("You have not yet had appointments with this employee.");

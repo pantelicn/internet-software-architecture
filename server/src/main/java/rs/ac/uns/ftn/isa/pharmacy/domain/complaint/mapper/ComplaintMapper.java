@@ -9,7 +9,9 @@ import rs.ac.uns.ftn.isa.pharmacy.domain.person.repository.PersonRepository;
 import rs.ac.uns.ftn.isa.pharmacy.domain.pharma.Pharmacy;
 import rs.ac.uns.ftn.isa.pharmacy.domain.supply.exceptions.InvalidForeignKeyException;
 import rs.ac.uns.ftn.isa.pharmacy.domain.users.employee.Employee;
+import rs.ac.uns.ftn.isa.pharmacy.domain.users.user.Patient;
 import rs.ac.uns.ftn.isa.pharmacy.repository.employee.EmployeeRepository;
+import rs.ac.uns.ftn.isa.pharmacy.repository.patients.PatientRepository;
 import rs.ac.uns.ftn.isa.pharmacy.repository.pharma.PharmacyRepository;
 
 import java.util.Optional;
@@ -18,16 +20,16 @@ import java.util.Optional;
 public class ComplaintMapper {
 
     private final EmployeeRepository employeeRepository;
-    private final PersonRepository personRepository;
+    private final PatientRepository patientRepository;
     private final PharmacyRepository pharmacyRepository;
 
     public ComplaintMapper(
             EmployeeRepository employeeRepository,
-            PersonRepository personRepository,
+            PatientRepository patientRepository,
             PharmacyRepository pharmacyRepository
     ){
         this.employeeRepository = employeeRepository;
-        this.personRepository = personRepository;
+        this.patientRepository = patientRepository;
         this.pharmacyRepository = pharmacyRepository;
     }
 
@@ -38,9 +40,9 @@ public class ComplaintMapper {
         complaint.setText(dto.getText());
         complaint.setType(dto.getType());
 
-        Optional<Person> optionalPerson = personRepository.findById(dto.getPersonId());
-        if (optionalPerson.isEmpty()) throw new InvalidForeignKeyException("Person");
-        complaint.setAuthor(optionalPerson.get());
+        Optional<Patient> optionalPatient = patientRepository.findById(dto.getPatientId());
+        if (optionalPatient.isEmpty()) throw new InvalidForeignKeyException("Person");
+        complaint.setAuthor(optionalPatient.get());
 
         if (complaint.getType() == Complaint.Type.EMPLOYEE_COMPLAINT) {
             Optional<Employee> optionalEmployee = employeeRepository.findById(dto.getEmployeeId());
@@ -62,7 +64,7 @@ public class ComplaintMapper {
                 complaint.getId(),
                 complaint.getText(),
                 complaint.getType(),
-                complaint.getAuthor().getFirstName() + " " + complaint.getAuthor().getLastName()
+                complaint.getAuthor().getPerson().getFullName()
         );
     }
 }

@@ -62,6 +62,7 @@ public class EmailService {
                 response
                         .getComplaint()
                         .getAuthor()
+                        .getPerson()
                         .getCredentials()
                         .getEmail(),
                 "Your complaint has been addressed"
