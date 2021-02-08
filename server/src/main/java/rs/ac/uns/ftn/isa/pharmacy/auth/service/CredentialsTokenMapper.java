@@ -8,7 +8,6 @@ import rs.ac.uns.ftn.isa.pharmacy.domain.pharma.Pharmacy;
 import rs.ac.uns.ftn.isa.pharmacy.domain.users.employee.Employee;
 import rs.ac.uns.ftn.isa.pharmacy.domain.users.user.Patient;
 import rs.ac.uns.ftn.isa.pharmacy.repository.pharma.PharmacyRepository;
-import rs.ac.uns.ftn.isa.pharmacy.services.PatientService;
 import rs.ac.uns.ftn.isa.pharmacy.services.employee.EmployeeService;
 import rs.ac.uns.ftn.isa.pharmacy.services.patients.PatientService;
 
