@@ -21,11 +21,14 @@ import CounselingReportStepTwo from './views/pharmacist/report/steps/CounselingR
 import CounselingReportStepThree from './views/pharmacist/report/steps/CounselingReportStepThree.vue'
 import CounselingReportStepFour from './views/pharmacist/report/steps/CounselingReportStepFour.vue'
 import TimeOffRequest from './views/timeoff/TimeOffRequest.vue'
+import DrugDispensing from './views/pharmacist/drug-dispensing/DrugDispensing.vue'
 import Profile from './views/person/Profile.vue'
 import Drugs from './views/patient/Drugs.vue'
 import Appointments from './views/patient/Appointments.vue'
 import ScheduleCounseling from './views/patient/ScheduleCounseling.vue'
 import Pharmacies from './views/patient/Pharmacies.vue'
+import PatientHome from './views/patient/PatientHome.vue'
+import PatientProfile from './views/patient/PatientProfile.vue'
 
 const router = new VueRouter({
     mode: 'hash',
@@ -136,8 +139,15 @@ const router = new VueRouter({
                     path: 'time-off',
                     name: 'pharmacist-time-off',
                     component: TimeOffRequest,
-                    meta: { requiresPharmaAuth: true}
+                    meta: { requiresPharmaAuth: true }
                 },
+                {
+                    path: 'drug-dispensing',
+                    name: 'drug-dispensing',
+                    component: DrugDispensing,
+                    meta: { requiresPharmaAuth: true }
+                }
+                ,
                 {
                     path: 'my-profile',
                     name: 'pharmacist-profile',
@@ -180,32 +190,34 @@ const router = new VueRouter({
             ]
         },
         {
-            path: '/patient-schedule',
-            component: ScheduleExamination
-        },
-        {
-            path: '/patient-appointments',
-            component: Appointments
-        },
-		{
-            path: '/patient-drugs',
-            component: Drugs
-        },
-        {
-            path: '/patient-schedule/examination/:id',
-            component: ScheduleExamination
-        },
-        {
-            path: '/patient-schedule/counseling',
-            component: ScheduleCounseling
-        },
-        {
-            path: '/patient-appointments',
-            component: Appointments
-        },
-        {
-            path: '/pharmacies',
-            component: Pharmacies
+            path: '/patient',
+            component: PatientHome,
+            children: [
+                {
+                    path: '',
+                    component: Pharmacies
+                },
+                {
+                    path: 'profile',
+                    component: PatientProfile
+                },
+                {
+                    path: 'appointments',
+                    component: Appointments
+                },
+                {
+                    path: 'drugs',
+                    component: Drugs
+                },
+                {
+                    path: 'schedule/examination/:id',
+                    component: ScheduleExamination
+                },
+                {
+                    path: 'schedule/counseling',
+                    component: ScheduleCounseling
+                },
+            ]
         }
     ]
 })
