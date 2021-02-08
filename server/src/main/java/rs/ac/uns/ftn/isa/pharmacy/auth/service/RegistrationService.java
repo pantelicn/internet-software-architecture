@@ -76,7 +76,7 @@ public class RegistrationService {
         Credentials credentials = new Credentials();
 
         credentials.setActivated(false);
-        credentials.setHasLoggedInBefore(false);
+        credentials.setHasChangedInitialPassword(false);
         credentials.setUid(UUID.randomUUID());
         credentials.setEmail(dto.getEmail());
         credentials.setPassword(dto.getPassword());

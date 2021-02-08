@@ -19,15 +19,15 @@ public class CredentialsService {
         this.credentialsRepository = credentialsRepository;
     }
 
-    public void logLogin(String email) {
+    public void logInitialPasswordChange(String email) {
         Credentials credentials = credentialsRepository.findById(email).get();
         if (!credentials.hasLoggedInBefore()) {
-            credentials.setHasLoggedInBefore(true);
+            credentials.setHasChangedInitialPassword(true);
             credentialsRepository.save(credentials);
         }
     }
 
-    public boolean hasLoggedIn(String email) {
+    public boolean hasChangedInitialPassword(String email) {
         Credentials credentials = credentialsRepository.findById(email).get();
         return credentials.hasLoggedInBefore();
     }

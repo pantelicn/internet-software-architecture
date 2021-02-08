@@ -80,9 +80,9 @@ public class AuthController {
 
     @GetMapping("logged")
     @Secured({Role.SUPPLIER, Role.DERMATOLOGIST, Role.PHARMACIST})
-    public ResponseEntity<?> hasLoggedInBefore(HttpServletRequest request) {
+    public ResponseEntity<?> hasChangedInitialPassword(HttpServletRequest request) {
         var identityProvider = HttpRequestUtil.getIdentity(request);
-        return ResponseEntity.ok(credentialsService.hasLoggedIn(identityProvider.getEmail()));
+        return ResponseEntity.ok(credentialsService.hasChangedInitialPassword(identityProvider.getEmail()));
     }
 
     @PostMapping("change-password")
@@ -92,8 +92,8 @@ public class AuthController {
         try {
             credentialsService.changePassword(identityProvider.getEmail(), dto);
 
-            if(!credentialsService.hasLoggedIn(identityProvider.getEmail()))
-                credentialsService.logLogin(identityProvider.getEmail());
+            if(!credentialsService.hasChangedInitialPassword(identityProvider.getEmail()))
+                credentialsService.logInitialPasswordChange(identityProvider.getEmail());
 
             return ResponseEntity.ok().build();
         }
