@@ -5,13 +5,13 @@ import rs.ac.uns.ftn.isa.pharmacy.auth.dto.RegistrationDto;
 import rs.ac.uns.ftn.isa.pharmacy.auth.model.Credentials;
 import rs.ac.uns.ftn.isa.pharmacy.auth.model.Role;
 import rs.ac.uns.ftn.isa.pharmacy.auth.repository.CredentialsRepository;
-import rs.ac.uns.ftn.isa.pharmacy.domain.locale.repository.CityRepository;
-import rs.ac.uns.ftn.isa.pharmacy.domain.person.Person;
-import rs.ac.uns.ftn.isa.pharmacy.domain.person.repository.PersonRepository;
-import rs.ac.uns.ftn.isa.pharmacy.domain.supply.exceptions.EntityExistsException;
-import rs.ac.uns.ftn.isa.pharmacy.domain.supply.exceptions.EntityNotFoundException;
-import rs.ac.uns.ftn.isa.pharmacy.domain.supply.exceptions.InvalidEntityException;
-import rs.ac.uns.ftn.isa.pharmacy.services.notifiers.EmailService;
+import rs.ac.uns.ftn.isa.pharmacy.locale.repository.CityRepository;
+import rs.ac.uns.ftn.isa.pharmacy.users.person.domain.Person;
+import rs.ac.uns.ftn.isa.pharmacy.users.person.repository.PersonRepository;
+import rs.ac.uns.ftn.isa.pharmacy.supply.exceptions.EntityExistsException;
+import rs.ac.uns.ftn.isa.pharmacy.supply.exceptions.EntityNotFoundException;
+import rs.ac.uns.ftn.isa.pharmacy.supply.exceptions.InvalidEntityException;
+import rs.ac.uns.ftn.isa.pharmacy.mail.services.EmailService;
 
 import java.util.UUID;
 

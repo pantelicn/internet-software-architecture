@@ -4,9 +4,9 @@ import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.isa.pharmacy.auth.dto.PassChangeDto;
 import rs.ac.uns.ftn.isa.pharmacy.auth.model.Credentials;
 import rs.ac.uns.ftn.isa.pharmacy.auth.repository.CredentialsRepository;
-import rs.ac.uns.ftn.isa.pharmacy.domain.supply.exceptions.EntityNotFoundException;
-import rs.ac.uns.ftn.isa.pharmacy.domain.supply.exceptions.IncorrectPasswordException;
-import rs.ac.uns.ftn.isa.pharmacy.domain.supply.exceptions.PasswordTooShortException;
+import rs.ac.uns.ftn.isa.pharmacy.supply.exceptions.EntityNotFoundException;
+import rs.ac.uns.ftn.isa.pharmacy.supply.exceptions.IncorrectPasswordException;
+import rs.ac.uns.ftn.isa.pharmacy.supply.exceptions.PasswordTooShortException;
 
 import java.util.UUID;
 
