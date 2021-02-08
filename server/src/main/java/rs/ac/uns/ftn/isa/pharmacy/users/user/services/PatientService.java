@@ -1,6 +1,7 @@
 package rs.ac.uns.ftn.isa.pharmacy.users.user.services;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import rs.ac.uns.ftn.isa.pharmacy.pharma.domain.Drug;
 import rs.ac.uns.ftn.isa.pharmacy.users.user.Patient;
 import rs.ac.uns.ftn.isa.pharmacy.exceptions.EntityNotFoundException;
@@ -48,5 +49,10 @@ public class PatientService {
                 .orElseThrow(() -> new EntityNotFoundException(Patient.class.getSimpleName(), patientId));
         patient.setAllergicTo(drugs);
         repository.save(patient);
+    }
+
+    @Transactional
+    public void eraseAllPenalties() {
+        repository.eraseAllPenalties();
     }
 }
