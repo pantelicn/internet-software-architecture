@@ -27,6 +27,7 @@ import Appointments from './views/patient/Appointments.vue'
 import ScheduleCounseling from './views/patient/ScheduleCounseling.vue'
 import Pharmacies from './views/patient/Pharmacies.vue'
 import PatientHome from './views/patient/PatientHome.vue'
+import PatientProfile from './views/patient/PatientProfile.vue'
 
 const router = new VueRouter({
     mode: 'hash',
@@ -187,6 +188,10 @@ const router = new VueRouter({
                 {
                     path: '',
                     component: Pharmacies
+                },
+                {
+                    path: 'profile',
+                    component: PatientProfile
                 },
                 {
                     path: 'appointments',

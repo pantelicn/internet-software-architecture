@@ -33,7 +33,7 @@
                     User
                 </a>
                 <div class="dropdown-menu dropdown-menu-right bg-dark" aria-labelledby="navbar-dropdown">
-                    <router-link class="dropdown-item" to="/">Profile</router-link>
+                    <router-link class="dropdown-item" to="/patient/profile">Profile</router-link>
                     <router-link class="dropdown-item" to="/">Penalties</router-link>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="#">Log out</a>

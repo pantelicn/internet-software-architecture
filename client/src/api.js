@@ -64,8 +64,8 @@ export const api = {
         root: host + patients,
         appointed: host + patients + '/appointed',
         profilePreview: host + patients + '/profile-preview/',
-        isAllergic: host + patients + '/is-allergic'
-        
+        isAllergic: host + patients + '/is-allergic',
+        allergies: host + patients + '/allergies'
     },
     person: {
         root: host + person,
