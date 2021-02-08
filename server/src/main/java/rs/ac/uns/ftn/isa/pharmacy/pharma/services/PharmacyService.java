@@ -4,7 +4,6 @@ import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.isa.pharmacy.auth.model.Role;
 import rs.ac.uns.ftn.isa.pharmacy.auth.service.RegistrationService;
 import rs.ac.uns.ftn.isa.pharmacy.pharma.dtos.PharmacyAdminCreationDto;
-import rs.ac.uns.ftn.isa.pharmacy.domain.repository.AdminRepository;
 import rs.ac.uns.ftn.isa.pharmacy.pharma.dtos.PharmacyCreationDto;
 import rs.ac.uns.ftn.isa.pharmacy.pharma.mappers.PhAdminMapper;
 import rs.ac.uns.ftn.isa.pharmacy.pharma.domain.Pharmacy;
@@ -15,6 +14,7 @@ import rs.ac.uns.ftn.isa.pharmacy.supply.exceptions.InvalidEntityException;
 import rs.ac.uns.ftn.isa.pharmacy.supply.exceptions.InvalidForeignKeyException;
 import rs.ac.uns.ftn.isa.pharmacy.supply.exceptions.MessageException;
 import rs.ac.uns.ftn.isa.pharmacy.users.admin.domain.Admin;
+import rs.ac.uns.ftn.isa.pharmacy.users.admin.repository.AdminRepository;
 import rs.ac.uns.ftn.isa.pharmacy.users.person.domain.Person;
 
 import java.util.List;

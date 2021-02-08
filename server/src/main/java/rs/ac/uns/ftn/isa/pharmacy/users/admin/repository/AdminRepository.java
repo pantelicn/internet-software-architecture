@@ -1,4 +1,4 @@
-package rs.ac.uns.ftn.isa.pharmacy.domain.repository;
+package rs.ac.uns.ftn.isa.pharmacy.users.admin.repository;
 
 
 import org.springframework.data.jpa.repository.JpaRepository;
