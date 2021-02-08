@@ -15,7 +15,7 @@ public class Pharmacy {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String name;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     private Address address;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pharmacy")
     private List<Shift> shifts;

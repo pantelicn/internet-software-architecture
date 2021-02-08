@@ -35,7 +35,7 @@ public class RegistrationService {
         this.emailService = emailService;
     }
 
-    public void register(RegistrationDto dto)
+    public Person register(RegistrationDto dto)
             throws InvalidEntityException, EntityExistsException, EntityNotFoundException
     {
         validateClientData(dto);
@@ -46,8 +46,9 @@ public class RegistrationService {
             credentials.setPerson(person);
             person.setCredentials(credentials);
 
-            personRepository.save(person);
+            Person savedPerson = personRepository.saveAndFlush(person);
             emailService.sendActivationMessage(credentials);
+            return savedPerson;
         }
         else throw new EntityExistsException("Account");
     }

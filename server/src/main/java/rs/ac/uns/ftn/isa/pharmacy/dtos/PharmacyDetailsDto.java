@@ -2,14 +2,14 @@ package rs.ac.uns.ftn.isa.pharmacy.dtos;
 
 import rs.ac.uns.ftn.isa.pharmacy.domain.locale.Address;
 
-public class PharmacyDto {
+public class PharmacyDetailsDto {
     private long id;
     private String name;
     private Address address;
     private double rating;
     private String description;
 
-    public PharmacyDto(long id, String name, Address address, double rating, String description) {
+    public PharmacyDetailsDto(long id, String name, Address address, double rating, String description) {
         this.id = id;
         this.name = name;
         this.address = address;
