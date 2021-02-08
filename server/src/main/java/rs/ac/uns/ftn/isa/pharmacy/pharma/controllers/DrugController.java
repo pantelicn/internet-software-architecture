@@ -61,7 +61,6 @@ public class DrugController {
     }
 
     @GetMapping("/patient-search/{drugName}")
-    @Secured(Role.PATIENT)
     public List<DrugSearchDto> patientSearch(@PathVariable String drugName) {
         return drugService.searchByName(drugName).stream()
                 .map(DrugSearchMapper::objectToDto)

@@ -77,8 +77,8 @@
             <button class="btn btn-success ml-1" @click="search">Search</button>
         </div>
         <div v-if="drugs.length > 0" class="d-flex justify-content-center p-1">
-            <table class="border border-success">
-                <tr class="border-bottom border-success">
+            <table class="table table-striped table-dark">
+                <tr>
                     <th>
                         Name
                     </th>
@@ -86,19 +86,21 @@
                         Manufacturer
                     </th>
                     <th></th>
-                <tr>
-                <tr v-for="drug in distinct(drugs)" v-bind:key="drug.id">
-                    <td>{{drug.name}}</td>
-                    <td>{{drug.manufacturer}}</td>
-                    <td><button class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal" @click="select(drug.drugId)">Reserve</button></td>
                 </tr>
+                <tbody>
+                    <tr v-for="drug in distinct(drugs)" v-bind:key="drug.id">
+                        <td>{{drug.name}}</td>
+                        <td>{{drug.manufacturer}}</td>
+                        <td><button class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal" @click="select(drug.drugId)">Reserve</button></td>
+                    </tr>
+                </tbody>
             </table>
         </div>
     </div>
     <div v-else>
         <div v-if="reservations.length > 0" class="d-flex justify-content-center p-1">
-            <table class="border border-success">
-                <tr class="border-bottom border-success">
+            <table class="table table-striped table-dark">
+                <tr>
                     <th>
                         Id
                     </th>
@@ -121,17 +123,19 @@
                         Pick up before
                     </th>
                     <th></th>
-                <tr>
-                <tr v-for="reservation in reservations" v-bind:key="reservation.reservationId">
-                    <td>{{reservation.reservationId}}</td>
-                    <td>{{reservation.name}}</td>
-                    <td>{{reservation.manufacturer}}</td>
-                    <td>{{reservation.pharmacyName}}</td>
-                    <td>{{reservation.quantity}}</td>
-                    <td>{{formatPrice(reservation.price.amount.amount * reservation.quantity) + reservation.price.amount.currency}}</td>
-                    <td>{{formatDate(reservation.pickUpBefore)}}</td>
-                    <td><button v-if="isCancelable(reservation.pickUpBefore)" class="btn btn-sm btn-success" data-toggle="modal" @click="cancel(reservation.reservationId)">Cancel</button></td>
                 </tr>
+                <tbody>
+                    <tr v-for="reservation in reservations" v-bind:key="reservation.reservationId">
+                        <td>{{reservation.reservationId}}</td>
+                        <td>{{reservation.name}}</td>
+                        <td>{{reservation.manufacturer}}</td>
+                        <td>{{reservation.pharmacyName}}</td>
+                        <td>{{reservation.quantity}}</td>
+                        <td>{{formatPrice(reservation.price.amount.amount * reservation.quantity) + reservation.price.amount.currency}}</td>
+                        <td>{{formatDate(reservation.pickUpBefore)}}</td>
+                        <td><button v-if="isCancelable(reservation.pickUpBefore)" class="btn btn-sm btn-success" data-toggle="modal" @click="cancel(reservation.reservationId)">Cancel</button></td>
+                    </tr>
+                </tbody>
             </table>
         </div>
         <div class="m-4" v-else><b>You have no reservations.</b></div>

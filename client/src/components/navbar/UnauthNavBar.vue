@@ -3,9 +3,22 @@
         <a class="navbar-brand" href="/">ISA Pharmacy App</a>
 
         <div class="collapse navbar-collapse" id="navbar-content">
-            <div class="mr-auto">
-            </div>
-            <router-link class="nav-item" to="/">Login</router-link>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <router-link class="nav-link" to="/pharmacies"> Pharmacies </router-link>
+                </li>
+                <li class="nav-item">
+                    <router-link class="nav-link" to="/drugs"> Drugs </router-link>
+                </li>
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <router-link class="nav-link" to="/register">Register</router-link>
+                </li>
+                <li class="nav-item">
+                    <router-link class="nav-link" to="/">Login </router-link>
+                </li>
+            </ul>
         </div>
     </nav>
 </template>
