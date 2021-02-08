@@ -1,12 +1,14 @@
 package rs.ac.uns.ftn.isa.pharmacy.services.employee;
 
 import org.springframework.stereotype.Service;
+import rs.ac.uns.ftn.isa.pharmacy.domain.pharma.Pharmacy;
 import rs.ac.uns.ftn.isa.pharmacy.domain.users.employee.Employee;
-import rs.ac.uns.ftn.isa.pharmacy.dtos.EmployeeBasicInfoDto;
+import rs.ac.uns.ftn.isa.pharmacy.domain.users.employee.Shift;
 import rs.ac.uns.ftn.isa.pharmacy.repository.employee.EmployeeRepository;
+
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class EmployeeService {
@@ -16,20 +18,16 @@ public class EmployeeService {
         this.repository=repository;
     }
 
-    public Set<Employee> getDermatologistsBasicInfo(long pharmacyId){
-        return filterEmployees(pharmacyId, repository.getDermatologist());
-    }
-    public Set<Employee> getPharmacistsBasicInfo(long pharmacyId){
-        return filterEmployees(pharmacyId, repository.getPharmacist());
+    public long getEmployeeId(long personId){
+        return this.repository.getEmployeeIdByPersonId(personId);
     }
 
-    private Set<Employee> filterEmployees(long pharmacyId, List<Employee> dermatologists) {
-        var filteredDermatologists = new HashSet<Employee>();
-        for (var dermatologist : dermatologists)
-            for (var shift : dermatologist.getShifts())
-                if (shift.getPharmacy().getId() == pharmacyId)
-                    filteredDermatologists.add(dermatologist);
-        return filteredDermatologists;
+    public List<Pharmacy> getMyPharmacies(long employeeId) {
+        var pharmacies = new HashSet<Pharmacy>();
+        for (Shift shift : repository.getOne(employeeId).getShifts()) {
+            pharmacies.add(shift.getPharmacy());
+        }
+        return new ArrayList<>(pharmacies);
     }
 
     public Employee findByPersonId(long id) {

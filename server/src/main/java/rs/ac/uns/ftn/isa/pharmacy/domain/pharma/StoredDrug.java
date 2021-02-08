@@ -37,6 +37,13 @@ public class StoredDrug {
         }
         this.quantity = quantity;
     }
+    public void decrementQuantity(){
+        if (quantity < 0) {
+            throw new QuantityException("There is not enough of the stored drug.");
+        }
+        this.quantity=-1;
+
+    }
 
     public Price getPrice() {
         return price;

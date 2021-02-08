@@ -36,7 +36,20 @@ export default {
         }
     },
     mounted(){
-        this.examination=this.$store.state.report.currentAppointment
+        this.examination = this.$store.state.report.currentAppointment
+        if(this.examination == null){
+            this.$router.push({name: 'upcoming-examinations'})
+        }
+    },
+    beforeRouteEnter (to, from, next) {
+        if(from.name !== 'upcoming-examinations')
+            next({ name: 'upcoming-examinations' })
+        else
+            next()
+    },
+    beforeRouteLeave (to, from, next) {
+        this.$store.commit('clearAppointmentReport')
+        next()
     }
 }
 </script>

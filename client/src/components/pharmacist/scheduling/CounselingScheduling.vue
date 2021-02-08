@@ -61,7 +61,6 @@ import axios from 'axios'
 import {
     api
 } from '../../../api.js'
-
 export function getTomorrowsDate(){
     let date = new Date()
     date.setDate(date.getDate() + 1)
@@ -69,6 +68,7 @@ export function getTomorrowsDate(){
 }
 
 import DatePicker from 'v-calendar/lib/components/date-picker.umd'
+import { getRoleId } from '../../../helpers/jwt'
 export default {
     name:'CounselingReport',
     data:function(){
@@ -95,11 +95,10 @@ export default {
             this.selectedDuration = event.target.value
         },
 
-        // TODO izmeni da se ne zakucava farmaceut kada zavrsis logogovanje
         scheduleNewCounseling: function () {
             let createdAppointmentDto = {
                 pharmacyId: this.currentAppointment.pharmacyId,
-                employeeId: 3,
+                employeeId: getRoleId(),
                 patientId: this.currentAppointment.patientId,
                 start: this.date,
                 duration: this.getDurationString()

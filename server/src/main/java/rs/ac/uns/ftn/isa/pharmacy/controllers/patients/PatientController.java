@@ -3,14 +3,18 @@ package rs.ac.uns.ftn.isa.pharmacy.controllers.patients;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
-import rs.ac.uns.ftn.isa.pharmacy.domain.pharma.Drug;
+import rs.ac.uns.ftn.isa.pharmacy.auth.HttpRequestUtil;
+import rs.ac.uns.ftn.isa.pharmacy.auth.IdentityProvider;
+import rs.ac.uns.ftn.isa.pharmacy.auth.model.Role;
 import rs.ac.uns.ftn.isa.pharmacy.dtos.PatientBasicInfoDto;
 import rs.ac.uns.ftn.isa.pharmacy.dtos.PatientProfilePreviewDto;
 import rs.ac.uns.ftn.isa.pharmacy.mappers.PatientBasicInfoMapper;
-import rs.ac.uns.ftn.isa.pharmacy.services.PatientService;
+import rs.ac.uns.ftn.isa.pharmacy.services.patients.PatientService;
 import rs.ac.uns.ftn.isa.pharmacy.services.pharma.DrugService;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,9 +29,11 @@ public class PatientController {
         this.drugService = drugService;
     }
 
-    @GetMapping("/appointed-by/{employeeId}")
-    public List<PatientBasicInfoDto> getAppointedPatients(@PathVariable long employeeId){
-        return patientService.getAppointedBy(employeeId)
+    @Secured({Role.PHARMACIST,Role.DERMATOLOGIST})
+    @GetMapping("/appointed")
+    public List<PatientBasicInfoDto> getAppointedPatients(HttpServletRequest request){
+        IdentityProvider provider = HttpRequestUtil.getIdentity(request);
+        return patientService.getAppointedBy(provider.getRoleId())
                 .stream()
                 .map(PatientBasicInfoMapper::objectToDto)
                 .collect(Collectors.toList());

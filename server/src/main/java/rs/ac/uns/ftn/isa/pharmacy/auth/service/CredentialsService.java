@@ -33,12 +33,13 @@ public class CredentialsService {
     }
 
     public void changePassword(String email, PassChangeDto dto) throws IncorrectPasswordException, PasswordTooShortException {
-        if (dto.getOldPassword() == null || dto.getNewPassword() == null || dto.getNewPassword().length() < 6)
+        var oldPassword = credentialsRepository.getOne(email).getPassword();
+        if (dto.getPassword() == null || dto.getPassword().length() < Credentials.MIN_PASSWORD_LEN)
             throw new PasswordTooShortException();
         Credentials credentials = credentialsRepository.findById(email).get();
-        if (!credentials.getPassword().contentEquals(dto.getOldPassword()))
+        if (!credentials.getPassword().contentEquals(oldPassword))
             throw new IncorrectPasswordException();
-        credentials.setPassword(dto.getNewPassword());
+        credentials.setPassword(dto.getPassword());
         credentialsRepository.save(credentials);
     }
 

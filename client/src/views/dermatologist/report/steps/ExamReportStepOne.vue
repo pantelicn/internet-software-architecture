@@ -33,6 +33,13 @@ export default {
 
         }
     },
+    beforeRouteEnter (to, from, next) {
+        if(from.name != 'upcoming-examinations')
+            next({ name: 'upcoming-examinations' })
+        else
+            next()
+
+    }
 }
 </script>
 

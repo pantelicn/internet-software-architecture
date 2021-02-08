@@ -37,6 +37,14 @@ export default {
             this.$router.push({ name: 'counseling-report-step-three' })
         }
     },
+    beforeRouteLeave (to, from, next) {
+        if(to.name == 'counseling-report-step-three' && this.text === '')
+            next( { name:'counseling-report-step-two' } )
+        else if(to.name == 'counseling-report-step-four' && this.text === '')
+            next({name: 'counseling-report-step-two'})
+        else
+            next()
+    },
     mounted() {
         this.text = this.$store.state.report.appointmentReport.examinationInformation
     },

@@ -1,0 +1,127 @@
+<template>
+    <div>
+        <DermatologistNavBar></DermatologistNavBar>
+        <b-modal ref="never-logged"
+                body-bg-variant="dark"
+                body-text-variant="light"
+                footer-bg-variant="dark"
+                header-bg-variant="dark"
+                header-text-variant="light"
+                ok-variant="success"
+                no-close-on-backdrop
+                hide-header-close
+                id="never-logged" 
+                title="Looks like you've never logged before"
+                @ok="handleOk"
+                @hide="handleHide" 
+                ok-only>
+            <b-col>
+                <b-row>
+                    <label> Please enter a new password </label>
+                </b-row>
+                <b-row>
+                    <b-form-input type="password" v-model="password"></b-form-input>
+                </b-row>
+                <b-row>
+                    <b-form-invalid-feedback :state="passwordMatching">
+                            Passwords must match
+                    </b-form-invalid-feedback>
+                </b-row>
+                <b-row>
+                    <b-form-invalid-feedback :state="passwordLengthValid">
+                            Your password must have at least 6 characters
+                    </b-form-invalid-feedback>
+                </b-row>
+                <b-row class="mt-2">
+                    <label> Validate your password </label>
+                </b-row>
+                <b-row>
+                    <b-form-input type="password" v-model="passwordValidated"></b-form-input>
+                </b-row>
+                <b-row>
+                    <b-form-invalid-feedback :state="passwordMatching">
+                            Passwords must match
+                    </b-form-invalid-feedback>
+                </b-row>
+                <b-row>
+                    <b-form-invalid-feedback :state="passwordLengthValid">
+                            Your password must have at least 6 characters
+                    </b-form-invalid-feedback>
+                </b-row>
+            </b-col>
+        </b-modal>
+        <router-view/>
+    </div>
+</template>
+
+<script>
+import DermatologistNavBar from '../../components/navbar/DermatologistNavBar'
+import axios from 'axios'
+import { api } from '../../api.js'
+export default {
+    name: 'DermatologistHome',
+    components: {
+        DermatologistNavBar
+    },
+    computed:{
+        passwordMatching(){
+            return (this.password == this.passwordValidated) 
+            && (this.password !== '' && this.passwordValidated !=='')
+        },
+        passwordLengthValid(){
+            return (this.passwordMatching && this.password.length >= 6 && this.passwordValidated.length >=6)
+        }
+    },
+    data() {
+        return {
+            password:'',
+            passwordValidated:'',
+        }
+    },
+    methods:{
+        hasLoggedBefore(){
+            axios.get(api.auth.hasLoggedBefore)
+            .then(res=>{
+                if(res.data == true)
+                    return
+                else
+                    this.$refs['never-logged'].show()
+            })
+        },
+        updatePassword(){
+            let passwordDto = {
+                password : this.password
+            }
+            axios.post(api.auth.changePassword,passwordDto).then(res=>{
+                this.$nextTick(() => {
+                    this.$bvModal.hide('never-logged')
+                })
+            }).catch(err=>{
+                this.$toast.error(err.data);
+            })
+        },
+        handleOk(bvModalEvt){
+            bvModalEvt.preventDefault()
+            if(this.passwordMatching && this.passwordLengthValid)
+                this.updatePassword()
+        },
+        handleHide(bvModalEvt){
+            if(!this.passwordMatching)
+                bvModalEvt.preventDefault()
+        }
+                
+    },
+    mounted(){
+        this.hasLoggedBefore()
+    }
+}
+</script>
+
+<style scoped>
+.modal-footer{
+    border-top:1px solid #4f5357 !important;
+}
+.modal-header{
+    border-bottom: 1px solid #4f5357 !important;
+}
+</style>

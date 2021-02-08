@@ -7,13 +7,18 @@ let drugs = '/api/drugs'
 let employees = '/api/employees'
 let scheduling = '/api/schedule'
 let patients = '/api/patients'
+let person = '/api/person'
 let storedDrugs = '/api/stored-drugs'
+let timeOff = '/api/time-off'
+let pharmacies = '/api/pharmacies'
 
 
 
 export const api = {
     auth: { 
-        login: host + auth + '/login'
+        login: host + auth + '/login', 
+        hasLoggedBefore: host + auth + '/logged',
+        changePassword: host + auth + '/change-password'
     }
     ,
     appointments: {
@@ -44,24 +49,33 @@ export const api = {
         isAvailable : host + storedDrugs + '/is-available'
     },
     employees: {
-        dermatologists: {
-            basicInfo: host + employees + '/dermatologists/basic-info/'
-        },
-        pharmacists: {
-            basicInfo: host + employees + '/pharmacists/basic-info/'
-        }
+        employeeId : host + employees + '/employee-id/',
+        myPharmacies: host + employees + '/my-pharmacies/'
     },
     scheduling: {
         root: host + scheduling,
         predefined: host + scheduling + '/predefined',
         newExamination: host + scheduling + '/examination',
-        newCounseling: host + scheduling + '/counseling'
+        newCounseling: host + scheduling + '/counseling',
+        patientCounseling: host + scheduling + '/counseling/patient',
+        findPharmacists: host + scheduling + '/counseling/pharmacists'
     },
     patients: {
         root: host + patients,
-        appointed: host + patients + '/appointed-by/',
+        appointed: host + patients + '/appointed',
         profilePreview: host + patients + '/profile-preview/',
         isAllergic: host + patients + '/is-allergic'
         
+    },
+    person: {
+        root: host + person,
+        credentials: host + person + '/credentials',
+        name: host + person + '/name'
+    },
+    timeOff: {
+        root: host + timeOff
+    },
+    pharmacies: {
+        root: host + pharmacies
     }
 }

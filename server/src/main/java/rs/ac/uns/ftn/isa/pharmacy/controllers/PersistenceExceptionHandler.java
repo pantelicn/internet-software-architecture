@@ -79,4 +79,5 @@ public class PersistenceExceptionHandler {
     String noUpcomingAppointmentsHandler(NoUpcomingAppointmentsException e){
         return e.getMessage();
     }
+
 }

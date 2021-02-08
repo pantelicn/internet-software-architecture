@@ -103,9 +103,8 @@ export default {
         }
     },
     methods:{
-        // TODO namesti da se farmaceut ne zakucava
         fetchUpcomingCounselings(){
-            axios.get(api.appointments.upcoming + 3).then(res=>{
+            axios.get(api.appointments.upcoming).then(res=>{
                 res.data.forEach(element => {
                     this.counselings.push({
                         appointmentId : element.appointmentId,
@@ -132,7 +131,7 @@ export default {
         },
         commitCounseling:function(item,button){
             this.$store.commit('setCurrentAppointment',item)
-            this.$router.push('/counseling-report/')
+            this.$router.push('pharmacist/counseling-report/')
         }
     },
     mounted(){

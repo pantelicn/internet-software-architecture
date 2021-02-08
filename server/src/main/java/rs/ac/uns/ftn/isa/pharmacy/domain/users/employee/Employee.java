@@ -1,6 +1,7 @@
 package rs.ac.uns.ftn.isa.pharmacy.domain.users.employee;
 
 import rs.ac.uns.ftn.isa.pharmacy.domain.person.Person;
+import rs.ac.uns.ftn.isa.pharmacy.domain.pharma.TimeOffRequest;
 
 import javax.persistence.*;
 import java.util.List;
@@ -16,6 +17,9 @@ public class Employee {
     private EmployeeType employeeType;
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST},mappedBy = "employee")
     private List<Shift> shifts;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employee")
+    private List<TimeOffRequest> timeOffRequests;
+    private double rating;
 
     public long getId() {
         return id;
@@ -49,6 +53,14 @@ public class Employee {
         this.shifts = shifts;
     }
 
+    public List<TimeOffRequest> getTimeOffRequests() {
+        return timeOffRequests;
+    }
+
+    public void setTimeOffRequests(List<TimeOffRequest> timeOffRequests) {
+        this.timeOffRequests = timeOffRequests;
+    }
+
     public boolean hasShiftAtPharmacy(Term term, double pharmacyId) {
         for(var shift:shifts)
             if (shift.getPharmacy().getId() == pharmacyId)
@@ -70,5 +82,15 @@ public class Employee {
             if(term.isInRange(shift.getStart(),shift.getEnd()))
                 return shift;
         return null;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        if (rating < 0 || rating > 5)
+            throw new IllegalArgumentException("Invalid employee rating.");
+        this.rating = rating;
     }
 }

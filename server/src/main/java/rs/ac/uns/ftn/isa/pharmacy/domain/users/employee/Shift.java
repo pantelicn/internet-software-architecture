@@ -4,6 +4,7 @@ import rs.ac.uns.ftn.isa.pharmacy.domain.pharma.Pharmacy;
 import rs.ac.uns.ftn.isa.pharmacy.domain.schedule.Appointment;
 
 import javax.persistence.*;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
@@ -79,5 +80,13 @@ public class Shift {
                 return true;
 
         return false;
+    }
+
+    /**
+     * Get shift as a {@link Term} object that represents the beginning, duration and the end of shift.
+     * @return {@link Term} object.
+     */
+    public Term asTerm() {
+        return new Term(start, Duration.between(start, end));
     }
 }

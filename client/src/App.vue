@@ -1,17 +1,18 @@
 <template>
+
   <div id="app">
-    <UserNavbar/>
     <router-view/>
   </div>
 </template>
 
 <script>
-import UserNavbar from './components/UserNavbar.vue'
 export default {
   name: 'App',
-  components: {
-    UserNavbar
-  }
+  mounted() {
+        let placesImport = document.createElement('script');
+            placesImport.setAttribute('src', "https://maps.googleapis.com/maps/api/js?key=AIzaSyAT-T7ngofAB9KXFewCksAfTWiuqx8-WCk&libraries=places")
+            document.head.appendChild(placesImport)
+    }
 }
 </script>
 
@@ -28,5 +29,14 @@ export default {
 
 #app a {
   color: #42b983;
+}
+#app .dropdown-menu-right{
+    background-color: #393f45 !important;
+}
+#app hr {
+    border-color : rgb(58, 92, 75) !important;
+}
+#app .modal-footer{
+  border-top:1px solid #4f5357 !important;
 }
 </style>

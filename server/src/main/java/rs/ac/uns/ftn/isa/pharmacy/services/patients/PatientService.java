@@ -1,4 +1,4 @@
-package rs.ac.uns.ftn.isa.pharmacy.services;
+package rs.ac.uns.ftn.isa.pharmacy.services.patients;
 
 import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.isa.pharmacy.domain.users.user.Patient;
