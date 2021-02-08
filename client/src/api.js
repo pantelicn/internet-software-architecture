@@ -42,7 +42,8 @@ export const api = {
         root: host + drugs,
         search: host + drugs + '/search',
         patientSearch: host + drugs + '/patient-search',
-        reservations: host + drugs + '/reservations'
+        reservations: host + drugs + '/reservations/',
+        dispense: host + drugs + '/reservations/dispense/'
     },
     storedDrugs: {
         root: host + storedDrugs,

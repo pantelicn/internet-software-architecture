@@ -10,12 +10,12 @@
             <b-navbar-nav>
                 <b-nav-item class="ml-4" to="/pharmacist">Upcoming Counselings</b-nav-item>
                 <b-nav-item class="ml-4" to="/pharmacist/counseled-patients">Counseled Patients</b-nav-item>
-                <b-nav-item class="ml-4" to="#">Drug dispensing</b-nav-item>
+                <b-nav-item class="ml-4" to="/pharmacist/drug-dispensing">Drug dispensing</b-nav-item>
             </b-navbar-nav>
 
             <b-navbar-nav class="ml-auto">
                 <b-nav-item-dropdown right>
-                    <template #button-content>
+                    <template #button-content v-if="name!=null">
                         Pharmacist {{name.firstName + " " + name.lastName}}
                     </template>
                     <b-dropdown-item to="/pharmacist/my-profile">Profile</b-dropdown-item>

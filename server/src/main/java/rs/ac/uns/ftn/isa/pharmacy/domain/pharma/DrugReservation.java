@@ -73,4 +73,8 @@ public class DrugReservation {
     public boolean isInPast(int days) {
         return this.pickUpBefore.isBefore(LocalDate.now().plusDays(days));
     }
+
+    public boolean canBeDispensed(){
+        return !this.isInPast(1);
+    }
 }

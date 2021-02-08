@@ -13,6 +13,8 @@ import rs.ac.uns.ftn.isa.pharmacy.domain.promotion.model.Promotion;
 import rs.ac.uns.ftn.isa.pharmacy.domain.promotion.model.Subscription;
 import rs.ac.uns.ftn.isa.pharmacy.domain.schedule.Appointment;
 
+import javax.mail.Store;
+
 
 @Service
 public class EmailService {
@@ -53,6 +55,13 @@ public class EmailService {
                 mailInfo.getAdminMail(),
                 "Drug doesn't exist in our stock."
         );
+    }
+    public void sendDrugDispensedMessage(DrugReservation drugReservation){
+        var message = new DrugDispensedMessage(emailSender,drugReservation);
+        message.send(
+                SENDER_EMAIL,
+                drugReservation.getPatient().getPerson().getCredentials().getEmail(),
+                "Drug successfully retrieved.");
     }
 
     public void sendResponseNoticeMessage(Response response) {

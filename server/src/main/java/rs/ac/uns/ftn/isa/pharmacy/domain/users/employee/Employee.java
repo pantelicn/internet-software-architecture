@@ -1,6 +1,7 @@
 package rs.ac.uns.ftn.isa.pharmacy.domain.users.employee;
 
 import rs.ac.uns.ftn.isa.pharmacy.domain.person.Person;
+import rs.ac.uns.ftn.isa.pharmacy.domain.pharma.Pharmacy;
 import rs.ac.uns.ftn.isa.pharmacy.domain.pharma.TimeOffRequest;
 
 import javax.persistence.*;
@@ -92,5 +93,12 @@ public class Employee {
         if (rating < 0 || rating > 5)
             throw new IllegalArgumentException("Invalid employee rating.");
         this.rating = rating;
+    }
+
+    public boolean worksIn(Pharmacy pharmacy) {
+        for(var shift:shifts)
+            if (shift.getPharmacy().getId() == pharmacy.getId())
+                    return true;
+        return false;
     }
 }
