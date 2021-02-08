@@ -40,6 +40,8 @@ public class CredentialsTokenMapper {
         switch (credentials.getRole()) {
             case Role.PATIENT:
                 Patient patient = patientService.findByPersonId(credentials.getPerson().getId());
+                System.out.println("Searching for person="+credentials.getPerson().getId());
+                System.out.println("Patient id=" + patient.getId());
                 token.setRoleId(patient.getId());
                 break;
             case Role.DERMATOLOGIST:

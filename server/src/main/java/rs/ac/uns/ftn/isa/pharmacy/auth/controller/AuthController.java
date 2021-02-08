@@ -20,6 +20,7 @@ import rs.ac.uns.ftn.isa.pharmacy.auth.model.Credentials;
 import rs.ac.uns.ftn.isa.pharmacy.auth.service.RegistrationService;
 import rs.ac.uns.ftn.isa.pharmacy.supply.exceptions.EntityNotFoundException;
 import rs.ac.uns.ftn.isa.pharmacy.supply.exceptions.MessageException;
+import rs.ac.uns.ftn.isa.pharmacy.users.user.services.PatientService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.UUID;
@@ -31,20 +32,20 @@ public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
     private final CredentialsService credentialsService;
-    private final RegistrationService registrationService;
+    private final PatientService patientService;
     private final CredentialsTokenMapper credentialsTokenMapper;
 
     public AuthController(
             AuthenticationManager authenticationManager,
             JwtService jwtService,
             CredentialsService credentialsService,
-            RegistrationService registrationService,
+            PatientService patientService,
             CredentialsTokenMapper credentialsTokenMapper
     ){
         this.authenticationManager = authenticationManager;
         this.jwtService = jwtService;
         this.credentialsService = credentialsService;
-        this.registrationService = registrationService;
+        this.patientService = patientService;
         this.credentialsTokenMapper = credentialsTokenMapper;
     }
 
@@ -70,7 +71,7 @@ public class AuthController {
     @PostMapping("register")
     public ResponseEntity<?> register(@RequestBody RegistrationDto dto) {
         try {
-            registrationService.register(dto);
+            patientService.register(dto);
             return ResponseEntity.ok().build();
         }
         catch (MessageException e) {
@@ -107,7 +108,7 @@ public class AuthController {
         try {
             UUID uuid = UUID.fromString(stringUuid);
             credentialsService.activate(uuid);
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok("Your account is activated. You may now log in.");
         }
         catch (EntityNotFoundException e) {
             return ResponseEntity.badRequest().body(e.getMessage());

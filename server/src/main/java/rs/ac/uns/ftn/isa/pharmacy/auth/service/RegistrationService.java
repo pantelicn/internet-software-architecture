@@ -12,6 +12,7 @@ import rs.ac.uns.ftn.isa.pharmacy.supply.exceptions.EntityExistsException;
 import rs.ac.uns.ftn.isa.pharmacy.supply.exceptions.EntityNotFoundException;
 import rs.ac.uns.ftn.isa.pharmacy.supply.exceptions.InvalidEntityException;
 import rs.ac.uns.ftn.isa.pharmacy.mail.services.EmailService;
+import rs.ac.uns.ftn.isa.pharmacy.users.user.Patient;
 
 import java.util.UUID;
 
@@ -35,7 +36,7 @@ public class RegistrationService {
         this.emailService = emailService;
     }
 
-    public Person register(RegistrationDto dto)
+    public Person registerPatient(RegistrationDto dto)
             throws EntityExistsException, EntityNotFoundException, InvalidEntityException
     {
         return register(dto, Role.PATIENT);
