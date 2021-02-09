@@ -9,9 +9,10 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name="persons")
+@SequenceGenerator(name = "persons_seq", initialValue = 100, allocationSize = 1)
 public class Person {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "persons_seq")
     private long id;
     private String pid;
     private String firstName;

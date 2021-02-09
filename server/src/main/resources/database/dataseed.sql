@@ -33,11 +33,10 @@ values (1, 250, "Tiny Pill", "Tiny Pill", 5, 1);
 insert into isa.pharmacies (id, amount, description, name, rating, address_id)
 values (2, 200, "Zegin", "Zegin", 5, 2);
 
-
 insert into isa.persons (id, pid, date_of_birth, first_name, gender, last_name, phone_number, address_id)
 values (1,"0112998091229", "2000-1-1 8:00:00", "Nikola", 0, "Pantelic", "05123123123", 2);
 insert into isa.patients (id,person_id,penalties) values (1,1,0);
-insert into isa.credentials (email,username,is_activated,has_logged_in_before,password,role,uid,person_id) 
+insert into isa.credentials (email,username,is_activated,has_changed_initial_password,password,role,uid,person_id) 
 values ("pantelacar@gmail.com","pantelaisus",1,1,"password","ROLE_PATIENT",'337d2368-8bb0-46a5-a33a-7a0fd98d262f',1);
 update isa.persons set credentials_email="pantelacar@gmail.com" where id=1;
 
@@ -45,7 +44,7 @@ update isa.persons set credentials_email="pantelacar@gmail.com" where id=1;
 insert into isa.persons (id, pid, date_of_birth, first_name, gender, last_name, phone_number, address_id)
 values (2,"021099911229", "1998-2-2 8:00:00", "John", 0, "Doe", "0642025209", 3);
 insert into isa.patients (id,person_id,penalties) values (2,2,0);
-insert into isa.credentials (email,username,is_activated,has_logged_in_before,password,role,uid,person_id) 
+insert into isa.credentials (email,username,is_activated,has_changed_initial_password,password,role,uid,person_id) 
 values ("mail@gmail.com","johndoe",1,1,"password","ROLE_PATIENT",'a4881085-96dc-4124-a3b7-34d48459791f',2);
 update isa.persons set credentials_email="mail@gmail.com" where id=2;
 
@@ -53,26 +52,26 @@ update isa.persons set credentials_email="mail@gmail.com" where id=2;
 insert into isa.persons (id, pid, date_of_birth, first_name, gender, last_name, phone_number, address_id)
 values (3,"041199310218", "1998-3-4 8:00:00", "Keith", 0, "Smith", "0631212319", 4);
 insert into isa.patients (id,person_id,penalties) values (3,3,0);
-insert into isa.credentials (email,username,is_activated,has_logged_in_before,password,role,uid,person_id) 
+insert into isa.credentials (email,username,is_activated,has_changed_initial_password,password,role,uid,person_id) 
 values ("mail1@gmail.com","keithsmith",1,1,"password","ROLE_PATIENT",'6f822cc2-a137-4be5-9f34-9d38a252b948',3);
 update isa.persons set credentials_email="mail1@gmail.com" where id=3;
 
 insert into isa.persons (id,pid, date_of_birth, first_name, gender, last_name, phone_number, address_id)
 values (4,"0210991102181", "1992-01-12 8:00:00", "Sage", 0, "Finley", "0632312312", 5);
-insert into isa.credentials (email,username,is_activated,has_logged_in_before,password,role,uid,person_id)
+insert into isa.credentials (email,username,is_activated,has_changed_initial_password,password,role,uid,person_id)
 values ("sagefinley@gmail.com","sagefinley",1,1,"password","ROLE_DERMATOLOGIST",'6f922cc2-a137-4be5-9f34-9d38a252b948',4);
 update isa.persons set credentials_email="sagefinley@gmail.com" where id=4;
 insert into isa.employees(id,employee_type,rating,person_id) values (1,1,4.5,4);
 
 
 select * from isa.credentials;
-update isa.credentials set has_logged_in_before=0 where email="sagefinley@gmail.com";
+update isa.credentials set has_changed_initial_password=0 where email="sagefinley@gmail.com";
 
 select * from isa.credentials;
 
 insert into isa.persons (id, pid, date_of_birth, first_name, gender, last_name, phone_number, address_id)
 values (5,"031099310218", "1992-09-09 8:00:00", "Mackenzie", 0, "Ashton", "0612935123", 6);
-insert into isa.credentials (email,username,is_activated,has_logged_in_before,password,role,uid,person_id) 
+insert into isa.credentials (email,username,is_activated,has_changed_initial_password,password,role,uid,person_id) 
 values ("mickeyashton@gmail.com","mickeyashton",1,1,"password","ROLE_PHARMACIST",'6f192cc2-a137-4be5-9f34-9d38a252b948',5);
 update isa.persons set credentials_email="mickeyashton@gmail.com" where id=5;
 insert into isa.employees(id,employee_type, rating, person_id) values (2,1,4.6,5);
@@ -87,7 +86,7 @@ insert into isa.employees(id,employee_type, rating, person_id) values (4, 0, 5, 
 
 insert into isa.persons (id,pid, date_of_birth, first_name, gender, last_name, phone_number, address_id)
 values (8,"130398311218", "1989-05-13 8:00:00", "John", 0, "Scott", "0663155129", 9);
-insert into isa.credentials (email,username,is_activated,has_logged_in_before,password,role,uid,person_id) 
+insert into isa.credentials (email,username,is_activated,has_changed_initial_password,password,role,uid,person_id) 
 values ("kennethlaine1@gmail.com","johnscott",1,1,"password","ROLE_PH_ADMIN",'6f822ca1-a137-4be5-9f34-9d38a252b948',8);
 update isa.persons set credentials_email="kennethlaine1@gmail.com" where id=8;
 insert into isa.admins (id,admin_type,person_id) values (1,1,8);
@@ -95,7 +94,7 @@ update isa.pharmacies set admin_id = 1 where id=1;
 
 insert into isa.persons (id,pid, date_of_birth, first_name, gender, last_name, phone_number, address_id)
 values (9,"130428311218", "1989-05-13 8:00:00", "Andrew", 0, "Miller", "0613155129", 10);
-insert into isa.credentials (email,username,is_activated,has_logged_in_before,password,role,uid,person_id) 
+insert into isa.credentials (email,username,is_activated,has_changed_initial_password,password,role,uid,person_id) 
 values ("andrewmiller@gmail.com","andrewmiller",1,1,"password","ROLE_PH_ADMIN",'6f822cc1-a125-4be5-9f34-9d38a252b948',9);
 update isa.persons set credentials_email="andrewmiller@gmail.com" where id=9;
 insert into isa.admins (id,admin_type,person_id) values (2,1,9);
@@ -288,4 +287,3 @@ values (14, 150.0, "2022-03-03 00:00:00", 25, 7, 2);
 
 
 select * from isa.appointments;
-

@@ -71,12 +71,19 @@
             <input type="radio" v-model="view" value="view"> Your reservations
         </label>
     </div>
+
+    <div>
+      <b-modal size="lg" :title="drugSpecModal.title" :id="drugSpecModal.id" ok-only>
+        <drug-specification :drug="drugSpecModal.drug"></drug-specification>
+      </b-modal>
+    </div>
+
     <div v-if="view == 'reserve'">
         <div class="form-inline d-flex justify-content-center m-3">
             <input type="text" class="form-control" placeholder="Search" v-model="searchString"/>
             <button class="btn btn-success ml-1" @click="search">Search</button>
         </div>
-        <div v-if="drugs.length > 0" class="d-flex justify-content-center p-1">
+        <div v-if="displayedDrugs.length > 0" class="d-flex justify-content-center p-1">
             <table class="table table-striped table-dark">
                 <tr>
                     <th>
@@ -85,13 +92,22 @@
                     <th>
                         Manufacturer
                     </th>
+                    <th>
+                      Drug type
+                    </th>
+                    <th>
+                      Rating
+                    </th>
                     <th></th>
                 </tr>
                 <tbody>
-                    <tr v-for="drug in distinct(drugs)" v-bind:key="drug.id">
+                    <tr v-for="drug in distinct(displayedDrugs)" v-bind:key="drug.id">
                         <td>{{drug.name}}</td>
                         <td>{{drug.manufacturer}}</td>
+                        <td>{{drug.drugType}}</td>
+                        <td>{{drug.rating}}</td>
                         <td><button class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal" @click="select(drug.drugId)">Reserve</button></td>
+                        <td><button class="btn btn-sm btn-info" @click="showSpecification(drug, $event.target)">Specification</button></td>
                     </tr>
                 </tbody>
             </table>
@@ -148,12 +164,21 @@ import { api } from '../../api.js'
 import axios from 'axios'
 import DatePicker from 'v-calendar/lib/components/date-picker.umd'
 import { format, isPast, subDays } from 'date-fns'
+import DrugSpecification from "@/components/report/DrugSpecification";
 
 export default {
     data: function () {
         return {
             view: 'reserve',
-            drugs: [],
+
+            displayedDrugs: [],
+            allDrugs: [],
+
+            filters: {
+                drugTypes: [],
+                ratings: []
+            },
+
             searchString: '',
             selectedDrug: null,
             availableStoredDrugs: [],
@@ -161,11 +186,17 @@ export default {
             quantity: 1,
             minDate: new Date(),
             date: new Date(),
-            reservations: []
+            reservations: [],
+
+            drugSpecModal: {
+              id: 'drug-specifications-modal',
+              drug: undefined,
+              title: ''
+            },
         }
     },
     components: {
-        DatePicker
+        DatePicker, DrugSpecification
     },
     mounted: function () {
         this.fetchReservations()
@@ -174,19 +205,27 @@ export default {
         search: function () {
             axios.get(api.drugs.patientSearch + '/' + this.searchString)
             .then(response => {
-                this.drugs = response.data
+                this.allDrugs = response.data;
+                this.displayedDrugs = this.allDrugs
             })
         },
         select: function (drugId) {
             this.availableStoredDrugs = []
-            this.drugs.forEach(drug => {
-                if (drug.drugId == drugId) {
+            this.displayedDrugs.forEach(drug => {
+                if (drug.drugId === drugId) {
                     this.availableStoredDrugs.push(drug)
                 }
             })
             this.selectedDrug = this.availableStoredDrugs[0]
             this.date = new Date()
             this.quantity = 1
+        },
+        showSpecification: function(drug, button) {
+            console.log(drug);
+            this.drugSpecModal.drug = drug
+            this.drugSpecModal.title = 'Drug ' + drug.name
+            this.$root.$emit('bv::show::modal', this.drugSpecModal.id, button)
+            this.$bvModal.show("drug-specifications-modal")
         },
         reserve: function () {
             let dto = {

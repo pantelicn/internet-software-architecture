@@ -3,9 +3,7 @@ package rs.ac.uns.ftn.isa.pharmacy.promotion.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import rs.ac.uns.ftn.isa.pharmacy.auth.HttpRequestUtil;
 import rs.ac.uns.ftn.isa.pharmacy.auth.IdentityProvider;
 import rs.ac.uns.ftn.isa.pharmacy.auth.model.Role;
@@ -69,5 +67,13 @@ public class PromotionController {
         catch (EntityNotFoundException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+    }
+
+    @GetMapping("subscribed/{pharmacyId}")
+    @Secured(Role.PATIENT)
+    public ResponseEntity<Boolean> isPatientSubscribed(HttpServletRequest request, @PathVariable long pharmacyId) {
+        IdentityProvider identityProvider = HttpRequestUtil.getIdentity(request);
+        long patientId = identityProvider.getRoleId();
+        return ResponseEntity.ok(promotionService.isPatientSubscribed(patientId, pharmacyId));
     }
 }

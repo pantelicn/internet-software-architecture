@@ -4,16 +4,19 @@ import rs.ac.uns.ftn.isa.pharmacy.pharma.domain.StoredDrug;
 import rs.ac.uns.ftn.isa.pharmacy.pharma.dtos.DrugSearchDto;
 
 public class DrugSearchMapper {
-    public static DrugSearchDto objectToDto(StoredDrug drug) {
+    public static DrugSearchDto objectToDto(StoredDrug storedDrug) {
         return new DrugSearchDto(
-                drug.getId(),
-                drug.getDrug().getId(),
-                drug.getDrug().getName(),
-                drug.getQuantity(),
-                drug.getPrice(),
-                drug.getDrug().getManufacturer(),
-                drug.getPharmacy().getId(),
-                drug.getPharmacy().getName()
+                storedDrug.getId(),
+                storedDrug.getDrug().getId(),
+                storedDrug.getDrug().getName(),
+                storedDrug.getQuantity(),
+                storedDrug.getPrice(),
+                storedDrug.getDrug().getManufacturer(),
+                storedDrug.getPharmacy().getId(),
+                storedDrug.getPharmacy().getName(),
+                storedDrug.getDrug().getAdditionalNotes(),
+                storedDrug.getDrug().getIntakeType(),
+                storedDrug.getDrug().getDrugType()
         );
     }
 }

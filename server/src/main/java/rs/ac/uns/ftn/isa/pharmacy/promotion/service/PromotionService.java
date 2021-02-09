@@ -67,4 +67,8 @@ public class PromotionService {
             emailService.sendPromotionMessage(promotion, subscription);
         }
     }
+
+    public boolean isPatientSubscribed(long patientId, long pharmacyId) {
+        return subscriptionRepository.countByPharmacyAndPerson(pharmacyId, patientId) > 0;
+    }
 }
