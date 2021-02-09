@@ -32,6 +32,15 @@
 
         <b-col cols="10" class="mt-4">
           <b-row>
+            <label>Username:</label>
+          </b-row>
+          <b-row>
+            <b-input placeholder="Username" v-model="username"></b-input>
+          </b-row>
+        </b-col>
+
+        <b-col cols="10" class="mt-4">
+          <b-row>
             <label>First name:</label>
           </b-row>
           <b-row>
@@ -45,6 +54,15 @@
           </b-row>
           <b-row>
             <b-input placeholder="Last name" v-model="lastName"></b-input>
+          </b-row>
+        </b-col>
+
+        <b-col cols="10" class="mt-4">
+          <b-row>
+            <label>PID: </label>
+          </b-row>
+          <b-row>
+            <b-input placeholder="Personal identification number" v-model="pid"></b-input>
           </b-row>
         </b-col>
 
@@ -146,6 +164,7 @@ export default {
       return {
           email : '',
           password : '',
+          username : '',
           firstName : '',
           lastName : '',
           phoneNumber : '',
@@ -157,6 +176,7 @@ export default {
               streetName : '',
               city : undefined
           },
+          pid : '',
           cities : [],
           countries : [],
           selectedCity : undefined,
@@ -187,7 +207,9 @@ export default {
               phoneNumber : this.phoneNumber,
               dateOfBirth : this.dateOfBirth,
               gender : this.gender,
-              address : this.address
+              address : this.address,
+              username : this.username,
+              pid : this.pid
           })
           .then(() => {
               this.statusMessage = "Registration successful. Please check your email to activate your account.";
@@ -198,12 +220,14 @@ export default {
           if (!this.email) {this.statusMessage = "Incorrect mail"; return false;}
           if (!this.password)  {this.statusMessage = "Incorrect password"; return false;}
           if (!this.firstName) {this.statusMessage = "Incorrect first name"; return false;}
+          if (!this.pid) {this.statusMessage = "Incorrect PID"; return false;}
           if (!this.lastName) {this.statusMessage = "Incorrect last name"; return false;}
           if (!this.phoneNumber) {this.statusMessage = "Incorrect phone"; return false;}
           if (!this.dobString) {this.statusMessage = "Incorrect date of birth"; return false;}
           if (!this.address) {this.statusMessage = "Incorrect address"; return false;}
           if (!this.address.streetName) {this.statusMessage = "Incorrect address"; return false;}
           if (!this.selectedCity) {this.statusMessage = "Incorrect city"; return false;}
+          if (!this.username) {this.statusMessage = "Incorrect username"; return false;}
           return true;
       },
       fetchCities() {

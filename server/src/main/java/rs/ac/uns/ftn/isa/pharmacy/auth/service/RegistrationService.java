@@ -69,6 +69,7 @@ public class RegistrationService {
         person.setPhoneNumber(dto.getPhoneNumber());
         person.setGender(dto.getGender());
         person.setDateOfBirth(dto.getDateOfBirth());
+        person.setPid(dto.getPid());
 
         return person;
     }
@@ -82,6 +83,7 @@ public class RegistrationService {
         credentials.setEmail(dto.getEmail());
         credentials.setPassword(dto.getPassword());
         credentials.setRole(role);
+        credentials.setUsername(dto.getUsername());
 
         return credentials;
     }
@@ -89,6 +91,8 @@ public class RegistrationService {
     private void validateClientData(RegistrationDto dto) throws InvalidEntityException, EntityNotFoundException {
         if (dto.getFirstName() == null || dto.getFirstName().isEmpty()) throw new InvalidEntityException("First name");
         if (dto.getLastName() == null || dto.getLastName().isEmpty()) throw new InvalidEntityException("Last name");
+        if (dto.getUsername() == null || dto.getUsername().isEmpty()) throw new InvalidEntityException("Username");
+        if (dto.getPid() == null || dto.getPid().isEmpty()) throw new InvalidEntityException("PID");
         if (dto.getEmail() == null || dto.getEmail().isEmpty()) throw new InvalidEntityException("Email address");
         if (dto.getPassword() == null || dto.getPassword().isEmpty()) throw new InvalidEntityException("Password");
         if (dto.getPhoneNumber() == null || dto.getPhoneNumber().isEmpty()) throw new InvalidEntityException("Phone number");
