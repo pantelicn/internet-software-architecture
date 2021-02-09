@@ -128,6 +128,7 @@ export default {
         }
     },
     mounted: function () {
+        this.checkIfSubscribed();
         axios.get(api.appointments.root + '/' + this.$route.params.id)
         .then(response => {
             this.freeAppointments = response.data

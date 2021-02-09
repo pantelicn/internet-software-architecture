@@ -1,6 +1,7 @@
 package rs.ac.uns.ftn.isa.pharmacy.promotion.mapper;
 
 import org.springframework.stereotype.Component;
+import rs.ac.uns.ftn.isa.pharmacy.promotion.dto.SubscriptionOverviewDto;
 import rs.ac.uns.ftn.isa.pharmacy.users.person.domain.Person;
 import rs.ac.uns.ftn.isa.pharmacy.users.person.repository.PersonRepository;
 import rs.ac.uns.ftn.isa.pharmacy.pharma.domain.Pharmacy;
@@ -34,5 +35,14 @@ public class SubscriptionMapper {
         subscription.setPharmacy(optionalPharmacy.get());
 
         return subscription;
+    }
+
+    public static SubscriptionOverviewDto objectToDto(Subscription subscription) {
+        return new SubscriptionOverviewDto(
+                subscription.getPharmacy().getId(),
+                subscription.getPharmacy().getName(),
+                subscription.getPharmacy().getAddress(),
+                subscription.getPharmacy().getDescription()
+        );
     }
 }

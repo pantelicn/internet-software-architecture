@@ -97,6 +97,7 @@ export const api = {
         root: host + promotion,
         subscribe: host + promotion + '/subscribe',
         unsubscribe: host + promotion + '/unsubscribe',
-        isSubscribed: host + promotion + '/subscribed'
+        isSubscribed: host + promotion + '/subscribed',
+        pharmacies: host + promotion + "/subscribed"
     }
 }
