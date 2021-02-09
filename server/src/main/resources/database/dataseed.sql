@@ -28,10 +28,10 @@ values(9,33.33,22.21,"Narodnih Heroja 89",1);
 insert into isa.addresses(id, latitude, longitude, street_name, city_id)
 values(10,33.33,22.21,"Janka Cmelika 13",1);
 
-insert into isa.pharmacies (id, amount, description, name, rating, address_id)
-values (1, 250, "Tiny Pill", "Tiny Pill", 5, 1);
-insert into isa.pharmacies (id, amount, description, name, rating, address_id)
-values (2, 200, "Zegin", "Zegin", 5, 2);
+insert into isa.pharmacies (id, amount, description, name, address_id)
+values (1, 250, "Tiny Pill", "Tiny Pill", 1);
+insert into isa.pharmacies (id, amount, description, name, address_id)
+values (2, 200, "Zegin", "Zegin", 2);
 
 
 insert into isa.persons (id, pid, date_of_birth, first_name, gender, last_name, phone_number, address_id)
@@ -62,7 +62,7 @@ values (4,"0210991102181", "1992-01-12 8:00:00", "Sage", 0, "Finley", "063231231
 insert into isa.credentials (email,username,is_activated,has_changed_initial_password,password,role,uid,person_id)
 values ("sagefinley@gmail.com","sagefinley",1,1,"password","ROLE_DERMATOLOGIST",'6f922cc2-a137-4be5-9f34-9d38a252b948',4);
 update isa.persons set credentials_email="sagefinley@gmail.com" where id=4;
-insert into isa.employees(id,employee_type,rating,person_id) values (1,1,4.5,4);
+insert into isa.employees(id,employee_type,person_id) values (1,1,4);
 
 
 update isa.credentials set has_changed_initial_password=0 where email="sagefinley@gmail.com";
@@ -74,15 +74,15 @@ values (5,"031099310218", "1992-09-09 8:00:00", "Mackenzie", 0, "Ashton", "06129
 insert into isa.credentials (email,username,is_activated,has_changed_initial_password,password,role,uid,person_id) 
 values ("mickeyashton@gmail.com","mickeyashton",1,1,"password","ROLE_PHARMACIST",'6f192cc2-a137-4be5-9f34-9d38a252b948',5);
 update isa.persons set credentials_email="mickeyashton@gmail.com" where id=5;
-insert into isa.employees(id,employee_type,person_id,rating) values (2,1,5,3.23);
+insert into isa.employees(id,employee_type,person_id) values (2,1,5);
 
 insert into isa.persons (id, pid, date_of_birth, first_name, gender, last_name, phone_number, address_id)
 values (6,"101099110218", "1991-10-10 8:00:00", "Mickey", 0, "Frankie", "062652035", 7);
-insert into isa.employees(id,employee_type, rating, person_id) values (3, 0, 4, 6);
+insert into isa.employees(id,employee_type, person_id) values (3, 0, 6);
 
 insert into isa.persons (id, pid, date_of_birth, first_name, gender, last_name, phone_number, address_id)
 values (7,"101099510218", "1995-10-10 8:00:00", "Luis", 0, "Wallace", "063125035", 8);
-insert into isa.employees(id,employee_type, rating, person_id) values (4, 0, 5, 7);
+insert into isa.employees(id,employee_type, person_id) values (4, 0, 7);
 
 insert into isa.persons (id,pid, date_of_birth, first_name, gender, last_name, phone_number, address_id)
 values (8,"130398311218", "1989-05-13 8:00:00", "John", 0, "Scott", "0663155129", 9);
@@ -208,42 +208,42 @@ values (25, "2021-02-28 13:00:00", "2021-02-28 20:00:00", 1,4);
 insert into isa.shifts (id, start, end, pharmacy_id,employee_id)
 values (26, "2021-02-15 8:00:00", "2021-02-15 17:00:00", 1,4);
 
-insert into isa.drugs (id, additional_notes, drug_type, intake_type, manufacturer, name, requires_prescription, rating)
-values (1, "Gel namenjen za masnu kožu", 4, 5, "MiksaMed", "Dermoidealia gel", false, 4.5);
+insert into isa.drugs (id, additional_notes, drug_type, intake_type, manufacturer, name, requires_prescription)
+values (1, "Gel namenjen za masnu kožu", 4, 5, "MiksaMed", "Dermoidealia gel", false);
 insert into isa.drug_ingredients (drug_id,ingredients) values (1,"Glycerin");
 insert into isa.drug_ingredients (drug_id,ingredients) values (1,"D-panthenol");
 insert into isa.drug_ingredients (drug_id,ingredients) values (1,"Allantoin");
 
-insert into isa.drugs (id, additional_notes, drug_type, intake_type, manufacturer, name, requires_prescription, rating)
-values (2, "Gel namenjen za masnu kožu", 4, 5, "ESI", "Acknes gel", false, 4.7);
+insert into isa.drugs (id, additional_notes, drug_type, intake_type, manufacturer, name, requires_prescription)
+values (2, "Gel namenjen za masnu kožu", 4, 5, "ESI", "Acknes gel", false);
 insert into isa.drug_ingredients (drug_id,ingredients) values (2,"Glycerin");
 insert into isa.drug_ingredients (drug_id,ingredients) values (2,"D-panthenol");
 insert into isa.drug_ingredients (drug_id,ingredients) values (2,"Allantoin");
 
-insert into isa.drugs (id, additional_notes, drug_type, intake_type, manufacturer, name, requires_prescription, rating)
-values (3, "Gel namenjen za masnu kožu", 4, 5, "Avene", "Cleanance Comedomed", false, 3.95);
+insert into isa.drugs (id, additional_notes, drug_type, intake_type, manufacturer, name, requires_prescription)
+values (3, "Gel namenjen za masnu kožu", 4, 5, "Avene", "Cleanance Comedomed", false);
 insert into isa.drug_ingredients (drug_id,ingredients) values (3,"Glycerin");
 insert into isa.drug_ingredients (drug_id,ingredients) values (3,"D-panthenol");
 insert into isa.drug_ingredients (drug_id,ingredients) values (3,"Allantoin");
 
-insert into isa.drugs (id, additional_notes, drug_type, intake_type, manufacturer, name, requires_prescription, rating)
-values (4, "Gel za upaljenu i iritiranu kožu", 4, 5, "Hiper", "Hama gel", false, 4.23);
+insert into isa.drugs (id, additional_notes, drug_type, intake_type, manufacturer, name, requires_prescription)
+values (4, "Gel za upaljenu i iritiranu kožu", 4, 5, "Hiper", "Hama gel", false);
 insert into isa.drug_ingredients (drug_id,ingredients) values (4,"Hamamelis destilat");
 insert into isa.drug_ingredients (drug_id,ingredients) values (4,"D-panthenol");
 insert into isa.drug_ingredients (drug_id,ingredients) values (4,"Extr. kamilice");
 
-insert into isa.drugs (id, additional_notes, drug_type, intake_type, manufacturer, name, requires_prescription, rating)
-values (5, "Krema za upaljenu i iritiranu kožu", 4, 4, "A-Derma", "Epitheliale AH Ultra", false, 4.9);
+insert into isa.drugs (id, additional_notes, drug_type, intake_type, manufacturer, name, requires_prescription)
+values (5, "Krema za upaljenu i iritiranu kožu", 4, 4, "A-Derma", "Epitheliale AH Ultra", false);
 insert into isa.drug_ingredients (drug_id,ingredients) values (5,"Glycerin");
 insert into isa.drug_ingredients (drug_id,ingredients) values (5,"Stearic acid");
 insert into isa.drug_ingredients (drug_id,ingredients) values (5,"Batyl alcohol");
 
-insert into isa.drugs (id, additional_notes, drug_type, intake_type, manufacturer, name, requires_prescription, rating)
-values (6, "Antidepresiv", 0, 0, "Hemofarm", "Flunisan", true, 5);
+insert into isa.drugs (id, additional_notes, drug_type, intake_type, manufacturer, name, requires_prescription)
+values (6, "Antidepresiv", 0, 0, "Hemofarm", "Flunisan", true);
 insert into isa.drug_ingredients (drug_id,ingredients) values (6,"Fluoksetin");
 
-insert into isa.drugs (id, additional_notes, drug_type, intake_type, manufacturer, name, requires_prescription, rating)
-values (7, "Antidepresiv", 0, 0, "Bosnalijek", "Flusetin", true, 4.9);
+insert into isa.drugs (id, additional_notes, drug_type, intake_type, manufacturer, name, requires_prescription)
+values (7, "Antidepresiv", 0, 0, "Bosnalijek", "Flusetin", true);
 insert into isa.drug_ingredients (drug_id,ingredients) values (7,"Fluoksetin");
 
 insert into isa.drugs_alternatives (drug_id,alternatives_id) values (1,2);
