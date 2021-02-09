@@ -11,11 +11,13 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import 'vue-toast-notification/dist/theme-sugar.css';
 import interceptorsSetup from './helpers/interceptors.js'
+import VCalendar from 'v-calendar'
 
 interceptorsSetup()
 
 
 Vue.use(VueRouter)
+Vue.use(VCalendar)
 Vue.use(BootstrapVue)
 Vue.use(Vuex)
 Vue.use(VueToast, {

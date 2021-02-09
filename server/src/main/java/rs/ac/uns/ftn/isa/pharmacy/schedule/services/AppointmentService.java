@@ -41,6 +41,13 @@ public class AppointmentService {
         return appointmentRepository.findAll();
     }
 
+    public List<Appointment> findAll(long employeeId){
+        return appointmentRepository.findAll()
+                .stream()
+                .filter(a -> a.getShift().getEmployee().getId() == employeeId)
+                .collect(Collectors.toList());
+    }
+
     public Appointment findById(long id) {
         return appointmentRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(Appointment.class.getSimpleName(), id));

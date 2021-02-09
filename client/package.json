@@ -17,9 +17,12 @@
     "jwt-decode": "^3.1.2",
     "moment": "^2.29.1",
     "popper.js": "^1.16.1",
+    "postcss": "^8.2.5",
     "sass-loader": "^11.0.0",
+    "tailwindcss": "^2.0.3",
     "v-calendar": "^2.2.2",
     "vue": "^2.6.11",
+    "vue-cal": "^3.10.0",
     "vue-google-autocomplete": "^1.1.0",
     "vue-place-autocomplete": "^0.5.3",
     "vue-range-component": "^1.0.3",
@@ -35,7 +38,8 @@
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "^2.6.11",
+    "webpack": "^4.46.0"
   },
   "eslintConfig": {
     "root": true,

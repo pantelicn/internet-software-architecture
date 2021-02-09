@@ -21,7 +21,7 @@
                     <b-dropdown-item to="/pharmacist/my-profile">Profile</b-dropdown-item>
                     <b-dropdown-divider></b-dropdown-divider>
                     <b-dropdown-item to="/pharmacist/time-off">Request time off</b-dropdown-item>
-                    <b-dropdown-item href="#">Calendar</b-dropdown-item>
+                    <b-dropdown-item to="/pharmacist/my-calendar">Calendar</b-dropdown-item>
                     <b-dropdown-divider></b-dropdown-divider>
                     <b-dropdown-item @click="logout()">Sign Out</b-dropdown-item>
                 </b-nav-item-dropdown>
