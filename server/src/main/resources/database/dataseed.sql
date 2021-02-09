@@ -28,10 +28,10 @@ values(9,33.33,22.21,"Narodnih Heroja 89",1);
 insert into isa.addresses(id, latitude, longitude, street_name, city_id)
 values(10,33.33,22.21,"Janka Cmelika 13",1);
 
-insert into isa.pharmacies (id, amount, description, name, rating, address_id)
-values (1, 250, "Tiny Pill", "Tiny Pill", 5, 1);
-insert into isa.pharmacies (id, amount, description, name, rating, address_id)
-values (2, 200, "Zegin", "Zegin", 5, 2);
+insert into isa.pharmacies (id, amount, description, name, address_id)
+values (1, 250, "Tiny Pill", "Tiny Pill", 1);
+insert into isa.pharmacies (id, amount, description, name, address_id)
+values (2, 200, "Zegin", "Zegin", 2);
 
 
 insert into isa.persons (id, pid, date_of_birth, first_name, gender, last_name, phone_number, address_id)
@@ -62,8 +62,7 @@ values (4,"0210991102181", "1992-01-12 8:00:00", "Sage", 0, "Finley", "063231231
 insert into isa.credentials (email,username,is_activated,has_changed_initial_password,password,role,uid,person_id)
 values ("sagefinley@gmail.com","sagefinley",1,1,"password","ROLE_DERMATOLOGIST",'6f922cc2-a137-4be5-9f34-9d38a252b948',4);
 update isa.persons set credentials_email="sagefinley@gmail.com" where id=4;
-insert into isa.employees(id,employee_type,rating,person_id) values (1,1,4.5,4);
-
+insert into isa.employees(id,employee_type,person_id) values (1,1,4);
 
 
 update isa.credentials set has_changed_initial_password=0 where email="sagefinley@gmail.com";
@@ -76,7 +75,7 @@ values (5,"031099310218", "1992-09-09 8:00:00", "Mackenzie", 0, "Ashton", "06129
 insert into isa.credentials (email,username,is_activated,has_changed_initial_password,password,role,uid,person_id) 
 values ("mickeyashton@gmail.com","mickeyashton",1,1,"password","ROLE_DERMATOLOGIST",'6f192cc2-a137-4be5-9f34-9d38a252b948',5);
 update isa.persons set credentials_email="mickeyashton@gmail.com" where id=5;
-insert into isa.employees(id,employee_type,person_id,rating) values (2,1,5,3.23);
+insert into isa.employees(id,employee_type,person_id) values (2,1,5);
 
 insert into isa.persons (id, pid, date_of_birth, first_name, gender, last_name, phone_number, address_id)
 values (6,"101099110218", "1991-10-10 8:00:00", "Mickey", 0, "Frankie", "062652035", 7);
@@ -88,7 +87,7 @@ update isa.persons set credentials_email="mickeyfrankie@gmail.com" where id=6;
 
 insert into isa.persons (id, pid, date_of_birth, first_name, gender, last_name, phone_number, address_id)
 values (7,"101099510218", "1995-10-10 8:00:00", "Luis", 0, "Wallace", "063125035", 8);
-insert into isa.employees(id,employee_type, rating, person_id) values (4, 0, 5, 7);
+insert into isa.employees(id,employee_type, person_id) values (4, 0, 7);
 
 insert into isa.persons (id,pid, date_of_birth, first_name, gender, last_name, phone_number, address_id)
 values (8,"130398311218", "1989-05-13 8:00:00", "John", 0, "Scott", "0663155129", 9);
@@ -117,6 +116,9 @@ values (4, "2020-10-08 8:00:00", "2020-10-08 15:00:00", 1,1);
 
 insert into isa.appointments (id, amount, duration, start, type, patient_id, shift_id)
 values (1, 2000, 1800000000000, "2020-10-04 9:40:00", 1, 1, 1);
+insert into isa.appointment_reports (id, appointment_info, appointment_id)
+values (1, "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", 1);
+
 insert into isa.appointments (id, amount, duration, start, type, patient_id, shift_id)
 values (2, 2000, 1800000000000, "2020-10-04 10:30:00", 1, 2, 1);
 insert into isa.appointments (id, amount, duration, start, type, patient_id, shift_id)

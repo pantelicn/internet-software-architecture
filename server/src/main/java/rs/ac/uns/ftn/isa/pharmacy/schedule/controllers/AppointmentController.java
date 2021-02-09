@@ -120,4 +120,22 @@ public class AppointmentController {
     public void submitAppointmentReport(@RequestBody ReportSubmissionDto reportSubmissionDto){
         service.submitAppointmentReport(reportSubmissionDto);
     }
+
+    @Secured(Role.PATIENT)
+    @GetMapping("/patient/examination-history")
+    public List<AppointmentDto> getPatientExaminationHistory(HttpServletRequest request) {
+        IdentityProvider identityProvider = HttpRequestUtil.getIdentity(request);
+        return service.getPatientExaminationHistory(identityProvider.getRoleId()).stream()
+                .map(AppointmentMapper::objectToDto)
+                .collect(Collectors.toList());
+    }
+
+    @Secured(Role.PATIENT)
+    @GetMapping("/patient/counseling-history")
+    public List<AppointmentDto> getPatientCounselingHistory(HttpServletRequest request) {
+        IdentityProvider identityProvider = HttpRequestUtil.getIdentity(request);
+        return service.getPatientCounselingHistory(identityProvider.getRoleId()).stream()
+                .map(AppointmentMapper::objectToDto)
+                .collect(Collectors.toList());
+    }
 }

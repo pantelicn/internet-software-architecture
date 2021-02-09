@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import rs.ac.uns.ftn.isa.pharmacy.exceptions.*;
+import rs.ac.uns.ftn.isa.pharmacy.pharma.exceptions.AllergyException;
 import rs.ac.uns.ftn.isa.pharmacy.pharma.exceptions.DateException;
 import rs.ac.uns.ftn.isa.pharmacy.pharma.exceptions.QuantityException;
 import rs.ac.uns.ftn.isa.pharmacy.schedule.exceptions.*;
@@ -80,6 +81,13 @@ public class PersistenceExceptionHandler {
     @ExceptionHandler(NoUpcomingAppointmentsException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     String noUpcomingAppointmentsHandler(NoUpcomingAppointmentsException e){
+        return e.getMessage();
+    }
+
+    @ResponseBody
+    @ExceptionHandler(AllergyException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    String allergyHandler(AllergyException e){
         return e.getMessage();
     }
 

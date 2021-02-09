@@ -1,7 +1,7 @@
 package rs.ac.uns.ftn.isa.pharmacy.schedule.domain;
 
 import rs.ac.uns.ftn.isa.pharmacy.finance.Money;
-import rs.ac.uns.ftn.isa.pharmacy.users.user.Patient;
+import rs.ac.uns.ftn.isa.pharmacy.users.user.domain.Patient;
 import rs.ac.uns.ftn.isa.pharmacy.users.employee.domain.Shift;
 import rs.ac.uns.ftn.isa.pharmacy.users.employee.domain.Term;
 

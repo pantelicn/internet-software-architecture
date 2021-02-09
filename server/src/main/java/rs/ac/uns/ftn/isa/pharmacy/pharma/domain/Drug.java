@@ -2,6 +2,8 @@ package rs.ac.uns.ftn.isa.pharmacy.pharma.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import rs.ac.uns.ftn.isa.pharmacy.supply.exceptions.InvalidEntityException;
+import rs.ac.uns.ftn.isa.pharmacy.users.user.domain.DrugRating;
+import rs.ac.uns.ftn.isa.pharmacy.users.user.domain.Rating;
 
 import javax.persistence.*;
 import java.util.List;
@@ -22,6 +24,8 @@ public class Drug {
     @ManyToMany(fetch = FetchType.LAZY)
     private List<Drug> alternatives;
     private String additionalNotes;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy ="drug")
+    private List<DrugRating> ratings;
 
     public void validate() throws InvalidEntityException {
         if (name == null) throw new InvalidEntityException("Name");
@@ -110,5 +114,23 @@ public class Drug {
 
     public void setAdditionalNotes(String additionalNotes) {
         this.additionalNotes = additionalNotes;
+    }
+
+    public double getRating() {
+        double totalRating = 0;
+        int size = this.ratings.size();
+        if (size == 0) return 0;
+        for (var rating: this.ratings) {
+            totalRating += rating.getRating();
+        }
+        return totalRating / size;
+    }
+
+    public List<DrugRating> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(List<DrugRating> ratings) {
+        this.ratings = ratings;
     }
 }

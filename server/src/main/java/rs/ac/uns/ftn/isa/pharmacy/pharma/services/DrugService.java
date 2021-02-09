@@ -2,24 +2,15 @@ package rs.ac.uns.ftn.isa.pharmacy.pharma.services;
 
 import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.isa.pharmacy.pharma.domain.Drug;
-import rs.ac.uns.ftn.isa.pharmacy.pharma.domain.DrugReservation;
 import rs.ac.uns.ftn.isa.pharmacy.pharma.domain.StoredDrug;
 import rs.ac.uns.ftn.isa.pharmacy.pharma.dtos.DrugCreationDto;
 import rs.ac.uns.ftn.isa.pharmacy.supply.exceptions.EntityExistsException;
 import rs.ac.uns.ftn.isa.pharmacy.supply.exceptions.InvalidEntityException;
 import rs.ac.uns.ftn.isa.pharmacy.supply.exceptions.MessageException;
-import rs.ac.uns.ftn.isa.pharmacy.users.user.Patient;
-import rs.ac.uns.ftn.isa.pharmacy.pharma.exceptions.DateException;
-import rs.ac.uns.ftn.isa.pharmacy.exceptions.EntityAlreadyExistsException;
 import rs.ac.uns.ftn.isa.pharmacy.exceptions.EntityNotFoundException;
-import rs.ac.uns.ftn.isa.pharmacy.exceptions.UserAccessException;
-import rs.ac.uns.ftn.isa.pharmacy.users.user.repository.PatientRepository;
 import rs.ac.uns.ftn.isa.pharmacy.pharma.repository.DrugRepository;
-import rs.ac.uns.ftn.isa.pharmacy.pharma.repository.DrugReservationRepository;
 import rs.ac.uns.ftn.isa.pharmacy.pharma.repository.StoredDrugRepository;
-import rs.ac.uns.ftn.isa.pharmacy.mail.services.EmailService;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 

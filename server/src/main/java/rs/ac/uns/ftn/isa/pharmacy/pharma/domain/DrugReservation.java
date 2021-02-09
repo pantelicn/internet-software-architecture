@@ -1,6 +1,6 @@
 package rs.ac.uns.ftn.isa.pharmacy.pharma.domain;
 
-import rs.ac.uns.ftn.isa.pharmacy.users.user.Patient;
+import rs.ac.uns.ftn.isa.pharmacy.users.user.domain.Patient;
 import rs.ac.uns.ftn.isa.pharmacy.pharma.exceptions.DateException;
 import rs.ac.uns.ftn.isa.pharmacy.pharma.exceptions.QuantityException;
 

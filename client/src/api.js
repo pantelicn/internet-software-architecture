@@ -11,6 +11,7 @@ let person = '/api/person'
 let storedDrugs = '/api/stored-drugs'
 let timeOff = '/api/time-off'
 let pharmacies = '/api/pharmacies'
+let rating = '/api/rating'
 let locale = '/api/locale'
 
 
@@ -38,6 +39,10 @@ export const api = {
         history: {
             examinations: host + appointments + '/examinations/patient-history/',
             counselings: host + appointments + '/counselings/patient-history/'
+        },
+        patientHistory: {
+            examinations: host + appointments + '/patient/examination-history',
+            counselings: host + appointments + '/patient/counseling-history'
         }
         
     },
@@ -81,6 +86,12 @@ export const api = {
     },
     pharmacies: {
         root: host + pharmacies
+    },
+    rating: {
+        root: host + rating,
+        employee: host + rating + '/employee',
+        drug: host + rating + '/drug',
+        pharmacy: host + rating + '/pharmacy'
     },
     locale: {
         root: host + locale,

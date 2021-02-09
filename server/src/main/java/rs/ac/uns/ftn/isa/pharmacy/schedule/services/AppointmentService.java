@@ -78,6 +78,24 @@ public class AppointmentService {
         return appointmentRepository.findAppointmentsByPatient(patientId);
     }
 
+    public List<Appointment> getPatientAppointmentHistory(long patientId) {
+        return getPatientAppointments(patientId).stream()
+                .filter(a -> a.getAppointmentReport() != null)
+                .collect(Collectors.toList());
+    }
+
+    public List<Appointment> getPatientExaminationHistory(long patientId) {
+        return getPatientAppointmentHistory(patientId).stream()
+                .filter(a -> a.getType() == AppointmentType.Examination)
+                .collect(Collectors.toList());
+    }
+
+    public List<Appointment> getPatientCounselingHistory(long patientId) {
+        return getPatientAppointmentHistory(patientId).stream()
+                .filter(a -> a.getType() == AppointmentType.Counseling)
+                .collect(Collectors.toList());
+    }
+
     public void cancelPatientAppointment(long patientId, long appointmentId) {
         Appointment appointment = findById(appointmentId);
         if (appointment.getPatient().getId() != patientId) {
