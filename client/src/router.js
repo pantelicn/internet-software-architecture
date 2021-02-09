@@ -29,9 +29,9 @@ import ScheduleCounseling from './views/patient/ScheduleCounseling.vue'
 import Pharmacies from './views/patient/Pharmacies.vue'
 import PatientHome from './views/patient/PatientHome.vue'
 import PatientProfile from './views/patient/PatientProfile.vue'
-import UnauthDrugs from './views/unauthorized/UnauthDrugs.vue'
 import Feedback from './views/patient/Feedback.vue'
 import Registration from "@/views/unauthorized/Registration";
+import DrugSearch from "@/views/DrugSearch";
 
 const router = new VueRouter({
     mode: 'hash',
@@ -40,24 +40,27 @@ const router = new VueRouter({
             path: '/',
             component: UnauthHome,
             name: 'unauth-home',
-            meta: { unauthorized:true },
             children: [
                 {
                     path: '',
                     name: 'login',
+                    meta: { unauthorized:true },
                     component: Login
                 },
                 {
                     path: 'pharmacies',
+                    meta: { unauthorized:true },
                     component: Pharmacies
                 },
                 {
                     path: 'drugs',
-                    component: UnauthDrugs
+                    meta: { noSupply: true},
+                    component: DrugSearch
                 },
                 {
                     path: 'register',
                     name: 'register',
+                    meta: { unauthorized:true },
                     component: Registration
                 },
             ],
@@ -239,44 +242,61 @@ const router = new VueRouter({
                     component: Feedback
                 }
             ]
-        }
+        },
     ]
 })
 
 router.beforeEach((to, from, next) => {
     if(to.matched.some( record => record.meta.unauthorized )){
-        if( getRole() !== null ){
-            if( getRole() === 'ROLE_DERMATOLOGIST' ){ 
-                next({ name: 'upcoming-examinations' })
-            }else if( getRole() === 'ROLE_PHARMACIST')
-                next({ name: 'upcoming-counselings' })
-            else if (getRole() === 'ROLE_PATIENT')
-                next({ path: '/patient'})
-        }else next()
+        if( getRole() !== null ) {
+            if( getRole() === 'ROLE_DERMATOLOGIST' ) {
+                next({ name: 'upcoming-examinations' });
+            }
+            else if( getRole() === 'ROLE_PHARMACIST') {
+                next({ name: 'upcoming-counselings' });
+            }
+            else if (getRole() === 'ROLE_PATIENT') {
+                next({ path: '/patient'});
+            }
+        }
+        else next();
 
     }
-    else if( to.matched.some( record => record.meta.requiresDermaAuth )){
-        if( getRole() !== 'ROLE_DERMATOLOGIST' ){ 
+    else if( to.matched.some(record => record.meta.requiresDermaAuth)) {
+        if( getRole() !== 'ROLE_DERMATOLOGIST' ) {
             next({ name: 'insufficient-permissions' })
         }
-        else next()
+        else next();
     }
-    else if( to.matched.some( record => record.meta.requiresPharmaAuth )){
-        if( getRole() !== 'ROLE_PHARMACIST')
+    else if( to.matched.some(record => record.meta.requiresPharmaAuth)) {
+        if( getRole() !== 'ROLE_PHARMACIST') {
             next({ name: 'insufficient-permissions' })
-        else next()
+        }
+        else next();
     }
     else if(to.matched.some(record => record.meta.requiresPatientAuth)) {
-        if (getRole() !== 'ROLE_PATIENT')
+        if (getRole() !== 'ROLE_PATIENT') {
             next({ name: 'insufficient-permissions' })
-        else next()
-    }
-    else if( to.matched.some( record => record.meta.requiresAuth )){
-        if(!isAuthenticated()){ 
-            next({ name: 'login' })
         }
         else next()
-    }else next()
+    }
+    else if(to.matched.some(record => record.meta.requiresAuth)) {
+        if(!isAuthenticated()) {
+            next({ name: 'login' })
+        }
+        else next();
+    }
+    else if(to.matched.some(record => record.meta.noSupply)) {
+        if (getRole() === "ROLE_SUPPLIER") {
+            next({ name: 'insufficient-permissions' })
+        }
+        if (getRole() === "ROLE_PATIENT") {
+            next( { path: "patient/drugs"} )
+        }
+        else next();
+    }
+
+    else next()
 
 
 
