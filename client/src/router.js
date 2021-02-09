@@ -22,6 +22,7 @@ import CounselingReportStepThree from './views/pharmacist/report/steps/Counselin
 import CounselingReportStepFour from './views/pharmacist/report/steps/CounselingReportStepFour.vue'
 import TimeOffRequest from './views/timeoff/TimeOffRequest.vue'
 import DrugDispensing from './views/pharmacist/drug-dispensing/DrugDispensing.vue'
+import WorkingCalendar from './views/employee/calendar/WorkingCalendar.vue'
 import Profile from './views/person/Profile.vue'
 import Drugs from './views/patient/Drugs.vue'
 import Appointments from './views/patient/Appointments.vue'
@@ -94,6 +95,12 @@ const router = new VueRouter({
                     meta: { requiresDermaAuth: true}
                 },
                 {
+                    path: 'my-calendar',
+                    name: 'my-calendar',
+                    component: WorkingCalendar,
+                    meta: { requiresPharmaAuth:true }
+                },
+                {
                     path: 'my-profile',
                     name: 'dermatologist-profile',
                     component: Profile,
@@ -152,6 +159,12 @@ const router = new VueRouter({
                     name: 'counseled-patients',
                     component: CounseledPatients,
                     meta: { requiresPharmaAuth: true }
+                },
+                {
+                    path: 'my-calendar',
+                    name: 'my-calendar',
+                    component: WorkingCalendar,
+                    meta: { requiresPharmaAuth:true }
                 },
                 {
                     path: 'time-off',

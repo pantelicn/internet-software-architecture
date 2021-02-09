@@ -14,13 +14,13 @@
 
             <b-navbar-nav class="ml-auto">
                 <b-nav-item-dropdown right>
-                    <template #button-content>
+                    <template #button-content v-if="name!=null">
                         Dermatologist {{ name.firstName + " " + name.lastName }}
                     </template>
                     <b-dropdown-item to="/dermatologist/my-profile">Profile</b-dropdown-item>
                     <b-dropdown-divider></b-dropdown-divider>
                     <b-dropdown-item to="/dermatologist/time-off">Request time off</b-dropdown-item>
-                    <b-dropdown-item href="#">Calendar</b-dropdown-item>
+                    <b-dropdown-item to="/dermatologist/my-calendar">Calendar</b-dropdown-item>
                     <b-dropdown-divider></b-dropdown-divider>
                     <b-dropdown-item @click="logout()">Sign Out</b-dropdown-item>
                 </b-nav-item-dropdown>

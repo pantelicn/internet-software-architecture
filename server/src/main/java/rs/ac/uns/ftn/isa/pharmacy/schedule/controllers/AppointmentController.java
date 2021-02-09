@@ -94,6 +94,17 @@ public class AppointmentController {
                 .map(UpcomingAppointmentEntryDto::new)
                 .collect(Collectors.toList());
     }
+    @Secured({Role.DERMATOLOGIST,Role.PHARMACIST})
+    @GetMapping("/all")
+    public List<UpcomingAppointmentEntryDto> getAllAppointments(HttpServletRequest request){
+        IdentityProvider identityProvider = HttpRequestUtil.getIdentity(request);
+
+        return service.findAll(identityProvider.getRoleId())
+                .stream()
+                .map(UpcomingAppointmentEntryDto::new)
+                .collect(Collectors.toList());
+    }
+
     @Secured({Role.DERMATOLOGIST})
     @PutMapping("/examinations/free-up/{examinationId}")
     public void freeUpExamination(@PathVariable long examinationId){
