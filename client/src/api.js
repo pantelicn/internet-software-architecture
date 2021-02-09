@@ -13,7 +13,7 @@ let timeOff = '/api/time-off'
 let pharmacies = '/api/pharmacies'
 let rating = '/api/rating'
 let locale = '/api/locale'
-
+let promotion = '/api/promotion'
 
 
 export const api = {
@@ -92,5 +92,11 @@ export const api = {
         root: host + locale,
         cities: host + locale + "/cities",
         countries: host + locale + "/countries"
+    },
+    promotion: {
+        root: host + promotion,
+        subscribe: host + promotion + '/subscribe',
+        unsubscribe: host + promotion + '/unsubscribe',
+        isSubscribed: host + promotion + '/subscribed'
     }
 }
