@@ -11,6 +11,7 @@ let person = '/api/person'
 let storedDrugs = '/api/stored-drugs'
 let timeOff = '/api/time-off'
 let pharmacies = '/api/pharmacies'
+let locale = '/api/locale'
 
 
 
@@ -18,7 +19,8 @@ export const api = {
     auth: { 
         login: host + auth + '/login', 
         hasLoggedBefore: host + auth + '/logged',
-        changePassword: host + auth + '/change-password'
+        changePassword: host + auth + '/change-password',
+        register: host + auth + "/register"
     }
     ,
     appointments: {
@@ -78,5 +80,10 @@ export const api = {
     },
     pharmacies: {
         root: host + pharmacies
+    },
+    locale: {
+        root: host + locale,
+        cities: host + locale + "/cities",
+        countries: host + locale + "/countries"
     }
 }
