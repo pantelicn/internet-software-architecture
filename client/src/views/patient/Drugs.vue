@@ -82,6 +82,31 @@
         <div class="form-inline d-flex justify-content-center m-3">
             <input type="text" class="form-control" placeholder="Search" v-model="searchString"/>
             <button class="btn btn-success ml-1" @click="search">Search</button>
+
+            <select class="form-control ml-5" v-model="filters.selectedDrugType">
+                <option
+                  v-for="drugType in filters.drugTypes"
+                  v-bind:key="drugType"
+                  v-bind:value="drugType"
+                >
+                  {{drugType}}
+                </option>
+            </select>
+
+            <select class="form-control ml-2" v-model="filters.selectedRating">
+              <option
+                  v-for="rating in filters.ratings"
+                  v-bind:key="rating"
+                  v-bind:value="rating"
+              >
+                {{rating}}
+              </option>
+            </select>
+
+            <b-button class="btn-success ml-2 pl-5 pr-5 pt-2 pb-2" @click="filter">
+                Filter
+            </b-button>
+
         </div>
         <div v-if="displayedDrugs.length > 0" class="d-flex justify-content-center p-1">
             <table class="table table-striped table-dark">
@@ -176,7 +201,9 @@ export default {
 
             filters: {
                 drugTypes: [],
-                ratings: []
+                ratings: [],
+                selectedDrugType: "All",
+                selectedRating: "All"
             },
 
             searchString: '',
@@ -207,7 +234,34 @@ export default {
             .then(response => {
                 this.allDrugs = response.data;
                 this.displayedDrugs = this.allDrugs
+
+                this.filters.drugTypes = ["All"];
+                this.filters.ratings = ["All"];
+                this.filters.selectedDrugType = "All";
+                this.filters.selectedRating = "All";
+
+                this.allDrugs.forEach(drug => {
+                    if (!this.filters.drugTypes.includes(drug.drugType)) {
+                        this.filters.drugTypes.push(drug.drugType);
+                    }
+                    if (!this.filters.ratings.includes(drug.rating)) {
+                        this.filters.ratings.push(drug.rating);
+                    }
+                });
             })
+        },
+        filter: function() {
+            this.displayedDrugs = [];
+            for (let i = 0; i < this.allDrugs.length; i++) {
+                let drug = this.allDrugs[i];
+                if (this.filters.selectedRating !== "All" && this.filters.selectedRating !== drug.rating) {
+                    continue;
+                }
+                if (this.filters.selectedDrugType !== "All" && this.filters.selectedDrugType !== drug.drugType) {
+                    continue;
+                }
+                this.displayedDrugs.push(drug);
+            }
         },
         select: function (drugId) {
             this.availableStoredDrugs = []
