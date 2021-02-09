@@ -22,6 +22,7 @@ public class Drug {
     @ManyToMany(fetch = FetchType.LAZY)
     private List<Drug> alternatives;
     private String additionalNotes;
+    private double rating;
 
     public void validate() throws InvalidEntityException {
         if (name == null) throw new InvalidEntityException("Name");
@@ -110,5 +111,13 @@ public class Drug {
 
     public void setAdditionalNotes(String additionalNotes) {
         this.additionalNotes = additionalNotes;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
     }
 }

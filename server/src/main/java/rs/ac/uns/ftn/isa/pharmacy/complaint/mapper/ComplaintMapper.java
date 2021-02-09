@@ -9,7 +9,7 @@ import rs.ac.uns.ftn.isa.pharmacy.supply.exceptions.InvalidForeignKeyException;
 import rs.ac.uns.ftn.isa.pharmacy.users.employee.domain.Employee;
 import rs.ac.uns.ftn.isa.pharmacy.users.employee.repository.EmployeeRepository;
 import rs.ac.uns.ftn.isa.pharmacy.pharma.repository.PharmacyRepository;
-import rs.ac.uns.ftn.isa.pharmacy.users.user.Patient;
+import rs.ac.uns.ftn.isa.pharmacy.users.user.domain.Patient;
 import rs.ac.uns.ftn.isa.pharmacy.users.user.repository.PatientRepository;
 
 import java.util.Optional;

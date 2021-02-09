@@ -6,7 +6,7 @@ import rs.ac.uns.ftn.isa.pharmacy.auth.model.Credentials;
 import rs.ac.uns.ftn.isa.pharmacy.auth.model.Role;
 import rs.ac.uns.ftn.isa.pharmacy.pharma.domain.Pharmacy;
 import rs.ac.uns.ftn.isa.pharmacy.users.employee.domain.Employee;
-import rs.ac.uns.ftn.isa.pharmacy.users.user.Patient;
+import rs.ac.uns.ftn.isa.pharmacy.users.user.domain.Patient;
 import rs.ac.uns.ftn.isa.pharmacy.pharma.repository.PharmacyRepository;
 import rs.ac.uns.ftn.isa.pharmacy.users.employee.services.EmployeeService;
 import rs.ac.uns.ftn.isa.pharmacy.users.user.services.PatientService;

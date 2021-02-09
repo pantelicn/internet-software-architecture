@@ -3,7 +3,7 @@ package rs.ac.uns.ftn.isa.pharmacy.complaint.model;
 import rs.ac.uns.ftn.isa.pharmacy.pharma.domain.Pharmacy;
 import rs.ac.uns.ftn.isa.pharmacy.supply.exceptions.InvalidEntityException;
 import rs.ac.uns.ftn.isa.pharmacy.users.employee.domain.Employee;
-import rs.ac.uns.ftn.isa.pharmacy.users.user.Patient;
+import rs.ac.uns.ftn.isa.pharmacy.users.user.domain.Patient;
 
 import javax.persistence.*;
 

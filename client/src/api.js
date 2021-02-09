@@ -11,6 +11,7 @@ let person = '/api/person'
 let storedDrugs = '/api/stored-drugs'
 let timeOff = '/api/time-off'
 let pharmacies = '/api/pharmacies'
+let rating = '/api/rating'
 
 
 
@@ -78,5 +79,8 @@ export const api = {
     },
     pharmacies: {
         root: host + pharmacies
+    },
+    rating: {
+        root: host + rating
     }
 }

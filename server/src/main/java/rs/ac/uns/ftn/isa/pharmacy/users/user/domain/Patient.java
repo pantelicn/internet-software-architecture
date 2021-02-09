@@ -1,4 +1,4 @@
-package rs.ac.uns.ftn.isa.pharmacy.users.user;
+package rs.ac.uns.ftn.isa.pharmacy.users.user.domain;
 
 import rs.ac.uns.ftn.isa.pharmacy.users.person.domain.Person;
 import rs.ac.uns.ftn.isa.pharmacy.pharma.domain.Drug;

@@ -10,10 +10,11 @@ import rs.ac.uns.ftn.isa.pharmacy.pharma.repository.StoredDrugRepository;
 import rs.ac.uns.ftn.isa.pharmacy.users.employee.repository.EmployeeRepository;
 import rs.ac.uns.ftn.isa.pharmacy.pharma.repository.DrugReservationRepository;
 import rs.ac.uns.ftn.isa.pharmacy.mail.services.EmailService;
-import rs.ac.uns.ftn.isa.pharmacy.users.user.Patient;
+import rs.ac.uns.ftn.isa.pharmacy.users.user.domain.Patient;
 import rs.ac.uns.ftn.isa.pharmacy.users.user.repository.PatientRepository;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -116,5 +117,10 @@ public class DrugReservationService {
 
     public void deleteById(long id) {
         reservationRepository.deleteById(id);
+    }
+
+    public List<DrugReservation> findPatientReservationHistory(long patientId) {
+        //TODO
+        return new ArrayList();
     }
 }

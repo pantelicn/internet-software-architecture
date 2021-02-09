@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.RestController;
 import rs.ac.uns.ftn.isa.pharmacy.auth.HttpRequestUtil;
 import rs.ac.uns.ftn.isa.pharmacy.auth.IdentityProvider;
 import rs.ac.uns.ftn.isa.pharmacy.auth.model.Role;
+import rs.ac.uns.ftn.isa.pharmacy.users.user.dtos.RateableEntitiesDto;
 import rs.ac.uns.ftn.isa.pharmacy.users.user.dtos.RatingEmployeeDto;
+import rs.ac.uns.ftn.isa.pharmacy.users.user.mappers.RateableEntitiesMapper;
 import rs.ac.uns.ftn.isa.pharmacy.users.user.mappers.RatingEmployeeMapper;
 import rs.ac.uns.ftn.isa.pharmacy.users.user.services.RatingService;
 
@@ -24,22 +26,16 @@ public class RatingController {
         this.ratingService = ratingService;
     }
 
-    @GetMapping("/pharmacists")
+    @GetMapping
     @Secured(Role.PATIENT)
-    public List<RatingEmployeeDto> getPatientPharmacistHistory(HttpServletRequest request) {
+    public RateableEntitiesDto getPatientPharmacistHistory(HttpServletRequest request) {
         IdentityProvider identityProvider = HttpRequestUtil.getIdentity(request);
-        return ratingService.getPatientPharmacistHistory(identityProvider.getRoleId()).stream()
-                .map(RatingEmployeeMapper::objectToDto)
-                .collect(Collectors.toList());
-    }
-
-    @GetMapping("/dermatologists")
-    @Secured(Role.PATIENT)
-    public List<RatingEmployeeDto> getPatientDermatologistHistory(HttpServletRequest request) {
-        IdentityProvider identityProvider = HttpRequestUtil.getIdentity(request);
-        return ratingService.getPatientDermatologistHistory(identityProvider.getRoleId()).stream()
-                .map(RatingEmployeeMapper::objectToDto)
-                .collect(Collectors.toList());
+        return RateableEntitiesMapper.objectsToDto(
+                ratingService.getPatientPharmacistHistory(identityProvider.getRoleId()),
+                ratingService.getPatientDermatologistHistory(identityProvider.getRoleId()),
+                ratingService.getPatientDrugHistory(identityProvider.getRoleId()),
+                ratingService.getPatientPharmacyHistory(identityProvider.getRoleId())
+        );
     }
 
 }
