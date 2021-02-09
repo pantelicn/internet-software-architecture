@@ -124,7 +124,8 @@ public class DrugReservationService {
     }
 
     public List<DrugReservation> findPatientReservationHistory(long patientId) {
-        //TODO
-        return new ArrayList();
+        return reservationRepository.findAllByPatientId(patientId).stream()
+                .filter(res -> res.isDispensed())
+                .collect(Collectors.toList());
     }
 }
