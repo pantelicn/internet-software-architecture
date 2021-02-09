@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.isa.pharmacy.exceptions.UserAccessException;
 import rs.ac.uns.ftn.isa.pharmacy.pharma.domain.DrugReservation;
 import rs.ac.uns.ftn.isa.pharmacy.pharma.domain.StoredDrug;
+import rs.ac.uns.ftn.isa.pharmacy.pharma.exceptions.AllergyException;
 import rs.ac.uns.ftn.isa.pharmacy.pharma.exceptions.DateException;
 import rs.ac.uns.ftn.isa.pharmacy.exceptions.EntityNotFoundException;
 import rs.ac.uns.ftn.isa.pharmacy.pharma.repository.StoredDrugRepository;
@@ -14,7 +15,6 @@ import rs.ac.uns.ftn.isa.pharmacy.users.user.domain.Patient;
 import rs.ac.uns.ftn.isa.pharmacy.users.user.repository.PatientRepository;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -78,6 +78,9 @@ public class DrugReservationService {
                 );
         if (drugReservation.isInPast()) {
             throw new DateException();
+        }
+        if (patient.getAllergicTo().stream().anyMatch(d -> d.getId() == storedDrug.getDrug().getId())) {
+            throw new AllergyException();
         }
         drugReservation.setPatient(patient);
         drugReservation.setStoredDrug(storedDrug);
