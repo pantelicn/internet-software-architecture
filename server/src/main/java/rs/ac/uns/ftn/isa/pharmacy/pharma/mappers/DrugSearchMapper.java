@@ -16,7 +16,8 @@ public class DrugSearchMapper {
                 storedDrug.getPharmacy().getName(),
                 storedDrug.getDrug().getAdditionalNotes(),
                 storedDrug.getDrug().getIntakeType(),
-                storedDrug.getDrug().getDrugType()
+                storedDrug.getDrug().getDrugType(),
+                storedDrug.getDrug().getRating()
         );
     }
 }

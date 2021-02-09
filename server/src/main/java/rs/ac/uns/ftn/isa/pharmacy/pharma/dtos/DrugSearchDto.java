@@ -15,10 +15,9 @@ public class DrugSearchDto {
     private String additionalNotes;
     private Drug.IntakeType intakeType;
     private Drug.Type drugType;
+    private double rating;
 
-    public DrugSearchDto(long storedDrugId, long drugId, String name, long quantity, Price price, String manufacturer,
-                         long pharmacyId, String pharmacyName, String additionalNotes, Drug.IntakeType intakeType, Drug.Type drugType)
-    {
+    public DrugSearchDto(long storedDrugId, long drugId, String name, long quantity, Price price, String manufacturer, long pharmacyId, String pharmacyName, String additionalNotes, Drug.IntakeType intakeType, Drug.Type drugType, double rating) {
         this.storedDrugId = storedDrugId;
         this.drugId = drugId;
         this.name = name;
@@ -30,6 +29,7 @@ public class DrugSearchDto {
         this.additionalNotes = additionalNotes;
         this.intakeType = intakeType;
         this.drugType = drugType;
+        this.rating = rating;
     }
 
     public long getStoredDrugId() {
@@ -118,5 +118,13 @@ public class DrugSearchDto {
 
     public void setDrugType(Drug.Type drugType) {
         this.drugType = drugType;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
     }
 }

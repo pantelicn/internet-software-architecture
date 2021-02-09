@@ -105,7 +105,7 @@
                         <td>{{drug.name}}</td>
                         <td>{{drug.manufacturer}}</td>
                         <td>{{drug.drugType}}</td>
-                        <td>{{drug.rating}}</td>
+                        <td>{{drug.rating === 0 ? "N/A" : drug.rating}}</td>
                         <td><button class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal" @click="select(drug.drugId)">Reserve</button></td>
                         <td><button class="btn btn-sm btn-info" @click="showSpecification(drug, $event.target)">Specification</button></td>
                     </tr>
