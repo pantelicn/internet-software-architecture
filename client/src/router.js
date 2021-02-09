@@ -31,7 +31,9 @@ import PatientHome from './views/patient/PatientHome.vue'
 import PatientProfile from './views/patient/PatientProfile.vue'
 import UnauthDrugs from './views/unauthorized/UnauthDrugs.vue'
 import Feedback from './views/patient/Feedback.vue'
-import Registration from "@/views/unauthorized/Registration";
+import Registration from './views/unauthorized/Registration'
+import ExaminationHistory from './views/patient/ExaminationHistory.vue'
+import CounselingHistory from './views/patient/CounselingHistory.vue'
 
 const router = new VueRouter({
     mode: 'hash',
@@ -237,6 +239,14 @@ const router = new VueRouter({
                 {
                     path: 'feedback',
                     component: Feedback
+                },
+                {
+                    path: 'history/examinations',
+                    component: ExaminationHistory
+                },
+                {
+                    path: 'history/counselings',
+                    component: CounselingHistory
                 }
             ]
         }

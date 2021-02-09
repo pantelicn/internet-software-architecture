@@ -38,6 +38,10 @@ export const api = {
         history: {
             examinations: host + appointments + '/examinations/patient-history/',
             counselings: host + appointments + '/counselings/patient-history/'
+        },
+        patientHistory: {
+            examinations: host + appointments + '/patient/examination-history',
+            counselings: host + appointments + '/patient/counseling-history'
         }
         
     },

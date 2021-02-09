@@ -123,7 +123,7 @@ public class AppointmentController {
     @GetMapping("/patient/counseling-history")
     public List<AppointmentDto> getPatientCounselingHistory(HttpServletRequest request) {
         IdentityProvider identityProvider = HttpRequestUtil.getIdentity(request);
-        return service.getPatientExaminationHistory(identityProvider.getRoleId()).stream()
+        return service.getPatientCounselingHistory(identityProvider.getRoleId()).stream()
                 .map(AppointmentMapper::objectToDto)
                 .collect(Collectors.toList());
     }

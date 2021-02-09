@@ -47,6 +47,10 @@ public class AppointmentDto {
         return duration;
     }
 
+    public long getDurationMinutes() {
+        return duration.toMinutes();
+    }
+
     public void setDuration(Duration duration) {
         this.duration = duration;
     }
