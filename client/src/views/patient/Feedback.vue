@@ -10,7 +10,7 @@
                                 {{dermatologist.name + ' ' + dermatologist.lastName}}
                             </td>
                             <td>
-                                <StarRating v-model="dermatologist.rating" :star-size="20"/>
+                                <StarRating v-model="dermatologist.rating" :star-size="20" @rating-selected="rateEmployee(dermatologist)"/>
                             </td>
                         </tr>
                     </tbody>
@@ -25,7 +25,7 @@
                                 {{pharmacist.name + ' ' + pharmacist.lastName}}
                             </td>
                             <td>
-                                <StarRating v-model="pharmacist.rating" :star-size="20"/>
+                                <StarRating v-model="pharmacist.rating" :star-size="20" @rating-selected="rateEmployee(pharmacist)"/>
                             </td>
                         </tr>
                     </tbody>
@@ -58,7 +58,7 @@
                                 {{pharmacy.name}}
                             </td>
                             <td>
-                                <StarRating v-model="pharmacy.rating" :star-size="20"/>
+                                <StarRating v-model="pharmacy.rating" :star-size="20" @rating-selected="ratePharmacy(pharmacy)"/>
                             </td>
                         </tr>
                     </tbody>
@@ -95,6 +95,28 @@ export default {
                 this.drugs = rateable.drugs
                 this.pharmacies = rateable.pharmacies
             })
+        },
+        rateEmployee: function (employee) {
+            let dto = {
+                employeeId: employee.employeeId,
+                rating: employee.rating
+            }
+            axios.post(api.rating.employee, dto)
+            .then(() => {
+                this.$toast.open("Employee rated.")
+            })
+            .catch()
+        },
+        ratePharmacy: function (pharmacy) {
+            let dto = {
+                id: pharmacy.id,
+                rating: pharmacy.rating
+            }
+            axios.post(api.rating.pharmacy, dto)
+            .then(() => {
+                this.$toast.open("Pharmacy rated.")
+            })
+            .catch()
         }
     },
     mounted: function () {

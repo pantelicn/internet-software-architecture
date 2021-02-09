@@ -83,7 +83,10 @@ export const api = {
         root: host + pharmacies
     },
     rating: {
-        root: host + rating
+        root: host + rating,
+        employee: host + rating + '/employee',
+        drug: host + rating + '/drug',
+        pharmacy: host + rating + '/pharmacy'
     },
     locale: {
         root: host + locale,
