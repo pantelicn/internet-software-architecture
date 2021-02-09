@@ -30,6 +30,7 @@ import Pharmacies from './views/patient/Pharmacies.vue'
 import PatientHome from './views/patient/PatientHome.vue'
 import PatientProfile from './views/patient/PatientProfile.vue'
 import UnauthDrugs from './views/unauthorized/UnauthDrugs.vue'
+import Feedback from './views/patient/Feedback.vue'
 import Registration from "@/views/unauthorized/Registration";
 
 const router = new VueRouter({
@@ -233,6 +234,10 @@ const router = new VueRouter({
                     path: 'schedule/counseling',
                     component: ScheduleCounseling
                 },
+                {
+                    path: 'feedback',
+                    component: Feedback
+                }
             ]
         }
     ]

@@ -27,7 +27,14 @@
                 </li>
                 <router-link to="/patient/drugs" class="nav-link">Drug reservation</router-link>
             </ul>
-            <router-link class="nav-item" to="/patient/appointments">Appointments</router-link>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <router-link class="nav-link" to="/patient/feedback">Feedback</router-link>
+                </li>
+                <li class="nav-item">
+                    <router-link class="nav-link" to="/patient/appointments">Appointments</router-link>
+                </li>
+            </ul>
             <div class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="navbar-dropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     User

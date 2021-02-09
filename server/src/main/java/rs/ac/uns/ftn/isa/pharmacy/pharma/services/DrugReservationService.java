@@ -4,17 +4,19 @@ import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.isa.pharmacy.exceptions.UserAccessException;
 import rs.ac.uns.ftn.isa.pharmacy.pharma.domain.DrugReservation;
 import rs.ac.uns.ftn.isa.pharmacy.pharma.domain.StoredDrug;
+import rs.ac.uns.ftn.isa.pharmacy.pharma.exceptions.AllergyException;
 import rs.ac.uns.ftn.isa.pharmacy.pharma.exceptions.DateException;
 import rs.ac.uns.ftn.isa.pharmacy.exceptions.EntityNotFoundException;
 import rs.ac.uns.ftn.isa.pharmacy.pharma.repository.StoredDrugRepository;
 import rs.ac.uns.ftn.isa.pharmacy.users.employee.repository.EmployeeRepository;
 import rs.ac.uns.ftn.isa.pharmacy.pharma.repository.DrugReservationRepository;
 import rs.ac.uns.ftn.isa.pharmacy.mail.services.EmailService;
-import rs.ac.uns.ftn.isa.pharmacy.users.user.Patient;
+import rs.ac.uns.ftn.isa.pharmacy.users.user.domain.Patient;
 import rs.ac.uns.ftn.isa.pharmacy.users.user.repository.PatientRepository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class DrugReservationService {
@@ -52,10 +54,11 @@ public class DrugReservationService {
 
     }
     public void dispense(long drugReservationId){
-        var reservedDrug = reservationRepository.findById(drugReservationId)
+        var drugReservation = reservationRepository.findById(drugReservationId)
                 .orElseThrow(() -> new EntityNotFoundException(DrugReservation.class.getSimpleName(),drugReservationId));
-        emailService.sendDrugDispensedMessage(reservedDrug);
-        reservationRepository.delete(reservedDrug);
+        emailService.sendDrugDispensedMessage(drugReservation);
+        drugReservation.setDispensed(true);
+        reservationRepository.save(drugReservation);
     }
 
     public void updateStoredDrugQuantity(long storedDrugId, int quantity) {
@@ -75,6 +78,9 @@ public class DrugReservationService {
                 );
         if (drugReservation.isInPast()) {
             throw new DateException();
+        }
+        if (patient.getAllergicTo().stream().anyMatch(d -> d.getId() == storedDrug.getDrug().getId())) {
+            throw new AllergyException();
         }
         drugReservation.setPatient(patient);
         drugReservation.setStoredDrug(storedDrug);
@@ -111,10 +117,18 @@ public class DrugReservationService {
     }
 
     public List<DrugReservation> findPatientReservations(long patientId) {
-        return reservationRepository.findAllByPatientId(patientId);
+        return reservationRepository.findAllByPatientId(patientId).stream()
+                .filter(res -> !res.isDispensed())
+                .collect(Collectors.toList());
     }
 
     public void deleteById(long id) {
         reservationRepository.deleteById(id);
+    }
+
+    public List<DrugReservation> findPatientReservationHistory(long patientId) {
+        return reservationRepository.findAllByPatientId(patientId).stream()
+                .filter(res -> res.isDispensed())
+                .collect(Collectors.toList());
     }
 }

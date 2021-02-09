@@ -3,6 +3,8 @@ package rs.ac.uns.ftn.isa.pharmacy.users.employee.domain;
 import rs.ac.uns.ftn.isa.pharmacy.users.person.domain.Person;
 import rs.ac.uns.ftn.isa.pharmacy.pharma.domain.Pharmacy;
 import rs.ac.uns.ftn.isa.pharmacy.pharma.domain.TimeOffRequest;
+import rs.ac.uns.ftn.isa.pharmacy.users.user.domain.EmployeeRating;
+import rs.ac.uns.ftn.isa.pharmacy.users.user.domain.Rating;
 
 import javax.persistence.*;
 import java.util.List;
@@ -20,7 +22,8 @@ public class Employee {
     private List<Shift> shifts;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "employee")
     private List<TimeOffRequest> timeOffRequests;
-    private double rating;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employee")
+    private List<EmployeeRating> ratings;
 
     public long getId() {
         return id;
@@ -86,13 +89,13 @@ public class Employee {
     }
 
     public double getRating() {
-        return rating;
-    }
-
-    public void setRating(double rating) {
-        if (rating < 0 || rating > 5)
-            throw new IllegalArgumentException("Invalid employee rating.");
-        this.rating = rating;
+        double totalRating = 0;
+        int size = this.ratings.size();
+        if (size == 0) return 0;
+        for (var rating: this.ratings) {
+            totalRating += rating.getRating();
+        }
+        return totalRating / size;
     }
 
     public boolean worksIn(Pharmacy pharmacy) {
@@ -100,5 +103,13 @@ public class Employee {
             if (shift.getPharmacy().getId() == pharmacy.getId())
                     return true;
         return false;
+    }
+
+    public List<EmployeeRating> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(List<EmployeeRating> ratings) {
+        this.ratings = ratings;
     }
 }

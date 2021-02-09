@@ -1,6 +1,6 @@
 package rs.ac.uns.ftn.isa.pharmacy.pharma.domain;
 
-import rs.ac.uns.ftn.isa.pharmacy.users.user.Patient;
+import rs.ac.uns.ftn.isa.pharmacy.users.user.domain.Patient;
 import rs.ac.uns.ftn.isa.pharmacy.pharma.exceptions.DateException;
 import rs.ac.uns.ftn.isa.pharmacy.pharma.exceptions.QuantityException;
 
@@ -18,6 +18,7 @@ public class DrugReservation {
     @ManyToOne
     private StoredDrug storedDrug;
     private LocalDate pickUpBefore;
+    private boolean isDispensed;
     private int quantity;
 
     public long getId() {
@@ -75,6 +76,14 @@ public class DrugReservation {
     }
 
     public boolean canBeDispensed(){
-        return !this.isInPast(1);
+        return !this.isInPast(1) || !this.isDispensed;
+    }
+
+    public boolean isDispensed() {
+        return isDispensed;
+    }
+
+    public void setDispensed(boolean dispensed) {
+        isDispensed = dispensed;
     }
 }

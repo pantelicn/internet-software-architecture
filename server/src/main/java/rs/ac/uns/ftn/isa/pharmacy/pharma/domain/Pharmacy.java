@@ -4,6 +4,8 @@ import rs.ac.uns.ftn.isa.pharmacy.finance.Money;
 import rs.ac.uns.ftn.isa.pharmacy.locale.domain.Address;
 import rs.ac.uns.ftn.isa.pharmacy.users.admin.domain.Admin;
 import rs.ac.uns.ftn.isa.pharmacy.users.employee.domain.Shift;
+import rs.ac.uns.ftn.isa.pharmacy.users.user.domain.PharmacyRating;
+import rs.ac.uns.ftn.isa.pharmacy.users.user.domain.Rating;
 
 import javax.persistence.*;
 import java.util.List;
@@ -25,9 +27,10 @@ public class Pharmacy {
     @JoinColumn(name="admin_id")
     private Admin pharmacyAdmin;
     private String description;
-    private double rating;
     @Embedded
     private Money counselingPrice;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy ="pharmacy")
+    private List<PharmacyRating> ratings;
 
     public long getId() {
         return id;
@@ -62,11 +65,13 @@ public class Pharmacy {
     }
 
     public double getRating() {
-        return rating;
-    }
-
-    public void setRating(double rating) {
-        this.rating = rating;
+        double totalRating = 0;
+        int size = this.ratings.size();
+        if (size == 0) return 0;
+        for (var rating: this.ratings) {
+            totalRating += rating.getRating();
+        }
+        return totalRating / size;
     }
 
     public List<Shift> getShifts() {
@@ -98,5 +103,13 @@ public class Pharmacy {
 
     public void setCounselingPrice(Money appointmentPrice) {
         this.counselingPrice = appointmentPrice;
+    }
+
+    public List<PharmacyRating> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(List<PharmacyRating> ratings) {
+        this.ratings = ratings;
     }
 }

@@ -2,7 +2,7 @@ package rs.ac.uns.ftn.isa.pharmacy.users.person.domain;
 
 import rs.ac.uns.ftn.isa.pharmacy.auth.model.Credentials;
 import rs.ac.uns.ftn.isa.pharmacy.locale.domain.Address;
-import rs.ac.uns.ftn.isa.pharmacy.users.user.Gender;
+import rs.ac.uns.ftn.isa.pharmacy.users.user.domain.Gender;
 
 import javax.persistence.*;
 import java.time.LocalDate;

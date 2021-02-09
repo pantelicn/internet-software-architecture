@@ -1,7 +1,7 @@
 package rs.ac.uns.ftn.isa.pharmacy.users.person.dtos;
 
 import rs.ac.uns.ftn.isa.pharmacy.locale.domain.Address;
-import rs.ac.uns.ftn.isa.pharmacy.users.user.Gender;
+import rs.ac.uns.ftn.isa.pharmacy.users.user.domain.Gender;
 
 import java.time.LocalDate;
 
