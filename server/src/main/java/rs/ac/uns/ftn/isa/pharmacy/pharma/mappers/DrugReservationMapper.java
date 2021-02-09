@@ -7,6 +7,7 @@ import rs.ac.uns.ftn.isa.pharmacy.pharma.dtos.DrugReservationDto;
 public class DrugReservationMapper {
     public static DrugReservation dtoToObject(DrugReservationDto dto) {
         DrugReservation object = new DrugReservation();
+        object.setDispensed(false);
         object.setQuantity(dto.getQuantity());
         var storedDrug = new StoredDrug();
         storedDrug.setId(dto.getStoredDrugId());
