@@ -22,6 +22,7 @@ import CounselingReportStepThree from './views/pharmacist/report/steps/Counselin
 import CounselingReportStepFour from './views/pharmacist/report/steps/CounselingReportStepFour.vue'
 import TimeOffRequest from './views/timeoff/TimeOffRequest.vue'
 import DrugDispensing from './views/pharmacist/drug-dispensing/DrugDispensing.vue'
+import WorkingCalendar from './views/employee/calendar/WorkingCalendar.vue'
 import Profile from './views/person/Profile.vue'
 import Drugs from './views/patient/Drugs.vue'
 import Appointments from './views/patient/Appointments.vue'
@@ -30,8 +31,9 @@ import Pharmacies from './views/patient/Pharmacies.vue'
 import PatientHome from './views/patient/PatientHome.vue'
 import PatientProfile from './views/patient/PatientProfile.vue'
 import Feedback from './views/patient/Feedback.vue'
-import Registration from "@/views/unauthorized/Registration";
-import DrugSearch from "@/views/DrugSearch";
+import Registration from './views/unauthorized/Registration'
+import ExaminationHistory from './views/patient/ExaminationHistory.vue'
+import CounselingHistory from './views/patient/CounselingHistory.vue'
 
 const router = new VueRouter({
     mode: 'hash',
@@ -95,6 +97,12 @@ const router = new VueRouter({
                     meta: { requiresDermaAuth: true}
                 },
                 {
+                    path: 'my-calendar',
+                    name: 'my-calendar',
+                    component: WorkingCalendar,
+                    meta: { requiresPharmaAuth:true }
+                },
+                {
                     path: 'my-profile',
                     name: 'dermatologist-profile',
                     component: Profile,
@@ -130,7 +138,7 @@ const router = new VueRouter({
                             component: ExamReportStepFour,
                             meta: { requiresDermaAuth: true}
                         },
-        
+
                     ]
                 },
             ]
@@ -153,6 +161,12 @@ const router = new VueRouter({
                     name: 'counseled-patients',
                     component: CounseledPatients,
                     meta: { requiresPharmaAuth: true }
+                },
+                {
+                    path: 'my-calendar',
+                    name: 'my-calendar',
+                    component: WorkingCalendar,
+                    meta: { requiresPharmaAuth:true }
                 },
                 {
                     path: 'time-off',
@@ -203,7 +217,7 @@ const router = new VueRouter({
                             component: CounselingReportStepFour,
                             meta: { requiresPharmaAuth: true }
                         },
-        
+
                     ]
                 },
             ]
@@ -240,6 +254,14 @@ const router = new VueRouter({
                 {
                     path: 'feedback',
                     component: Feedback
+                },
+                {
+                    path: 'history/examinations',
+                    component: ExaminationHistory
+                },
+                {
+                    path: 'history/counselings',
+                    component: CounselingHistory
                 }
             ]
         },

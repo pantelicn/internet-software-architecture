@@ -1,6 +1,6 @@
 <template>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="/">Navbar</a>
+        <a class="navbar-brand" href="/">ISA Pharmacy App</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -21,8 +21,8 @@
                         History
                     </a>
                     <div class="dropdown-menu bg-dark" aria-labelledby="navbar-dropdown">
-                        <router-link class="dropdown-item" to="/">Dermatologist visits</router-link>
-                        <router-link class="dropdown-item" to="/">Pharmacist counseling</router-link>
+                        <router-link class="dropdown-item" to="/patient/history/examinations">Dermatologist visits</router-link>
+                        <router-link class="dropdown-item" to="/patient/history/counselings">Pharmacist counseling</router-link>
                     </div>
                 </li>
                 <router-link to="/patient/drugs" class="nav-link">Drug reservation</router-link>

@@ -27,6 +27,7 @@ export const api = {
     appointments: {
         root: host + appointments,
         free: host + appointments + '/free-examinations',
+        all: host + appointments + '/all',
         patient: host + appointments + '/patient',
         cancel: host + appointments + '/cancel',
         upcoming: host + appointments + '/upcoming/',
@@ -38,6 +39,10 @@ export const api = {
         history: {
             examinations: host + appointments + '/examinations/patient-history/',
             counselings: host + appointments + '/counselings/patient-history/'
+        },
+        patientHistory: {
+            examinations: host + appointments + '/patient/examination-history',
+            counselings: host + appointments + '/patient/counseling-history'
         }
         
     },

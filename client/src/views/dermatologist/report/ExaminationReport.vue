@@ -42,7 +42,7 @@ export default {
         }
     },
     beforeRouteEnter (to, from, next) {
-        if(from.name !== 'upcoming-examinations')
+        if(!(from.name == 'upcoming-examinations' || from.name == 'my-calendar'))
             next({ name: 'upcoming-examinations' })
         else
             next()

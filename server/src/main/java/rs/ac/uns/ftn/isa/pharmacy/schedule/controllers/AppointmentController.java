@@ -94,6 +94,17 @@ public class AppointmentController {
                 .map(UpcomingAppointmentEntryDto::new)
                 .collect(Collectors.toList());
     }
+    @Secured({Role.DERMATOLOGIST,Role.PHARMACIST})
+    @GetMapping("/all")
+    public List<UpcomingAppointmentEntryDto> getAllAppointments(HttpServletRequest request){
+        IdentityProvider identityProvider = HttpRequestUtil.getIdentity(request);
+
+        return service.findAll(identityProvider.getRoleId())
+                .stream()
+                .map(UpcomingAppointmentEntryDto::new)
+                .collect(Collectors.toList());
+    }
+
     @Secured({Role.DERMATOLOGIST})
     @PutMapping("/examinations/free-up/{examinationId}")
     public void freeUpExamination(@PathVariable long examinationId){
@@ -108,5 +119,23 @@ public class AppointmentController {
     @PutMapping("/appointment-report")
     public void submitAppointmentReport(@RequestBody ReportSubmissionDto reportSubmissionDto){
         service.submitAppointmentReport(reportSubmissionDto);
+    }
+
+    @Secured(Role.PATIENT)
+    @GetMapping("/patient/examination-history")
+    public List<AppointmentDto> getPatientExaminationHistory(HttpServletRequest request) {
+        IdentityProvider identityProvider = HttpRequestUtil.getIdentity(request);
+        return service.getPatientExaminationHistory(identityProvider.getRoleId()).stream()
+                .map(AppointmentMapper::objectToDto)
+                .collect(Collectors.toList());
+    }
+
+    @Secured(Role.PATIENT)
+    @GetMapping("/patient/counseling-history")
+    public List<AppointmentDto> getPatientCounselingHistory(HttpServletRequest request) {
+        IdentityProvider identityProvider = HttpRequestUtil.getIdentity(request);
+        return service.getPatientCounselingHistory(identityProvider.getRoleId()).stream()
+                .map(AppointmentMapper::objectToDto)
+                .collect(Collectors.toList());
     }
 }

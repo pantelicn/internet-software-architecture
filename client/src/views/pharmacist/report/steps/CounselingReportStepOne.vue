@@ -35,7 +35,7 @@ export default {
         }
     },
     beforeRouteEnter (to, from, next) {
-        if(from.name != 'upcoming-counselings')
+       if(!(from.name == 'upcoming-counselings' || from.name == 'my-calendar'))
             next({ name: 'upcoming-counselings' })
         else
             next()

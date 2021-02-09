@@ -17,14 +17,16 @@ public class UpcomingAppointmentEntryDto {
 
     public UpcomingAppointmentEntryDto(Appointment appointment) {
         this.appointmentId = appointment.getId();
-        this.patientId = appointment.getPatient().getId();
-        this.patientFirstName = appointment.getPatient().getPerson().getFirstName();
-        this.patientLastName = appointment.getPatient().getPerson().getLastName();
         this.start = appointment.getTerm().getStart();
         this.end = appointment.getTerm().getEnd();
         this.pharmacyId = appointment.getShift().getPharmacy().getId();
         this.pharmacyName = appointment.getShift().getPharmacy().getName();
         this.price = appointment.getPrice().getAmount() + " " + appointment.getPrice().getCurrency();
+        if(appointment.getPatient() != null){
+            this.patientId = appointment.getPatient().getId();
+            this.patientFirstName = appointment.getPatient().getPerson().getFirstName();
+            this.patientLastName = appointment.getPatient().getPerson().getLastName();
+        }
     }
 
     public long getAppointmentId() {
