@@ -65,17 +65,16 @@ update isa.persons set credentials_email="sagefinley@gmail.com" where id=4;
 insert into isa.employees(id,employee_type,rating,person_id) values (1,1,4.5,4);
 
 
-select * from isa.credentials;
 update isa.credentials set has_changed_initial_password=0 where email="sagefinley@gmail.com";
 
-select * from isa.credentials;
+select * from isa.stored_drugs;
 
 insert into isa.persons (id, pid, date_of_birth, first_name, gender, last_name, phone_number, address_id)
 values (5,"031099310218", "1992-09-09 8:00:00", "Mackenzie", 0, "Ashton", "0612935123", 6);
 insert into isa.credentials (email,username,is_activated,has_changed_initial_password,password,role,uid,person_id) 
 values ("mickeyashton@gmail.com","mickeyashton",1,1,"password","ROLE_PHARMACIST",'6f192cc2-a137-4be5-9f34-9d38a252b948',5);
 update isa.persons set credentials_email="mickeyashton@gmail.com" where id=5;
-insert into isa.employees(id,employee_type, rating, person_id) values (2,1,4.6,5);
+insert into isa.employees(id,employee_type,person_id,rating) values (2,1,5,3.23);
 
 insert into isa.persons (id, pid, date_of_birth, first_name, gender, last_name, phone_number, address_id)
 values (6,"101099110218", "1991-10-10 8:00:00", "Mickey", 0, "Frankie", "062652035", 7);

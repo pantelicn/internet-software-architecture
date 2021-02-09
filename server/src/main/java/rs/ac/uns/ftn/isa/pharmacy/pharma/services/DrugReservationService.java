@@ -16,6 +16,7 @@ import rs.ac.uns.ftn.isa.pharmacy.users.user.repository.PatientRepository;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class DrugReservationService {
@@ -53,10 +54,11 @@ public class DrugReservationService {
 
     }
     public void dispense(long drugReservationId){
-        var reservedDrug = reservationRepository.findById(drugReservationId)
+        var drugReservation = reservationRepository.findById(drugReservationId)
                 .orElseThrow(() -> new EntityNotFoundException(DrugReservation.class.getSimpleName(),drugReservationId));
-        emailService.sendDrugDispensedMessage(reservedDrug);
-        reservationRepository.delete(reservedDrug);
+        emailService.sendDrugDispensedMessage(drugReservation);
+        drugReservation.setDispensed(true);
+        reservationRepository.save(drugReservation);
     }
 
     public void updateStoredDrugQuantity(long storedDrugId, int quantity) {
@@ -112,7 +114,9 @@ public class DrugReservationService {
     }
 
     public List<DrugReservation> findPatientReservations(long patientId) {
-        return reservationRepository.findAllByPatientId(patientId);
+        return reservationRepository.findAllByPatientId(patientId).stream()
+                .filter(res -> !res.isDispensed())
+                .collect(Collectors.toList());
     }
 
     public void deleteById(long id) {

@@ -8,12 +8,30 @@ import java.time.LocalDate;
 public class RegistrationDto {
     private String email;
     private String password;
+    private String username;
     private String firstName;
     private String lastName;
     private Address address;
     private String phoneNumber;
     private LocalDate dateOfBirth;
     private Gender gender;
+    private String pid;
+
+    public String getPid() {
+        return pid;
+    }
+
+    public void setPid(String pid) {
+        this.pid = pid;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     public String getEmail() {
         return email;

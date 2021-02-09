@@ -31,6 +31,7 @@ import PatientHome from './views/patient/PatientHome.vue'
 import PatientProfile from './views/patient/PatientProfile.vue'
 import UnauthDrugs from './views/unauthorized/UnauthDrugs.vue'
 import Feedback from './views/patient/Feedback.vue'
+import Registration from "@/views/unauthorized/Registration";
 
 const router = new VueRouter({
     mode: 'hash',
@@ -53,6 +54,11 @@ const router = new VueRouter({
                 {
                     path: 'drugs',
                     component: UnauthDrugs
+                },
+                {
+                    path: 'register',
+                    name: 'register',
+                    component: Registration
                 }
             ],
         },

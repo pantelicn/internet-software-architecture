@@ -86,6 +86,10 @@ export default {
                 this.$router.push('/patient')
             }
         },
+        clearInput(){
+            this.email = ''
+            this.password = ''
+        },
         login(){
             let credentials = {
                 email: this.email,
@@ -97,10 +101,15 @@ export default {
                 
             })
             .catch(err => {
-                if(err.response.status == 401){
-                    this.$toast.error('User with given credentials doesn\'t exist');
-                    this.email = ''
-                    this.password = ''
+                if (err.response.status === 401) {
+                  this.$toast.error("User does not exist or is not activated.")
+                  this.clearInput()
+                }
+                else if (err.response.status === 500) {
+                    this.$toast.error("Server error occurred.");
+                }
+                else {
+                    this.$toast.error("An error occurred");
                 }
             })
         }
