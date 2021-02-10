@@ -1,7 +1,23 @@
 <template>
-  <b-container class="mt-4">
-    <h1>Available offers</h1>
-    <div>
+  <b-container class="mt-5">
+    <div class="row">
+      <h1 class="col-9">Available offers</h1>
+      <select class="col-3" v-model="filter" style="font-size: 24px;" @change="doFilter">
+        <option value="All">
+          All
+        </option>
+        <option value="ACCEPTED">
+          Accepted
+        </option>
+        <option value="REJECTED">
+          Rejected
+        </option>
+        <option value="PENDING">
+          Pending
+        </option>
+      </select>
+    </div>
+    <div class="mt-5">
       <table class="text-light bg-dark table" style="border: none; border-collapse: collapse">
         <thead style="border: none">
           <th>Id</th>
@@ -11,7 +27,7 @@
           <th>Ordered drugs</th>
           <th>Edit</th>
         </thead>
-        <tr v-for="offer in offers" :key="offer.id">
+        <tr v-for="offer in displayedOffers" :key="offer.id">
           <td>{{offer.id}}</td>
           <td>{{offer.price.amount}} RSD</td>
           <td>{{new Date(offer.deliveryDeadline).toDateString()}}</td>
@@ -53,7 +69,8 @@ export default {
   name: "SupplierOffers",
   data() {
     return {
-      offers: [],
+      allOffers: [],
+      displayedOffers: [],
       currentOffer: {
         purchaseOrder: {
           orderedDrugs: []
@@ -63,14 +80,16 @@ export default {
         },
         deliveryDeadlineString: '',
         deliveryDeadline: undefined
-      }
+      },
+      filter: "All"
     }
   },
   methods: {
     getOffers() {
       axios.get(api.offer.root)
       .then(response => {
-          this.offers = response.data;
+          this.allOffers = response.data;
+          this.displayedOffers = this.allOffers;
       })
       .catch(() => this.$toast.error("Failed to fetch offers."));
     },
@@ -93,6 +112,21 @@ export default {
       })
         .then(() => this.$toast.success("Successfully updated your offer."))
         .catch(error => this.$toast.error(error.response.data));
+    },
+    doFilter() {
+      if (this.filter === "All") {
+        this.displayedOffers = this.allOffers;
+        return;
+      }
+      this.displayedOffers = [];
+      this.allOffers.forEach(offer => {
+          if (offer.status === this.filter) {
+            this.displayedOffers.push(offer);
+          }
+      })
+      if (this.displayedOffers.length === 0) {
+        this.$toast.info("No offers with status [" + this.filter + "]");
+      }
     }
   },
   mounted() {

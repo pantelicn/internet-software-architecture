@@ -1,12 +1,26 @@
 <template>
-<div>
-  <h1>cao</h1>
-</div>
+  <div>
+    <Profile/>
+  </div>
 </template>
 
 <script>
+import Profile from "@/views/person/Profile";
+
 export default {
-name: "SupplierProfile"
+  name: "SupplierProfile",
+  data() {
+    return {
+      loaded: false,
+      person: undefined
+    }
+  },
+  components: {
+    Profile
+  },
+  mounted() {
+    this.getPerson();
+  }
 }
 </script>
 
