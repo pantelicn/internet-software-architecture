@@ -11,6 +11,8 @@ public class StoredDrug {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+    @Version
+    private int version;
     private long quantity;
     @Embedded
     private Price price;
@@ -67,5 +69,13 @@ public class StoredDrug {
 
     public void setPharmacy(Pharmacy pharmacy) {
         this.pharmacy = pharmacy;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
     }
 }
