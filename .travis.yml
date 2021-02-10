@@ -10,6 +10,7 @@ before_install:
   - mysql -e 'CREATE DATABASE isa;'
 script: 
     - cd client
+    - npm install
     - npm run build
     - cd ..
     - cp client/dist/index.html server/src/main/resources/templates
