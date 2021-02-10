@@ -18,6 +18,9 @@ script:
     - cp client/dist/css server/src/main/resources/static -r
     - cd server
     - mvn clean verify sonar:sonar -Pcoverage -Dsonar.projectKey=isa:project
+before_deploy:
+  - git add src/main/resources/static/
+  - git add src/main/resources/templates
 deploy:
   provider: heroku
   api_key: $HEROKU_KEY
