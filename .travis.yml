@@ -9,6 +9,12 @@ services:
 before_install:
   - mysql -e 'CREATE DATABASE isa;'
 script: 
+    - cd client
+    - npm run build
+    - cd ..
+    - cp client/dist/index.html server/src/main/resources/templates
+    - cp client/dist/js server/src/main/resources/static -r
+    - cp client/dist/css server/src/main/resources/static -r
     - cd server
     - mvn clean verify sonar:sonar -Pcoverage -Dsonar.projectKey=isa:project
 deploy:
