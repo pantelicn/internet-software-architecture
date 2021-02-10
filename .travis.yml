@@ -13,6 +13,7 @@ script:
     - npm install
     - npm run build
     - cd ..
+    - mkdir server/src/main/resources/templates
     - cp client/dist/index.html server/src/main/resources/templates
     - cp client/dist/js server/src/main/resources/static -r
     - cp client/dist/css server/src/main/resources/static -r
@@ -20,7 +21,7 @@ script:
     - mvn clean verify sonar:sonar -Pcoverage -Dsonar.projectKey=isa:project
 before_deploy:
   - git add src/main/resources/static/
-  - git add src/main/resources/templates
+  - git add src/main/resources/templates/
 deploy:
   provider: heroku
   api_key: $HEROKU_KEY
