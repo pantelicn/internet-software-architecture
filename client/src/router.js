@@ -35,6 +35,8 @@ import Registration from './views/unauthorized/Registration'
 import ExaminationHistory from './views/patient/ExaminationHistory.vue'
 import CounselingHistory from './views/patient/CounselingHistory.vue'
 import DrugSearch from "@/views/DrugSearch";
+import ComplaintResponse from "@/views/sysadmin/ComplaintResponse";
+import SysAdminHome from "@/views/sysadmin/SysAdminHome";
 
 const router = new VueRouter({
     mode: 'hash',
@@ -143,7 +145,20 @@ const router = new VueRouter({
                     ]
                 },
             ]
-
+        },
+        {
+            path: '/sys',
+            name: 'sys-root',
+            component: SysAdminHome,
+            meta: { requiresSysAuth: true },
+            children: [
+                {
+                    path: 'respond',
+                    name: 'complaint-responses',
+                    meta: { requiresSysAuth: true },
+                    component: ComplaintResponse,
+                }
+            ]
         },
         {
             path: '/pharmacist',
@@ -281,6 +296,9 @@ router.beforeEach((to, from, next) => {
             else if (getRole() === 'ROLE_PATIENT') {
                 next({ path: '/patient'});
             }
+            else if (getRole() === 'ROLE_SYS_ADMIN') {
+                next({ path:'/sys' });
+            }
         }
         else next();
 
@@ -317,6 +335,12 @@ router.beforeEach((to, from, next) => {
             next( { path: "patient/drugs"} )
         }
         else next();
+    }
+    else if(to.matched.some(record => record.meta.requiresSysAuth)) {
+        if (getRole() === "ROLE_SYS_ADMIN") {
+            next();
+        }
+        else next({ name: 'insufficient-permissions' })
     }
 
     else next()
