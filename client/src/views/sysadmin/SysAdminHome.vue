@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import SysAdminNavbar from "@/components/navbar/SysAdminNavbar";
+import SysAdminNavbar from "@/components/navbar/SysAdminNavBar";
 
 export default {
 name: "SysAdminHome",

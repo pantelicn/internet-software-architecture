@@ -6,16 +6,9 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbar-content">
+
+      <!-- Drop down HISTORY -->
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" id="navbar-dropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Schedule
-          </a>
-          <div class="dropdown-menu bg-dark" aria-labelledby="navbar-dropdown">
-            <router-link to="/patient" class="dropdown-item">Dermatologist examination</router-link>
-            <router-link class="dropdown-item" to="/patient/schedule/counseling">Pharmacist counseling</router-link>
-          </div>
-        </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" id="navbar-dropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             History
@@ -25,19 +18,17 @@
             <router-link class="dropdown-item" to="/patient/history/counselings">Pharmacist counseling</router-link>
           </div>
         </li>
-        <router-link to="/patient/drugs" class="nav-link">Drug reservation</router-link>
+        <router-link to="/supplier/orders" class="nav-link">Pending orders</router-link>
       </ul>
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <router-link class="nav-link" to="/patient/appointments">Appointments</router-link>
-        </li>
-      </ul>
+
+
+      <!-- Regular hyperlink -->
       <div class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" id="navbar-dropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          SysAdmin
+          Supplier
         </a>
         <div class="dropdown-menu dropdown-menu-right bg-dark" aria-labelledby="navbar-dropdown">
-          <router-link class="dropdown-item" to="/patient/profile">Profile</router-link>
+          <router-link class="dropdown-item" to="/supplier/profile">Profile</router-link>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="#" @click="logout">Log out</a>
         </div>
@@ -50,14 +41,13 @@
 import {clearJwt} from "@/helpers/jwt";
 
 export default {
-  name: "SysAdminNavbar",
+  name: "SupplierNavBar",
   methods: {
     logout: function () {
       clearJwt()
       this.$router.push({ name: 'login' })
     },
   }
-
 }
 </script>
 

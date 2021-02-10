@@ -15,7 +15,8 @@ let rating = '/api/rating'
 let locale = '/api/locale'
 let promotion = '/api/promotion'
 let complaint = '/api/complaint'
-
+let order = '/api/purchase-order'
+let offer = '/api/offer'
 
 export const api = {
     auth: { 
@@ -109,5 +110,13 @@ export const api = {
     complaint: {
         root: host + complaint,
         respond: host + complaint + '/respond'
+    },
+    order: {
+        allActive: host + order,
+    },
+    offer: {
+        root: host + offer,
+        status: host + offer + "/status",
+
     }
 }

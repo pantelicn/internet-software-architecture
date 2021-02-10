@@ -37,6 +37,10 @@ import CounselingHistory from './views/patient/CounselingHistory.vue'
 import DrugSearch from "@/views/DrugSearch";
 import ComplaintResponse from "@/views/sysadmin/ComplaintResponse";
 import SysAdminHome from "@/views/sysadmin/SysAdminHome";
+import SupplierHome from "@/views/supplier/SupplierHome";
+import SupplierOffers from "@/views/supplier/SupplierOffers";
+import SupplierOrders from "@/views/supplier/SupplierOrders";
+import SupplierProfile from "@/views/supplier/SupplierProfile";
 
 const router = new VueRouter({
     mode: 'hash',
@@ -158,6 +162,30 @@ const router = new VueRouter({
                     meta: { requiresSysAuth: true },
                     component: ComplaintResponse,
                 }
+            ]
+        },
+        {
+            path: '/supplier',
+            name: 'supplier-root',
+            component: SupplierHome,
+            meta: { requiresSupplier: true },
+            children: [
+                {
+                    path: '',
+                    name: 'offers',
+                    component: SupplierOffers
+                },
+                {
+                    path: 'profile',
+                    name: 'profile',
+                    component: SupplierProfile,
+                },
+                {
+                    path: 'orders',
+                    name: 'orders',
+                    component: SupplierOrders
+                },
+
             ]
         },
         {
@@ -299,6 +327,9 @@ router.beforeEach((to, from, next) => {
             else if (getRole() === 'ROLE_SYS_ADMIN') {
                 next({ path:'/sys' });
             }
+            else if(getRole() === 'ROLE_SUPPLIER') {
+                next( { path: '/supplier' })
+            }
         }
         else next();
 
@@ -341,6 +372,12 @@ router.beforeEach((to, from, next) => {
             next();
         }
         else next({ name: 'insufficient-permissions' })
+    }
+    else if(to.matched.some(record => record.meta.requiresSupplier)) {
+        if (getRole() === "ROLE_SUPPLIER") {
+            next();
+        }
+        else next({ name: 'insufficient-permissions' });
     }
 
     else next()
