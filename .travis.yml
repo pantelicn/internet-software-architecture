@@ -14,6 +14,7 @@ script:
     - npm run build
     - cd ..
     - mkdir server/src/main/resources/templates
+    - mkdir server/src/main/resources/static
     - cp client/dist/index.html server/src/main/resources/templates
     - cp client/dist/js server/src/main/resources/static -r
     - cp client/dist/css server/src/main/resources/static -r
