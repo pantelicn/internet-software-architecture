@@ -117,6 +117,6 @@ export const api = {
     offer: {
         root: host + offer,
         status: host + offer + "/status",
-
+        check: host + offer + "/check",
     }
 }

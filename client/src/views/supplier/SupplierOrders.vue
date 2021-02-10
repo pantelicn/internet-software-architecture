@@ -69,12 +69,19 @@ export default {
   methods: {
     getOrders() {
       axios.get(api.order.allActive)
-        .then(response => {this.orders = response.data; console.log(this.orders);})
+        .then(response => {this.orders = response.data;})
         .catch(() => this.$toast.error("Failed to fetch orders"));
     },
     openOfferWindow(order) {
       this.currentOrder = order;
       this.offer.purchaseOrderId = order.id;
+      axios.get(api.offer.check + "/" + order.id)
+        .then(response => {
+          if (!response.data) {
+            this.$toast.error("You do not have enough supplies to make this offer.")
+          }
+        })
+        .catch(() => alert("Something broke."))
     },
     sendOffer() {
       console.log(this.offer);
