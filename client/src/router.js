@@ -34,6 +34,7 @@ import Feedback from './views/patient/Feedback.vue'
 import Registration from './views/unauthorized/Registration'
 import ExaminationHistory from './views/patient/ExaminationHistory.vue'
 import CounselingHistory from './views/patient/CounselingHistory.vue'
+import DrugSearch from "@/views/DrugSearch";
 
 const router = new VueRouter({
     mode: 'hash',

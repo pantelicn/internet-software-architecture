@@ -14,6 +14,7 @@ let pharmacies = '/api/pharmacies'
 let rating = '/api/rating'
 let locale = '/api/locale'
 let promotion = '/api/promotion'
+let complaint = '/api/complaint'
 
 
 export const api = {
@@ -104,5 +105,9 @@ export const api = {
         unsubscribe: host + promotion + '/unsubscribe',
         isSubscribed: host + promotion + '/subscribed',
         pharmacies: host + promotion + "/subscribed"
+    },
+    complaint: {
+        root: host + complaint,
+        respond: host + complaint + '/respond'
     }
 }
