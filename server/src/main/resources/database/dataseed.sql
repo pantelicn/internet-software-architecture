@@ -79,7 +79,7 @@ insert into isa.employees(id,employee_type,person_id) values (2,1,5);
 
 insert into isa.persons (id, pid, date_of_birth, first_name, gender, last_name, phone_number, address_id)
 values (6,"101099110218", "1991-10-10 8:00:00", "Mickey", 0, "Frankie", "062652035", 7);
-insert into isa.employees(id,employee_type, rating, person_id) values (3, 0, 4, 6);
+insert into isa.employees(id,employee_type, person_id) values (3, 0, 6);
 insert into isa.credentials (email,username,is_activated,has_changed_initial_password,password,role,uid,person_id) 
 values ("mickeyfrankie@gmail.com","mickeyfrankie",1,1,"password","ROLE_PHARMACIST",'6f191cc2-a137-4be5-9f34-9d38a252b948',6);
 update isa.persons set credentials_email="mickeyfrankie@gmail.com" where id=6;
@@ -293,6 +293,58 @@ values (13, 150.0, "2022-03-03 00:00:00", 10, 6, 2);
 insert into isa.stored_drugs (id, amount, valid_until, quantity, drug_id, pharmacy_id)
 values (14, 150.0, "2022-03-03 00:00:00", 25, 7, 2);
 
+insert into isa.persons (id, pid, date_of_birth, first_name, gender, last_name, phone_number, address_id)
+	values (6969,"12930912309123", "2000-1-1 08:00:00", "System", 0, "Administrator", "05123123123", 1);
+insert into isa.credentials(email, has_changed_initial_password, is_activated, password, role, uid, username, person_id)
+	values("sysadmin1@mail.com", false, true, "password", "ROLE_SYS_ADMIN",  '6f822cc1-a125-4be5-9f34-9d38a252b9ff', "sysadmin1", null);
+update isa.persons set credentials_email = "sysadmin1@mail.com" where id=6969;
+update isa.credentials set person_id=6969 where email="sysadmin1@mail.com"; 
 
-select * from isa.appointments;
+insert into isa.persons (id, pid, date_of_birth, first_name, gender, last_name, phone_number, address_id)
+	values (6970,"12930912309123", "2000-1-1 08:00:00", "Supplier", 0, "Supplierovsky", "05123123123", 1);
+insert into isa.credentials(email, has_changed_initial_password, is_activated, password, role, uid, username, person_id)
+	values("suppliersupplierovsky@mail.com", false, true, "password", "ROLE_SUPPLIER",  '12822cc1-a125-4be5-9f34-9d38a252b9ff', "supplierovsky", null);
+update isa.persons set credentials_email = "suppliersupplierovsky@mail.com" where id=6970;
+update isa.credentials set person_id=6970 where email="suppliersupplierovsky@mail.com"; 
 
+select * from isa.purchase_order;
+select * from isa.ordered_drug;
+select * from isa.pharmacies;
+
+insert into isa.purchase_order(id, offer_deadline, status) values(1, "2022-01-01", 0);
+insert into isa.purchase_order(id, offer_deadline, status) values(2, "2021-05-01", 0);
+insert into isa.purchase_order(id, offer_deadline, status) values(3, "2021-02-15", 0);
+insert into isa.purchase_order(id, offer_deadline, status) values(4, "2020-12-01", 0);
+insert into isa.purchase_order(id, offer_deadline, status) values(5, "2021-3-15", 0);
+
+
+insert into isa.ordered_drug(id, amount, drug_id, order_id) values(11, 100, 1, 1);
+insert into isa.ordered_drug(id, amount, drug_id, order_id) values(2, 1200, 4, 1);
+insert into isa.ordered_drug(id, amount, drug_id, order_id) values(3, 2500, 5, 1);
+insert into isa.ordered_drug(id, amount, drug_id, order_id) values(4, 3300, 3, 1);
+insert into isa.ordered_drug(id, amount, drug_id, order_id) values(5, 20000, 2, 1);
+insert into isa.ordered_drug(id, amount, drug_id, order_id) values(6, 2300, 7, 2);
+insert into isa.ordered_drug(id, amount, drug_id, order_id) values(7, 10230, 6, 2);
+insert into isa.ordered_drug(id, amount, drug_id, order_id) values(8, 1010, 5, 3);
+insert into isa.ordered_drug(id, amount, drug_id, order_id) values(9, 300, 2, 3);
+insert into isa.ordered_drug(id, amount, drug_id, order_id) values(10, 4400, 1, 4);
+insert into isa.ordered_drug(id, amount, drug_id, order_id) values(12, 5000, 4, 5);
+insert into isa.ordered_drug(id, amount, drug_id, order_id) values(13, 100, 2, 5);
+insert into isa.ordered_drug(id, amount, drug_id, order_id) values(14, 25000, 6, 5);
+
+
+insert into isa.purchase_order_ordered_drugs(purchase_order_id, ordered_drugs_id) values(1, 11);
+insert into isa.purchase_order_ordered_drugs(purchase_order_id, ordered_drugs_id) values(1, 2);
+insert into isa.purchase_order_ordered_drugs(purchase_order_id, ordered_drugs_id) values(1, 3);
+insert into isa.purchase_order_ordered_drugs(purchase_order_id, ordered_drugs_id) values(1,4);
+insert into isa.purchase_order_ordered_drugs(purchase_order_id, ordered_drugs_id) values(1,5);
+insert into isa.purchase_order_ordered_drugs(purchase_order_id, ordered_drugs_id) values(2, 6);
+insert into isa.purchase_order_ordered_drugs(purchase_order_id, ordered_drugs_id) values(2, 7);
+insert into isa.purchase_order_ordered_drugs(purchase_order_id, ordered_drugs_id) values(3, 8);
+insert into isa.purchase_order_ordered_drugs(purchase_order_id, ordered_drugs_id) values(3, 9);
+insert into isa.purchase_order_ordered_drugs(purchase_order_id, ordered_drugs_id) values(4, 10);
+insert into isa.purchase_order_ordered_drugs(purchase_order_id, ordered_drugs_id) values(5, 12);
+insert into isa.purchase_order_ordered_drugs(purchase_order_id, ordered_drugs_id) values(5, 13);
+insert into isa.purchase_order_ordered_drugs(purchase_order_id, ordered_drugs_id) values(5, 14);
+
+insert into supplier(person_id) values(6970);
