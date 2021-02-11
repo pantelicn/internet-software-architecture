@@ -32,9 +32,17 @@ public class SchedulingController {
     @PutMapping("/predefined")
     @Secured({Role.PATIENT,Role.DERMATOLOGIST})
     public ResponseEntity<?> schedulePredefinedAppointment(@RequestBody PredefinedAppointmentReservationDto appointmentReservation){
-        //TODO - za pacijenta njegov id treba da se vadi iz headera
         schedulingService.schedulePredefinedAppointment(appointmentReservation);
         return ResponseEntity.status(HttpStatus.OK).body(null);
+    }
+
+    @PutMapping("/predefined/patient")
+    @Secured(Role.PATIENT)
+    @ResponseStatus(HttpStatus.OK)
+    public void schedulePredefinedAppointment(HttpServletRequest request, @RequestBody PredefinedAppointmentReservationDto appointmentReservation) {
+        IdentityProvider identityProvider = HttpRequestUtil.getIdentity(request);
+        appointmentReservation.setPatientId(identityProvider.getRoleId());
+        schedulingService.schedulePredefinedAppointment(appointmentReservation);
     }
 
     @PostMapping("/examination")

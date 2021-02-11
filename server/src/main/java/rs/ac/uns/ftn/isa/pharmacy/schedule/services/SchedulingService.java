@@ -50,6 +50,9 @@ public class SchedulingService {
             throw new PatientOccupiedException();
         else if (!appointment.getTerm().isInFuture())
             throw new AppointmentTimeException();
+        else if (appointment.getPatient() != null) {
+            throw new EmployeeOccupiedException();
+        }
 
         appointment.setPatient(patient);
         appointment = appointmentRepository.save(appointment);
