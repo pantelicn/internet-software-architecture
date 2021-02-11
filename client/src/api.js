@@ -19,6 +19,7 @@ let promotion = '/api/promotion'
 let complaint = '/api/complaint'
 let order = '/api/purchase-order'
 let offer = '/api/offer'
+let supplier = '/api/supplier'
 
 export const api = {
     auth: { 
@@ -122,5 +123,9 @@ export const api = {
         root: host + offer,
         status: host + offer + "/status",
         check: host + offer + "/check",
+    },
+    supplier: {
+        root: host + supplier,
+
     }
 }
