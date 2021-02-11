@@ -42,7 +42,8 @@ public class SchedulingService {
     }
     @Transactional
     public void schedulePredefinedAppointment(PredefinedAppointmentReservationDto appointmentReservation) throws PatientOccupiedException{
-        var appointment = appointmentRepository.getOne(appointmentReservation.getAppointmentId());
+        var appointment = appointmentRepository.findById(appointmentReservation.getAppointmentId())
+                .orElseThrow(() -> new EntityNotFoundException(Appointment.class.getSimpleName(), appointmentReservation.getAppointmentId()));
         var patient = patientRepository.getOne(appointmentReservation.getPatientId());
 
         if(!patient.canSchedule(appointment))
