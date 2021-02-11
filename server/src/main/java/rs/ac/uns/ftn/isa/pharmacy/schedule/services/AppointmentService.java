@@ -44,7 +44,7 @@ public class AppointmentService {
     public List<Appointment> findAll(long employeeId){
         return appointmentRepository.findAll()
                 .stream()
-                .filter(a -> a.getShift().getEmployee().getId() == employeeId)
+                .filter(a -> a.getShift().getEmployee().getId() == employeeId && a.getAppointmentReport() == null)
                 .collect(Collectors.toList());
     }
 
@@ -96,6 +96,7 @@ public class AppointmentService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public void cancelPatientAppointment(long patientId, long appointmentId) {
         Appointment appointment = findById(appointmentId);
         if (appointment.getPatient().getId() != patientId) {
@@ -134,6 +135,7 @@ public class AppointmentService {
         return upcomingAppointments;
     }
 
+    @Transactional
     public void freeUpExamination(long examinationId){
         var appointment = appointmentRepository.findById(examinationId)
                 .orElseThrow(() -> new EntityNotFoundException(Appointment.class.getSimpleName(), examinationId));
@@ -146,6 +148,7 @@ public class AppointmentService {
         patientRepository.save(patient);
     }
 
+    @Transactional
     public void freeUpCounseling(long counselingId) {
         var patient = appointmentRepository.findById(counselingId)
                 .orElseThrow(() -> new EntityNotFoundException(Appointment.class.getSimpleName(), counselingId))

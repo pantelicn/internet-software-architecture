@@ -7,8 +7,8 @@
             <label> Pharmacy:</label> 
         </b-row>
         <b-row cols="5" align-h="center">
-            <b-form-select v-model="select" :options="options"
-             :disabled="disabled"></b-form-select>
+            <b-form-select v-model="pharmacyId" :options="options"
+             ></b-form-select>
         </b-row>
         <b-row align-h="center" class="mt-5 mb-2">
             <label> Select a time period: </label>
@@ -57,7 +57,7 @@
             ></b-form-textarea>
         </b-row>
         <b-row align-h="center" class="mt-5">
-            <b-button variant="success" size="lg" @click="submit">Submit</b-button>
+            <b-button variant="success" size="lg" @click="submit" :disabled="disabled">Submit</b-button>
         </b-row>
 
     </b-col>
@@ -79,10 +79,9 @@ export default {
     components:{ DatePicker },
     computed:{
         disabled(){
-            if(this.myPharmacies.length==2){
-                return false;
-            }
-            return true;
+            if(this.pharmacyId === '' || this.pharmacyId == null)
+                return true
+            return false
         },
         select(){
             if(this.myPharmacies.length==1)
@@ -99,6 +98,7 @@ export default {
                 end: getTomorrowsDate()
             },
             info:'',
+            pharmacyId:'',
             myPharmacies:null,
             options:[
                 { value:null, text: 'Select a pharmacy'}
@@ -128,7 +128,7 @@ export default {
         submit(){
             let timeOffRequestDto = {
                 employeeId: getRoleId(),
-                pharmacyId: this.select,
+                pharmacyId: this.pharmacyId,
                 requestInfo: this.info,
                 start: this.range.start,
                 end: this.range.end

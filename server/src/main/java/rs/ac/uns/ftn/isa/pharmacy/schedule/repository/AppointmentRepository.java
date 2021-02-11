@@ -1,12 +1,15 @@
 package rs.ac.uns.ftn.isa.pharmacy.schedule.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import rs.ac.uns.ftn.isa.pharmacy.schedule.domain.Appointment;
 
+import javax.persistence.LockModeType;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
@@ -31,4 +34,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
 
     @Query("select count(a.id) from Appointment a where a.shift.pharmacy.id =:pharmacyId and a.patient.id =:patientId")
     int countByPatientAndPharmacy(@Param("pharmacyId") long pharmacyId, @Param("patientId") long patientId);
+
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    Optional<Appointment> findById(Long id);
 }
