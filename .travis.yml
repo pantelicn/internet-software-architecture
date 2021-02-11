@@ -25,6 +25,8 @@ deploy:
   api_key: $HEROKU_KEY
   skip_cleanup: true
   app:
-    develop: isa-pharmacy
+    main: isa-pharmacy
+  on:
+    branch: main
 
     
