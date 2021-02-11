@@ -90,7 +90,8 @@ export const api = {
         root: host + timeOff
     },
     pharmacies: {
-        root: host + pharmacies
+        root: host + pharmacies,
+        addAdmin: host + pharmacies + '/admin'
     },
     rating: {
         root: host + rating,

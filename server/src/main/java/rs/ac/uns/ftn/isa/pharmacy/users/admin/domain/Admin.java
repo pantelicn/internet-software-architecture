@@ -7,9 +7,10 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="admins")
+@SequenceGenerator(name = "admin_seq", initialValue = 100)
 public class Admin{
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "admin_seq")
     private long id;
     @OneToOne
     private Person person;
