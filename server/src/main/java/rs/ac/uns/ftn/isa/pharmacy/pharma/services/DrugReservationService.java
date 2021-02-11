@@ -1,6 +1,8 @@
 package rs.ac.uns.ftn.isa.pharmacy.pharma.services;
 
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import rs.ac.uns.ftn.isa.pharmacy.exceptions.UserAccessException;
 import rs.ac.uns.ftn.isa.pharmacy.pharma.domain.DrugReservation;
 import rs.ac.uns.ftn.isa.pharmacy.pharma.domain.StoredDrug;
@@ -61,6 +63,7 @@ public class DrugReservationService {
         reservationRepository.save(drugReservation);
     }
 
+    @Transactional
     public void updateStoredDrugQuantity(long storedDrugId, int quantity) {
         var storedDrug = storedDrugRepository.findById(storedDrugId)
                 .orElseThrow(() -> new EntityNotFoundException(StoredDrug.class.getSimpleName(), storedDrugId));
@@ -68,6 +71,7 @@ public class DrugReservationService {
         storedDrugRepository.save(storedDrug);
     }
 
+    @Transactional
     public void reserve(DrugReservation drugReservation, long patientId) {
         var patient = patientRepository.findById(patientId)
                 .orElseThrow(() -> new EntityNotFoundException(Patient.class.getSimpleName(), patientId));

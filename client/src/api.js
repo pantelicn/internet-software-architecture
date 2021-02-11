@@ -1,4 +1,6 @@
-const host = 'http://localhost:8080'
+var host = 'http://localhost:8080'
+if (process.env.NODE_ENV == 'production')
+    host = 'https://isa-pharmacy.herokuapp.com'
 
 //REST endpoints
 let auth = "/api/auth"

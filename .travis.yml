@@ -9,13 +9,24 @@ services:
 before_install:
   - mysql -e 'CREATE DATABASE isa;'
 script: 
+    - cd client
+    - npm install
+    - npm run build
+    - cd ..
+    - mkdir server/src/main/resources/templates
+    - mkdir server/src/main/resources/static
+    - cp client/dist/index.html server/src/main/resources/templates
+    - cp client/dist/js server/src/main/resources/static -r
+    - cp client/dist/css server/src/main/resources/static -r
     - cd server
     - mvn clean verify sonar:sonar -Pcoverage -Dsonar.projectKey=isa:project
 deploy:
   provider: heroku
-  api_key:
-    secure: $HEROKU_KEY
+  api_key: $HEROKU_KEY
+  skip_cleanup: true
   app:
-    develop: isa-pharmacy
+    main: isa-pharmacy
+  on:
+    branch: main
 
     

@@ -2,6 +2,7 @@ package rs.ac.uns.ftn.isa.pharmacy.schedule.services;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import rs.ac.uns.ftn.isa.pharmacy.exceptions.EntityNotFoundException;
 import rs.ac.uns.ftn.isa.pharmacy.schedule.domain.Appointment;
 import rs.ac.uns.ftn.isa.pharmacy.schedule.domain.AppointmentType;
 import rs.ac.uns.ftn.isa.pharmacy.users.employee.domain.Employee;
@@ -58,7 +59,8 @@ public class SchedulingService {
     public void scheduleNewAppointment(CreatedAppointmentDto createdAppointmentDto, AppointmentType type) throws PersistenceException {
         var term = createdAppointmentDto.getTerm();
 
-        var employee = employeeRepository.getOne(createdAppointmentDto.getEmployeeId());
+        var employee = employeeRepository.findById(createdAppointmentDto.getEmployeeId())
+                .orElseThrow(() -> new EntityNotFoundException(Employee.class.getSimpleName(), createdAppointmentDto.getEmployeeId()));
         var patient = patientRepository.getOne(createdAppointmentDto.getPatientId());
         var appointment = new Appointment(term, type,null,null);
 
