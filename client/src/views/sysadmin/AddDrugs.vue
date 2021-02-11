@@ -89,6 +89,15 @@
             <div></div>
             <textarea type="text" v-model="ingredientsSpaced" placeholder="Ingredients divided by comma" rows="5"> </textarea>
           </div>
+
+          <div class="mt-3">
+            <p>Pick alternative drugs for this drug:</p>
+            <select multiple v-model="drugDto.alternativeDrugIds" style="height: 250px; width: 100%">
+              <option v-for="alt in alts" :key="alt.id" :value=alt.id style="height: 25px;">
+                {{alt.name}}
+              </option>
+            </select>
+          </div>
       </div>
     </div>
 
@@ -117,25 +126,29 @@ export default {
                 },
                 alternativeDrugIds: []
             },
-            ingredientsSpaced: ''
+            ingredientsSpaced: '',
+            alts: []
         }
     },
     methods: {
         create() {
-            this.validate();
             this.preprocess();
-
             axios.post(api.drugs.root, this.drugDto)
                 .then(() => this.$toast.success(this.drugDto.drug.name + " successfully created"))
                 .catch(error => this.$toast.error(error.response.data));
         },
-        validate() {
-
-        },
         preprocess() {
             let ingredients = this.ingredientsSpaced.split(" ");
             ingredients.forEach(ingredient => this.drugDto.drug.ingredients.push(ingredient));
+        },
+        getExistingDrugs() {
+            axios.get(api.drugs.simple)
+                .then(response => this.alts = response.data)
+                .catch(error => this.$toast.error(error.response.data));
         }
+    },
+    mounted() {
+        this.getExistingDrugs();
     }
 }
 </script>
