@@ -44,7 +44,7 @@ public class AppointmentService {
     public List<Appointment> findAll(long employeeId){
         return appointmentRepository.findAll()
                 .stream()
-                .filter(a -> a.getShift().getEmployee().getId() == employeeId)
+                .filter(a -> a.getShift().getEmployee().getId() == employeeId && a.getAppointmentReport() == null)
                 .collect(Collectors.toList());
     }
 
