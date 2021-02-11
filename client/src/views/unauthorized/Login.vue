@@ -76,14 +76,20 @@ export default {
     methods:{
         reroute(){
             let role = getRole()
-            if(role == "ROLE_PHARMACIST"){
+            if(role === "ROLE_PHARMACIST"){
                 this.$router.push('/pharmacist/')
             }
-            else if(role == "ROLE_DERMATOLOGIST"){
+            else if(role === "ROLE_DERMATOLOGIST"){
                 this.$router.push('/dermatologist/')
             }
-            else if(role == "ROLE_PATIENT") {
+            else if(role === "ROLE_PATIENT") {
                 this.$router.push('/patient')
+            }
+            else if(role === "ROLE_SUPPLIER") {
+              this.$router.push("/supplier");
+            }
+            else if (role === "ROLE_SYS_ADMIN") {
+              this.$router.push("/sys");
             }
         },
         clearInput(){
@@ -98,7 +104,6 @@ export default {
             axios.post(api.auth.login,credentials).then(res => {
                 setJwt(res.headers['authorization'])
                 this.reroute()
-                
             })
             .catch(err => {
                 if (err.response.status === 401) {

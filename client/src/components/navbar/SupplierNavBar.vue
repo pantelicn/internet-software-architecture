@@ -9,15 +9,6 @@
 
       <!-- Drop down HISTORY -->
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" id="navbar-dropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            History
-          </a>
-          <div class="dropdown-menu bg-dark" aria-labelledby="navbar-dropdown">
-            <router-link class="dropdown-item" to="/patient/history/examinations">Dermatologist visits</router-link>
-            <router-link class="dropdown-item" to="/patient/history/counselings">Pharmacist counseling</router-link>
-          </div>
-        </li>
         <router-link to="/supplier/orders" class="nav-link">Pending orders</router-link>
       </ul>
 

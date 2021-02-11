@@ -11,14 +11,16 @@
       <ul class="navbar-nav mr-auto">
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" id="navbar-dropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            History
+            Register new
           </a>
           <div class="dropdown-menu bg-dark" aria-labelledby="navbar-dropdown">
-            <router-link class="dropdown-item" to="/patient/history/examinations">Dermatologist visits</router-link>
-            <router-link class="dropdown-item" to="/patient/history/counselings">Pharmacist counseling</router-link>
+            <router-link class="dropdown-item" to="/sys/register-supplier">Supplier</router-link>
+            <router-link class="dropdown-item" to="/sys/register-pharmacy">Pharmacy</router-link>
+            <router-link class="dropdown-item" to="/sys/register-ph-admin">Pharmacy admin</router-link>
           </div>
         </li>
-        <router-link to="/patient/drugs" class="nav-link">Drug reservation</router-link>
+        <router-link to="/sys/complaints" class="nav-link">Complaints</router-link>
+        <router-link to="/sys/drugs" class="nav-link">Add drugs</router-link>
       </ul>
 
 
@@ -28,8 +30,6 @@
           SysAdmin
         </a>
         <div class="dropdown-menu dropdown-menu-right bg-dark" aria-labelledby="navbar-dropdown">
-          <router-link class="dropdown-item" to="/patient/profile">Profile</router-link>
-          <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="#" @click="logout">Log out</a>
         </div>
       </div>

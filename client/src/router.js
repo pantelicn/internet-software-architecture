@@ -41,6 +41,10 @@ import SupplierHome from "@/views/supplier/SupplierHome";
 import SupplierOffers from "@/views/supplier/SupplierOffers";
 import SupplierOrders from "@/views/supplier/SupplierOrders";
 import SupplierProfile from "@/views/supplier/SupplierProfile";
+import RegisterSupplier from "@/views/sysadmin/RegisterSupplier";
+import RegisterPharmacy from "@/views/sysadmin/RegisterPharmacy";
+import RegisterPhAdmin from "@/views/sysadmin/RegisterPhAdmin";
+import AddDrugs from "@/views/sysadmin/AddDrugs";
 
 const router = new VueRouter({
     mode: 'hash',
@@ -157,10 +161,30 @@ const router = new VueRouter({
             meta: { requiresSysAuth: true },
             children: [
                 {
-                    path: 'respond',
+                    path: 'complaints',
                     name: 'complaint-responses',
                     meta: { requiresSysAuth: true },
                     component: ComplaintResponse,
+                },
+                {
+                    path: 'register-supplier',
+                    name: 'register-supplier',
+                    component: RegisterSupplier
+                },
+                {
+                    path: 'register-pharmacy',
+                    name: 'register-pharmacy',
+                    component: RegisterPharmacy
+                },
+                {
+                    path: 'register-ph-admin',
+                    name: 'register-ph-admin',
+                    component: RegisterPhAdmin
+                },
+                {
+                    path: 'drugs',
+                    name: 'drugs',
+                    component: AddDrugs
                 }
             ]
         },
