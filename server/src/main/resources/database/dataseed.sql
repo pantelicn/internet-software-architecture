@@ -263,35 +263,35 @@ insert into isa.drugs_alternatives (drug_id,alternatives_id) values (7,6);
 insert into isa.patients_allergic_to (patient_id,allergic_to_id) values (1,1);
 
 
-insert into isa.stored_drugs (id, amount, valid_until, quantity, drug_id, pharmacy_id)
-values (1, 200.5, "2022-03-03 00:00:00", 10, 1, 1);
-insert into isa.stored_drugs (id, amount, valid_until, quantity, drug_id, pharmacy_id)
-values (2, 300.0, "2022-03-03 00:00:00", 20, 2, 1);
-insert into isa.stored_drugs (id, amount, valid_until, quantity, drug_id, pharmacy_id)
-values (3, 100.0, "2022-03-03 00:00:00", 20, 3, 1);
-insert into isa.stored_drugs (id, amount, valid_until, quantity, drug_id, pharmacy_id)
-values (4, 150.0, "2022-03-03 00:00:00", 25, 4, 1);
-insert into isa.stored_drugs (id, amount, valid_until, quantity, drug_id, pharmacy_id)
-values (5, 220.0, "2022-03-03 00:00:00", 15, 5, 1);
-insert into isa.stored_drugs (id, amount, valid_until, quantity, drug_id, pharmacy_id)
-values (6, 150.0, "2022-03-03 00:00:00", 0, 6, 1);
+insert into isa.stored_drugs (id, amount, valid_until, quantity, drug_id, pharmacy_id, version)
+values (1, 200.5, "2022-03-03 00:00:00", 10, 1, 1, 0);
+insert into isa.stored_drugs (id, amount, valid_until, quantity, drug_id, pharmacy_id, version)
+values (2, 300.0, "2022-03-03 00:00:00", 20, 2, 1, 0);
+insert into isa.stored_drugs (id, amount, valid_until, quantity, drug_id, pharmacy_id, version)
+values (3, 100.0, "2022-03-03 00:00:00", 20, 3, 1, 0);
+insert into isa.stored_drugs (id, amount, valid_until, quantity, drug_id, pharmacy_id, version)
+values (4, 150.0, "2022-03-03 00:00:00", 25, 4, 1, 0);
+insert into isa.stored_drugs (id, amount, valid_until, quantity, drug_id, pharmacy_id, version)
+values (5, 220.0, "2022-03-03 00:00:00", 15, 5, 1, 0);
+insert into isa.stored_drugs (id, amount, valid_until, quantity, drug_id, pharmacy_id, version)
+values (6, 150.0, "2022-03-03 00:00:00", 0, 6, 1, 0);
 #insert into isa.stored_drugs (id, amount, valid_until, quantity, drug_id, pharmacy_id)
 #values (7, 150.0, "2022-03-03 00:00:00", 25, 7, 1);
 
-insert into isa.stored_drugs (id, amount, valid_until, quantity, drug_id, pharmacy_id)
-values (8, 200.5, "2022-03-03 00:00:00", 5, 1, 2);
-insert into isa.stored_drugs (id, amount, valid_until, quantity, drug_id, pharmacy_id)
-values (9, 300.0, "2022-03-03 00:00:00", 10, 2, 2);
-insert into isa.stored_drugs (id, amount, valid_until, quantity, drug_id, pharmacy_id)
-values (10, 100.0, "2022-03-03 00:00:00", 15, 3, 2);
-insert into isa.stored_drugs (id, amount, valid_until, quantity, drug_id, pharmacy_id)
-values (11, 150.0, "2022-03-03 00:00:00", 10, 4, 2);
-insert into isa.stored_drugs (id, amount, valid_until, quantity, drug_id, pharmacy_id)
-values (12, 220.0, "2022-03-03 00:00:00", 5, 5, 2);
-insert into isa.stored_drugs (id, amount, valid_until, quantity, drug_id, pharmacy_id)
-values (13, 150.0, "2022-03-03 00:00:00", 10, 6, 2);
-insert into isa.stored_drugs (id, amount, valid_until, quantity, drug_id, pharmacy_id)
-values (14, 150.0, "2022-03-03 00:00:00", 25, 7, 2);
+insert into isa.stored_drugs (id, amount, valid_until, quantity, drug_id, pharmacy_id, version)
+values (8, 200.5, "2022-03-03 00:00:00", 5, 1, 2, 0);
+insert into isa.stored_drugs (id, amount, valid_until, quantity, drug_id, pharmacy_id, version)
+values (9, 300.0, "2022-03-03 00:00:00", 10, 2, 2, 0);
+insert into isa.stored_drugs (id, amount, valid_until, quantity, drug_id, pharmacy_id, version)
+values (10, 100.0, "2022-03-03 00:00:00", 15, 3, 2, 0);
+insert into isa.stored_drugs (id, amount, valid_until, quantity, drug_id, pharmacy_id, version)
+values (11, 150.0, "2022-03-03 00:00:00", 10, 4, 2, 0);
+insert into isa.stored_drugs (id, amount, valid_until, quantity, drug_id, pharmacy_id, version)
+values (12, 220.0, "2022-03-03 00:00:00", 5, 5, 2, 0);
+insert into isa.stored_drugs (id, amount, valid_until, quantity, drug_id, pharmacy_id, version)
+values (13, 150.0, "2022-03-03 00:00:00", 10, 6, 2, 0);
+insert into isa.stored_drugs (id, amount, valid_until, quantity, drug_id, pharmacy_id, version)
+values (14, 150.0, "2022-03-03 00:00:00", 25, 7, 2, 0);
 
 insert into isa.persons (id, pid, date_of_birth, first_name, gender, last_name, phone_number, address_id)
 	values (6969,"12930912309123", "2000-1-1 08:00:00", "System", 0, "Administrator", "05123123123", 1);
@@ -347,4 +347,4 @@ insert into isa.purchase_order_ordered_drugs(purchase_order_id, ordered_drugs_id
 insert into isa.purchase_order_ordered_drugs(purchase_order_id, ordered_drugs_id) values(5, 13);
 insert into isa.purchase_order_ordered_drugs(purchase_order_id, ordered_drugs_id) values(5, 14);
 
-insert into supplier(person_id) values(6970);
+insert into isa.supplier(person_id) values(6970);
