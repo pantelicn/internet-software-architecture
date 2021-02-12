@@ -1,5 +1,7 @@
 # isa-frontend
 
+Port backend aplikacije se može podesiti u src/api.js (Podrazumevani je 8080)
+
 ## Project setup
 ```
 npm install
