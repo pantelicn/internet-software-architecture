@@ -27,3 +27,23 @@ postaviti se u server direktorijum i izvšiti:
 `$ mvn spring-boot:run`
 
 Nakon prvog pokretanja projekta tabele u bazi će biti kreirane i može se iskoristiti sql skripta u folderu `server/src/main/resources/database` za popunjavanje podacima
+
+### Uloge
+- Student 1: Nikola Pantelić RA-234/2017
+- Student 2: Darjan Rac RA-144/2017 (**Nije radio**)
+- Student 3: Saša Štrbački RA-166/2017
+- Student 4: Nikola Gudelj RA-21/2017
+
+### Napomene
+#### Student 1
+- Za potrebe testiranja definisana su 2 pacijenta
+- Pacijent 1 (samhunter@gmail.com, password: password)
+- Pacijent 2 (johndoe@gmail.com, password: password)
+#### Student 3
+- Za potrebe testiranja definisana su 2 dermatologa i 2 farmaceuta
+- Dermatolog 1 (sagefinley@gmail.com, password: password)
+- Dermatolog 2 (mackenzieashton@gmail.com. password: password)
+  - za demonstraciju prvog prijavljivanja
+- Farmaceut 1 (mickeyfrankie@gmail.com, password: password) zaposlen u "Tiny Pill"
+- Farmaceut 2 (luiswallace@gmail.com, password: password) zaposlen u "Zegin"
+  - za demonstraciju prvog prijavljivanja
