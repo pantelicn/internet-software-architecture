@@ -18,7 +18,7 @@ public class Patient {
     private Person person;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "patient")
     private List<Appointment> appointments;
-    @OneToMany
+    @ManyToMany
     private List<Drug> allergicTo;
     private int penalties;
 
