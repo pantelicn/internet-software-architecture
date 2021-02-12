@@ -51,10 +51,9 @@ values (2, 200, "Zegin", "Zegin", 2);
 
 insert into isa.persons (id, pid, date_of_birth, first_name, gender, last_name, phone_number, address_id)
 values (1,"0112998091229", "2000-1-1", "Sam", 0, "Hunter", "05123123123", 3);
-insert into isa.patients (id,person_id,penalties) values (1,1,0);
+insert into isa.patients (id,person_id,penalties) values (1,1,3);
 insert into isa.credentials (email,username,is_activated,has_changed_initial_password,password,role,uid,person_id) 
 values ("samhunter@gmail.com","samhunter",1,1,"password","ROLE_PATIENT",'337d2368-8bb0-46a5-a33a-7a0fd98d262f',1);
-update isa.persons set credentials_email="samhunter@gmail.com" where id=1;
 
 insert into isa.persons (id, pid, date_of_birth, first_name, gender, last_name, phone_number, address_id)
 values (2,"021099911229", "1998-2-2", "John", 0, "Doe", "0642025209", 4);
@@ -401,4 +400,8 @@ values (13, 150.0, "2022-03-03 00:00:00", 10, 6, 2, 0);
 insert into isa.stored_drugs (id, amount, valid_until, quantity, drug_id, pharmacy_id,version)
 values (14, 150.0, "2022-03-03 00:00:00", 25, 7, 2, 0);
 
+insert into isa.appointment_reports (id, appointment_info, appointment_id)
+values (1, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ac sem erat. Sed dui neque, aliquam rhoncus fermentum vitae, facilisis quis metus.", 1);
 
+insert into isa.drug_reservations (id, is_dispensed, pick_up_before, quantity, patient_id, stored_drug_id)
+values (1, true, "2021-1-5", 2, 1, 1);
