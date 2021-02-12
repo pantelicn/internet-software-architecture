@@ -65,6 +65,7 @@ export const api = {
         isAvailable : host + storedDrugs + '/is-available'
     },
     employees: {
+        registerDermatologist : host + employees + "/register-dermatologist",
         employeeId : host + employees + '/employee-id/',
         myPharmacies: host + employees + '/my-pharmacies/'
     },
