@@ -1,6 +1,7 @@
 package rs.ac.uns.ftn.isa.pharmacy.pharma.dtos;
 
 import rs.ac.uns.ftn.isa.pharmacy.finance.Price;
+import rs.ac.uns.ftn.isa.pharmacy.pharma.domain.Drug;
 
 public class DrugSearchDto {
     private long storedDrugId;
@@ -11,8 +12,12 @@ public class DrugSearchDto {
     private String manufacturer;
     private long pharmacyId;
     private String pharmacyName;
+    private String additionalNotes;
+    private Drug.IntakeType intakeType;
+    private Drug.Type drugType;
+    private double rating;
 
-    public DrugSearchDto(long storedDrugId, long drugId, String name, long quantity, Price price, String manufacturer, long pharmacyId, String pharmacyName) {
+    public DrugSearchDto(long storedDrugId, long drugId, String name, long quantity, Price price, String manufacturer, long pharmacyId, String pharmacyName, String additionalNotes, Drug.IntakeType intakeType, Drug.Type drugType, double rating) {
         this.storedDrugId = storedDrugId;
         this.drugId = drugId;
         this.name = name;
@@ -21,6 +26,10 @@ public class DrugSearchDto {
         this.manufacturer = manufacturer;
         this.pharmacyId = pharmacyId;
         this.pharmacyName = pharmacyName;
+        this.additionalNotes = additionalNotes;
+        this.intakeType = intakeType;
+        this.drugType = drugType;
+        this.rating = rating;
     }
 
     public long getStoredDrugId() {
@@ -85,5 +94,37 @@ public class DrugSearchDto {
 
     public void setPharmacyName(String pharmacyName) {
         this.pharmacyName = pharmacyName;
+    }
+
+    public String getAdditionalNotes() {
+        return additionalNotes;
+    }
+
+    public void setAdditionalNotes(String additionalNotes) {
+        this.additionalNotes = additionalNotes;
+    }
+
+    public Drug.IntakeType getIntakeType() {
+        return intakeType;
+    }
+
+    public void setIntakeType(Drug.IntakeType intakeType) {
+        this.intakeType = intakeType;
+    }
+
+    public Drug.Type getDrugType() {
+        return drugType;
+    }
+
+    public void setDrugType(Drug.Type drugType) {
+        this.drugType = drugType;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
     }
 }

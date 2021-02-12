@@ -5,7 +5,10 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import rs.ac.uns.ftn.isa.pharmacy.auth.HttpRequestUtil;
+import rs.ac.uns.ftn.isa.pharmacy.auth.IdentityProvider;
 import rs.ac.uns.ftn.isa.pharmacy.auth.model.Role;
+import rs.ac.uns.ftn.isa.pharmacy.supply.dto.OfferMapper;
+import rs.ac.uns.ftn.isa.pharmacy.supply.dto.OfferOverviewDto;
 import rs.ac.uns.ftn.isa.pharmacy.supply.dto.OfferRequestDto;
 import rs.ac.uns.ftn.isa.pharmacy.supply.exceptions.MessageException;
 import rs.ac.uns.ftn.isa.pharmacy.supply.domain.Offer;
@@ -13,6 +16,7 @@ import rs.ac.uns.ftn.isa.pharmacy.supply.service.OfferService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("api/offer")
@@ -26,9 +30,14 @@ public class OfferController {
 
     @GetMapping
     @Secured(Role.SUPPLIER)
-    public ResponseEntity<List<Offer>> getBySupplier(HttpServletRequest request) {
+    public ResponseEntity<List<OfferOverviewDto>> getBySupplier(HttpServletRequest request) {
         var identityProvider = HttpRequestUtil.getIdentity(request);
-        return ResponseEntity.ok(offerService.getBySupplierId(identityProvider.getPersonId()));
+        return ResponseEntity.ok(
+                offerService.getBySupplierId(identityProvider.getPersonId())
+                    .stream()
+                    .map(OfferMapper::objectToDto)
+                    .collect(Collectors.toList())
+        );
     }
 
     @GetMapping("order/{orderId}")
@@ -60,6 +69,13 @@ public class OfferController {
         catch (MessageException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+    }
+
+    @GetMapping("check/{purchaseOrderId}")
+    @Secured(Role.SUPPLIER)
+    public ResponseEntity<Boolean> checkSupplies(HttpServletRequest request, @PathVariable long purchaseOrderId) {
+        IdentityProvider identityProvider = HttpRequestUtil.getIdentity(request);
+        return ResponseEntity.ok(offerService.checkSupplies(purchaseOrderId, identityProvider.getRoleId()));
     }
 
     @PutMapping

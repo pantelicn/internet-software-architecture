@@ -6,10 +6,11 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "addresses")
+@SequenceGenerator(name = "addresses_seq", initialValue = 100, allocationSize = 1)
 public class Address {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "addresses_seq")
     private long id;
     @ManyToOne()
     private City city;

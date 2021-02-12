@@ -1,15 +1,13 @@
 package rs.ac.uns.ftn.isa.pharmacy.complaint.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "complaint_responses")
 public class Response {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
     private String text;
     @OneToOne

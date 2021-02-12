@@ -13,6 +13,9 @@ public class AppointmentMapper {
                 appointment.getShift().getEmployee().getPerson().getFirstName(),
                 appointment.getShift().getEmployee().getPerson().getLastName(),
                 appointment.getType(),
-                5);
+                5,
+                appointment.getShift().getEmployee().getId(),
+                appointment.getShift().getPharmacy().getId()
+        );
     }
 }

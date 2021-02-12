@@ -5,6 +5,7 @@ import rs.ac.uns.ftn.isa.pharmacy.auth.model.AuthToken;
 import rs.ac.uns.ftn.isa.pharmacy.auth.model.Credentials;
 import rs.ac.uns.ftn.isa.pharmacy.auth.model.Role;
 import rs.ac.uns.ftn.isa.pharmacy.pharma.domain.Pharmacy;
+import rs.ac.uns.ftn.isa.pharmacy.supply.domain.Supplier;
 import rs.ac.uns.ftn.isa.pharmacy.users.employee.domain.Employee;
 import rs.ac.uns.ftn.isa.pharmacy.users.user.domain.Patient;
 import rs.ac.uns.ftn.isa.pharmacy.pharma.repository.PharmacyRepository;
@@ -51,6 +52,8 @@ public class CredentialsTokenMapper {
                 Pharmacy pharmacy = pharmacyRepository.getByAdmin(credentials.getPerson().getId());
                 token.setRoleId(pharmacy.getId());
                 break;
+            case Role.SUPPLIER:
+                token.setRoleId(credentials.getPerson().getId());
         }
     }
 

@@ -15,8 +15,10 @@ public class AppointmentDto {
     private String employeeLastName;
     private AppointmentType type;
     private int employeeRating;
+    private long employeeId;
+    private long pharmacyId;
 
-    public AppointmentDto(long id, LocalDateTime start, Duration duration, Money price, String employeeName, String employeeLastName, AppointmentType type, int rating) {
+    public AppointmentDto(long id, LocalDateTime start, Duration duration, Money price, String employeeName, String employeeLastName, AppointmentType type, int rating, long employeeId, long pharmacyId) {
         this.id = id;
         this.start = start;
         this.duration = duration;
@@ -25,6 +27,24 @@ public class AppointmentDto {
         this.employeeLastName = employeeLastName;
         this.type = type;
         this.employeeRating = rating;
+        this.employeeId = employeeId;
+        this.pharmacyId = pharmacyId;
+    }
+
+    public long getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(long employeeId) {
+        this.employeeId = employeeId;
+    }
+
+    public long getPharmacyId() {
+        return pharmacyId;
+    }
+
+    public void setPharmacyId(long pharmacyId) {
+        this.pharmacyId = pharmacyId;
     }
 
     public long getId() {

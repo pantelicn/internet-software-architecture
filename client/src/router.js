@@ -30,11 +30,23 @@ import ScheduleCounseling from './views/patient/ScheduleCounseling.vue'
 import Pharmacies from './views/patient/Pharmacies.vue'
 import PatientHome from './views/patient/PatientHome.vue'
 import PatientProfile from './views/patient/PatientProfile.vue'
-import UnauthDrugs from './views/unauthorized/UnauthDrugs.vue'
 import Feedback from './views/patient/Feedback.vue'
 import Registration from './views/unauthorized/Registration'
 import ExaminationHistory from './views/patient/ExaminationHistory.vue'
 import CounselingHistory from './views/patient/CounselingHistory.vue'
+import DrugSearch from "@/views/DrugSearch";
+import ComplaintResponse from "@/views/sysadmin/ComplaintResponse";
+import SysAdminHome from "@/views/sysadmin/SysAdminHome";
+import SupplierHome from "@/views/supplier/SupplierHome";
+import SupplierOffers from "@/views/supplier/SupplierOffers";
+import SupplierOrders from "@/views/supplier/SupplierOrders";
+import SupplierProfile from "@/views/supplier/SupplierProfile";
+import RegisterSupplier from "@/views/sysadmin/RegisterSupplier";
+import RegisterPharmacy from "@/views/sysadmin/RegisterPharmacy";
+import RegisterPhAdmin from "@/views/sysadmin/RegisterPhAdmin";
+import AddDrugs from "@/views/sysadmin/AddDrugs";
+import RegisterSysAdmin from "@/views/sysadmin/RegisterSysAdmin";
+import RegisterDermatologist from "@/views/sysadmin/RegisterDermatologist";
 
 const router = new VueRouter({
     mode: 'hash',
@@ -43,26 +55,29 @@ const router = new VueRouter({
             path: '/',
             component: UnauthHome,
             name: 'unauth-home',
-            meta: { unauthorized:true },
             children: [
                 {
                     path: '',
                     name: 'login',
+                    meta: { unauthorized:true },
                     component: Login
                 },
                 {
                     path: 'pharmacies',
+                    meta: { unauthorized:true },
                     component: Pharmacies
                 },
                 {
                     path: 'drugs',
-                    component: UnauthDrugs
+                    meta: { noSupply: true},
+                    component: DrugSearch
                 },
                 {
                     path: 'register',
                     name: 'register',
+                    meta: { unauthorized:true },
                     component: Registration
-                }
+                },
             ],
         },
         {
@@ -136,11 +151,78 @@ const router = new VueRouter({
                             component: ExamReportStepFour,
                             meta: { requiresDermaAuth: true}
                         },
-        
+
                     ]
                 },
             ]
+        },
+        {
+            path: '/sys',
+            name: 'sys-root',
+            component: SysAdminHome,
+            meta: { requiresSysAuth: true },
+            children: [
+                {
+                    path: 'complaints',
+                    name: 'complaint-responses',
+                    meta: { requiresSysAuth: true },
+                    component: ComplaintResponse,
+                },
+                {
+                    path: 'register-supplier',
+                    name: 'register-supplier',
+                    component: RegisterSupplier
+                },
+                {
+                    path: 'register-pharmacy',
+                    name: 'register-pharmacy',
+                    component: RegisterPharmacy
+                },
+                {
+                    path: 'register-ph-admin',
+                    name: 'register-ph-admin',
+                    component: RegisterPhAdmin
+                },
+                {
+                    path: 'drugs',
+                    name: 'drugs',
+                    component: AddDrugs
+                },
+                {
+                    path: 'register-sys-admin',
+                    name: 'register-sys-admin',
+                    component: RegisterSysAdmin
+                },
+                {
+                    path: 'register-dermatologist',
+                    name: 'register-dermatologist',
+                    component: RegisterDermatologist
+                }
+            ]
+        },
+        {
+            path: '/supplier',
+            name: 'supplier-root',
+            component: SupplierHome,
+            meta: { requiresSupplier: true },
+            children: [
+                {
+                    path: '',
+                    name: 'offers',
+                    component: SupplierOffers
+                },
+                {
+                    path: 'profile',
+                    name: 'profile',
+                    component: SupplierProfile,
+                },
+                {
+                    path: 'orders',
+                    name: 'orders',
+                    component: SupplierOrders
+                },
 
+            ]
         },
         {
             path: '/pharmacist',
@@ -215,7 +297,7 @@ const router = new VueRouter({
                             component: CounselingReportStepFour,
                             meta: { requiresPharmaAuth: true }
                         },
-        
+
                     ]
                 },
             ]
@@ -262,44 +344,79 @@ const router = new VueRouter({
                     component: CounselingHistory
                 }
             ]
-        }
+        },
     ]
 })
 
 router.beforeEach((to, from, next) => {
     if(to.matched.some( record => record.meta.unauthorized )){
-        if( getRole() !== null ){
-            if( getRole() === 'ROLE_DERMATOLOGIST' ){ 
-                next({ name: 'upcoming-examinations' })
-            }else if( getRole() === 'ROLE_PHARMACIST')
-                next({ name: 'upcoming-counselings' })
-            else if (getRole() === 'ROLE_PATIENT')
-                next({ path: '/patient'})
-        }else next()
+        if( getRole() !== null ) {
+            if( getRole() === 'ROLE_DERMATOLOGIST' ) {
+                next({ name: 'upcoming-examinations' });
+            }
+            else if( getRole() === 'ROLE_PHARMACIST') {
+                next({ name: 'upcoming-counselings' });
+            }
+            else if (getRole() === 'ROLE_PATIENT') {
+                next({ path: '/patient'});
+            }
+            else if (getRole() === 'ROLE_SYS_ADMIN') {
+                next({ path:'/sys' });
+            }
+            else if(getRole() === 'ROLE_SUPPLIER') {
+                next( { path: '/supplier' })
+            }
+        }
+        else next();
 
     }
-    else if( to.matched.some( record => record.meta.requiresDermaAuth )){
-        if( getRole() !== 'ROLE_DERMATOLOGIST' ){ 
+    else if( to.matched.some(record => record.meta.requiresDermaAuth)) {
+        if( getRole() !== 'ROLE_DERMATOLOGIST' ) {
             next({ name: 'insufficient-permissions' })
         }
-        else next()
+        else next();
     }
-    else if( to.matched.some( record => record.meta.requiresPharmaAuth )){
-        if( getRole() !== 'ROLE_PHARMACIST')
+    else if( to.matched.some(record => record.meta.requiresPharmaAuth)) {
+        if( getRole() !== 'ROLE_PHARMACIST') {
             next({ name: 'insufficient-permissions' })
-        else next()
+        }
+        else next();
     }
     else if(to.matched.some(record => record.meta.requiresPatientAuth)) {
-        if (getRole() !== 'ROLE_PATIENT')
+        if (getRole() !== 'ROLE_PATIENT') {
             next({ name: 'insufficient-permissions' })
-        else next()
-    }
-    else if( to.matched.some( record => record.meta.requiresAuth )){
-        if(!isAuthenticated()){ 
-            next({ name: 'login' })
         }
         else next()
-    }else next()
+    }
+    else if(to.matched.some(record => record.meta.requiresAuth)) {
+        if(!isAuthenticated()) {
+            next({ name: 'login' })
+        }
+        else next();
+    }
+    else if(to.matched.some(record => record.meta.noSupply)) {
+        if (getRole() === "ROLE_SUPPLIER") {
+            next({ name: 'insufficient-permissions' })
+        }
+        if (getRole() === "ROLE_PATIENT") {
+            next( { path: "patient/drugs"} )
+        }
+        else next();
+    }
+    else if(to.matched.some(record => record.meta.requiresSysAuth)) {
+        if (getRole() === "ROLE_SYS_ADMIN") {
+            next();
+        }
+        else next({ name: 'insufficient-permissions' })
+    }
+    else if(to.matched.some(record => record.meta.requiresSupplier)) {
+        if (getRole() === "ROLE_SUPPLIER") {
+            next();
+        }
+        else next({ name: 'insufficient-permissions' });
+    }
+
+    else next()
 
 
 

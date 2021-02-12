@@ -1,6 +1,7 @@
 package rs.ac.uns.ftn.isa.pharmacy.complaint.mapper;
 
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import rs.ac.uns.ftn.isa.pharmacy.complaint.dto.ComplaintCreationDto;
 import rs.ac.uns.ftn.isa.pharmacy.complaint.dto.UnansweredComplaintDto;
 import rs.ac.uns.ftn.isa.pharmacy.complaint.model.Complaint;
@@ -31,6 +32,7 @@ public class ComplaintMapper {
         this.pharmacyRepository = pharmacyRepository;
     }
 
+    @Transactional
     public Complaint dtoToObject(ComplaintCreationDto dto) throws InvalidForeignKeyException {
         Complaint complaint = new Complaint();
 
