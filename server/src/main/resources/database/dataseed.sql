@@ -487,6 +487,6 @@ insert into isa.appointments (id, amount, duration, start, type, patient_id, shi
 insert into isa.appointments (id, amount, duration, start, type, patient_id, shift_id)
 	values (82, 13500, 1800000000000, "2021-01-10 9:40:00", 1, 4, 3);
 
-insert into isa.appointment_reports(id, appointment_info, appointment_id) values(2, "Obican pregled za pacijenta.", 80);
-insert into isa.appointment_reports(id, appointment_info, appointment_id) values(3, "Operacija jezicne sluzokoze", 81);
-insert into isa.appointment_reports(id, appointment_info, appointment_id) values(4, "Postop. kontrola.", 82);
+insert into isa.appointment_reports(id, appointment_info, appointment_id) values(4, "Obican pregled za pacijenta.", 80);
+insert into isa.appointment_reports(id, appointment_info, appointment_id) values(5, "Operacija jezicne sluzokoze", 81);
+insert into isa.appointment_reports(id, appointment_info, appointment_id) values(6, "Postop. kontrola.", 82);
