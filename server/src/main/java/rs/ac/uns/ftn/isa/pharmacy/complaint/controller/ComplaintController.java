@@ -8,10 +8,12 @@ import rs.ac.uns.ftn.isa.pharmacy.auth.IdentityProvider;
 import rs.ac.uns.ftn.isa.pharmacy.auth.model.Role;
 import rs.ac.uns.ftn.isa.pharmacy.complaint.dto.ComplaintCreationDto;
 import rs.ac.uns.ftn.isa.pharmacy.complaint.dto.ResponseCreationDto;
+import rs.ac.uns.ftn.isa.pharmacy.complaint.dto.UnansweredComplaintDto;
 import rs.ac.uns.ftn.isa.pharmacy.complaint.service.ComplaintService;
 import rs.ac.uns.ftn.isa.pharmacy.supply.exceptions.MessageException;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @RestController
 @RequestMapping("api/complaint")
@@ -25,7 +27,7 @@ public class ComplaintController {
 
     @GetMapping
     @Secured(Role.SYS_ADMIN)
-    public ResponseEntity<?> get() {
+    public ResponseEntity<List<UnansweredComplaintDto>> get() {
         return ResponseEntity.ok(complaintService.getAllUnanswered());
     }
 

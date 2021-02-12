@@ -1,25 +1,33 @@
 <template>
-<div class="border border-success rounded p-3 container">
+<div class="row mt-4">
+
+  <div class="col-3">
+    <b-button v-if="!isSubscribed" class="btn-warning mt-5 pl-4 pr-4 pt-2 pb-2" @click="subscribe">Subscribe to promotions</b-button>
+    <b-button v-else class="btn-danger mt-5 pl-4 pr-4 pt-2 pb-2" @click="unsubscribe">Stop receiving promotions</b-button>
+  </div>
+  <div class="col-6 border border-success rounded p-3">
     Sort by:
     <div class="btn-group btn-group-toggle" data-toggle="buttons">
-        <label class="btn btn-info">
-            <input type="radio" @click="sortByPrice"> Price
-        </label>
-        <label class="btn btn-info">
-            <input type="radio" @click="sortByRating"> Doctor rating
-        </label>
+      <label class="btn btn-info">
+        <input type="radio" @click="sortByPrice"> Price
+      </label>
+      <label class="btn btn-info">
+        <input type="radio" @click="sortByRating"> Doctor rating
+      </label>
     </div>
     <div class="container d-flex justify-content-between my-3">
-        <button class="btn btn-success" @click="previousWeek">Back</button>
-        <div class="border border-success rounded p-2 bg-dark dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{formatWeek(selectedDate)}}</div>
-        <div class="dropdown-menu bg-dark" aria-labelledby="navbar-dropdown">
-            <DatePicker value="null" v-model="selectedDate" v-on:change="updateWeek()" is-dark v-if="showDatePicker"/>
-        </div>
-        <button class="btn btn-success" @click="nextWeek">Next</button>
+      <button class="btn btn-success" @click="previousWeek">Back</button>
+      <div class="border border-success rounded p-2 bg-dark dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{formatWeek(selectedDate)}}</div>
+      <div class="dropdown-menu bg-dark" aria-labelledby="navbar-dropdown">
+        <DatePicker value="null" v-model="selectedDate" v-on:change="updateWeek()" is-dark v-if="showDatePicker"/>
+      </div>
+      <button class="btn btn-success" @click="nextWeek">Next</button>
     </div>
     <div>
-        <AppointmentCalendar v-bind:appointments="weeklyAppointments()"/>
+      <AppointmentCalendar v-bind:appointments="weeklyAppointments()"/>
     </div>
+  </div>
+
 </div>
 </template>
 
@@ -37,7 +45,9 @@ export default {
             showDatePicker: true,
             selectedDate: new Date(),
             priceAscending: false,
-            ratingAscending: false
+            ratingAscending: false,
+
+            isSubscribed: false
         }
     },
     components: {
@@ -85,9 +95,40 @@ export default {
                 return 0
             })
             this.ratingAscending = !this.ratingAscending
+        },
+        subscribe() {
+            axios.post(api.promotion.subscribe, {
+                pharmacyId : this.getPharmacyId()
+            })
+            .then(response => {
+                this.isSubscribed = true;
+                this.$toast.success("Successfully subscribed.");
+            })
+            .catch(() => this.$toast.error("Failed to subscribe."))
+        },
+        unsubscribe() {
+            axios.post(api.promotion.unsubscribe, {
+                pharmacyId : this.getPharmacyId()
+            })
+                .then(response => {
+                  this.isSubscribed = false;
+                  this.$toast.success("Successfully unsubscribed.");
+                })
+                .catch(() => this.$toast.error("Failed to unsubscribe."))
+        },
+        checkIfSubscribed() {
+            axios.get(api.promotion.isSubscribed + "/" + this.getPharmacyId())
+                .then(response => {
+                    this.isSubscribed = response.data;
+                })
+                .catch(() => this.$toast.open("Failed to check subscription."));
+        },
+        getPharmacyId() {
+          return this.$route.params.id;
         }
     },
     mounted: function () {
+        this.checkIfSubscribed();
         axios.get(api.appointments.root + '/' + this.$route.params.id)
         .then(response => {
             this.freeAppointments = response.data

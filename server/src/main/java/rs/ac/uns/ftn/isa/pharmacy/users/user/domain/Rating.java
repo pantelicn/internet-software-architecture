@@ -1,5 +1,7 @@
 package rs.ac.uns.ftn.isa.pharmacy.users.user.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity

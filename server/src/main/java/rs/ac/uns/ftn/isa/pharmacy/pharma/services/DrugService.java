@@ -11,6 +11,7 @@ import rs.ac.uns.ftn.isa.pharmacy.exceptions.EntityNotFoundException;
 import rs.ac.uns.ftn.isa.pharmacy.pharma.repository.DrugRepository;
 import rs.ac.uns.ftn.isa.pharmacy.pharma.repository.StoredDrugRepository;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,13 +44,14 @@ public class DrugService {
         if (drugRepository.existsById(dto.getDrug().getId()))
             throw new EntityExistsException(dto.getDrug().getName());
 
-        if (dto.getDrug().getAlternatives() != null) {
-            for (var alt : dto.getDrug().getAlternatives()) {
-                Optional<Drug> optionalDrug = drugRepository.findById(alt.getId());
-                if (optionalDrug.isEmpty())
-                    throw new MessageException("Alternative mentioned is nonexistent [" + alt.getId() + "].");
-                dto.getDrug().getAlternatives().add(optionalDrug.get());
-            }
+        if (dto.getDrug().getAlternatives() == null)
+            dto.getDrug().setAlternatives(new LinkedList<>());
+
+        for (var altId : dto.getAlternativeDrugIds()) {
+            Optional<Drug> optionalDrug = drugRepository.findById(altId.longValue());
+            if (optionalDrug.isEmpty())
+                throw new MessageException("Alternative mentioned is nonexistent [" + altId + "].");
+            dto.getDrug().getAlternatives().add(optionalDrug.get());
         }
 
         return drugRepository.save(dto.getDrug());

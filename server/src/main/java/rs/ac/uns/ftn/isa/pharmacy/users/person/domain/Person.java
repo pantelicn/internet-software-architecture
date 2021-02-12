@@ -1,5 +1,6 @@
 package rs.ac.uns.ftn.isa.pharmacy.users.person.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import rs.ac.uns.ftn.isa.pharmacy.auth.model.Credentials;
 import rs.ac.uns.ftn.isa.pharmacy.locale.domain.Address;
 import rs.ac.uns.ftn.isa.pharmacy.users.user.domain.Gender;
@@ -9,9 +10,10 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name="persons")
+@SequenceGenerator(name = "persons_seq", initialValue = 100, allocationSize = 1)
 public class Person {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "persons_seq")
     private long id;
     private String pid;
     private String firstName;

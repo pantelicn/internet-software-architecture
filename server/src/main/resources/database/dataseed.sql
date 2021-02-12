@@ -1,7 +1,9 @@
-drop schema isa;
-create schema isa;
-SET @@session.time_zone='+01:00';
-SELECT @@global.time_zone, @@session.time_zone;
+# drop schema isa;
+# create schema isa; # Used to create initial schema
+# SET @@session.time_zone='+00:00';
+# SELECT @@global.time_zone, @@session.time_zone;
+
+# before inserting, run spring-boot application first in order to create tables.
 
 insert into isa.countries (id, code, name)
 values (1, "RS", "Srbija");
@@ -49,7 +51,7 @@ values (2, 200, "Zegin", "Zegin", 2);
 
 insert into isa.persons (id, pid, date_of_birth, first_name, gender, last_name, phone_number, address_id)
 values (1,"0112998091229", "2000-1-1", "Sam", 0, "Hunter", "05123123123", 3);
-insert into isa.patients (id,person_id,penalties) values (1,1,0);
+insert into isa.patients (id,person_id,penalties) values (1,1,3);
 insert into isa.credentials (email,username,is_activated,has_changed_initial_password,password,role,uid,person_id) 
 values ("samhunter@gmail.com","samhunter",1,1,"password","ROLE_PATIENT",'337d2368-8bb0-46a5-a33a-7a0fd98d262f',1);
 update isa.persons set credentials_email="samhunter@gmail.com" where id=1;
@@ -276,6 +278,7 @@ values (29, 2200, 1800000000000, "2021-02-28 16:00:00", 1, null, 42);
 insert into isa.appointments (id, amount, duration, start, type, patient_id, shift_id)
 values (30, 2340, 1800000000000, "2021-02-28 17:00:00", 1, null, 42);
 
+
 insert into isa.appointments (id, amount, duration, start, type, patient_id, shift_id)
 values (31, 2200, 1800000000000, "2021-02-24 12:30:00", 1, 1, 41);
 insert into isa.appointments (id, amount, duration, start, type, patient_id, shift_id)
@@ -399,4 +402,91 @@ values (13, 150.0, "2022-03-03 00:00:00", 10, 6, 2, 0);
 insert into isa.stored_drugs (id, amount, valid_until, quantity, drug_id, pharmacy_id,version)
 values (14, 150.0, "2022-03-03 00:00:00", 25, 7, 2, 0);
 
+insert into isa.appointment_reports (id, appointment_info, appointment_id)
+values (1, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ac sem erat. Sed dui neque, aliquam rhoncus fermentum vitae, facilisis quis metus.", 1);
+insert into isa.appointment_reports (id, appointment_info, appointment_id)
+values (2, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ac sem erat. Sed dui neque, aliquam rhoncus fermentum vitae, facilisis quis metus.", 2);
+insert into isa.appointment_reports (id, appointment_info, appointment_id)
+values (3, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ac sem erat. Sed dui neque, aliquam rhoncus fermentum vitae, facilisis quis metus.", 10);
 
+insert into isa.drug_reservations (id, is_dispensed, pick_up_before, quantity, patient_id, stored_drug_id)
+values (1, true, "2021-1-5", 2, 1, 1);
+insert into isa.drug_reservations (id, is_dispensed, pick_up_before, quantity, patient_id, stored_drug_id)
+values (2, true, "2021-1-6", 3, 2, 1);
+insert into isa.drug_reservations (id, is_dispensed, pick_up_before, quantity, patient_id, stored_drug_id)
+values (3, true, "2021-1-6", 3, 2, 2);
+
+-- asd
+insert into isa.persons (id, pid, date_of_birth, first_name, gender, last_name, phone_number, address_id)
+	values (80,"123123324", "2000-1-1", "Sys", 0, "Admin1", "05123123123", 3);
+insert into isa.credentials(email, has_changed_initial_password, is_activated, password, role, uid, username, person_id)
+	values("sysadmin1@mail.com", 0, 1, "password", "ROLE_SYS_ADMIN", "6f822cc2-a137-4be5-9f34-9d38a252b9ff", "sysadmin1", 80);
+update isa.persons set credentials_email="sysadmin1@mail.com" where id=80;
+
+insert into isa.persons (id, pid, date_of_birth, first_name, gender, last_name, phone_number, address_id)
+	values (81,"153123324", "1980-1-1", "Supplier", 0, "Supplierovsky", "05123123123", 3);
+insert into isa.credentials(email, has_changed_initial_password, is_activated, password, role, uid, username, person_id)
+	values("suppliersupplierovsky@mail.com", 0, 1, "password", "ROLE_SUPPLIER", "6f822ac3-b137-4be5-9f34-9d38a252b9ff", "suppliersupplierovsky", 81);
+update isa.persons set credentials_email="suppliersupplierovsky@mail.com" where id=81;
+insert into isa.supplier(person_id) values(81);
+
+insert into isa.purchase_order(id, offer_deadline, status) values(1, "2022-01-01", 0);
+insert into isa.purchase_order(id, offer_deadline, status) values(2, "2021-05-01", 0);
+insert into isa.purchase_order(id, offer_deadline, status) values(3, "2021-02-15", 0);
+insert into isa.purchase_order(id, offer_deadline, status) values(4, "2020-12-01", 0);
+insert into isa.purchase_order(id, offer_deadline, status) values(5, "2021-3-15", 0);
+
+insert into isa.ordered_drug(id, amount, drug_id, order_id) values(11, 100, 1, 1);
+insert into isa.ordered_drug(id, amount, drug_id, order_id) values(2, 1200, 4, 1);
+insert into isa.ordered_drug(id, amount, drug_id, order_id) values(3, 2500, 5, 1);
+insert into isa.ordered_drug(id, amount, drug_id, order_id) values(4, 3300, 3, 1);
+insert into isa.ordered_drug(id, amount, drug_id, order_id) values(5, 20000, 2, 1);
+insert into isa.ordered_drug(id, amount, drug_id, order_id) values(6, 2300, 7, 2);
+insert into isa.ordered_drug(id, amount, drug_id, order_id) values(7, 10230, 6, 2);
+insert into isa.ordered_drug(id, amount, drug_id, order_id) values(8, 1010, 5, 3);
+insert into isa.ordered_drug(id, amount, drug_id, order_id) values(9, 300, 2, 3);
+insert into isa.ordered_drug(id, amount, drug_id, order_id) values(10, 4400, 1, 4);
+insert into isa.ordered_drug(id, amount, drug_id, order_id) values(12, 5000, 4, 5);
+insert into isa.ordered_drug(id, amount, drug_id, order_id) values(13, 100, 2, 5);
+insert into isa.ordered_drug(id, amount, drug_id, order_id) values(14, 25000, 6, 5);
+
+
+insert into isa.purchase_order_ordered_drugs(purchase_order_id, ordered_drugs_id) values(1, 11);
+insert into isa.purchase_order_ordered_drugs(purchase_order_id, ordered_drugs_id) values(1, 2);
+insert into isa.purchase_order_ordered_drugs(purchase_order_id, ordered_drugs_id) values(1, 3);
+insert into isa.purchase_order_ordered_drugs(purchase_order_id, ordered_drugs_id) values(1,4);
+insert into isa.purchase_order_ordered_drugs(purchase_order_id, ordered_drugs_id) values(1,5);
+insert into isa.purchase_order_ordered_drugs(purchase_order_id, ordered_drugs_id) values(2, 6);
+insert into isa.purchase_order_ordered_drugs(purchase_order_id, ordered_drugs_id) values(2, 7);
+insert into isa.purchase_order_ordered_drugs(purchase_order_id, ordered_drugs_id) values(3, 8);
+insert into isa.purchase_order_ordered_drugs(purchase_order_id, ordered_drugs_id) values(3, 9);
+insert into isa.purchase_order_ordered_drugs(purchase_order_id, ordered_drugs_id) values(4, 10);
+insert into isa.purchase_order_ordered_drugs(purchase_order_id, ordered_drugs_id) values(5, 12);
+insert into isa.purchase_order_ordered_drugs(purchase_order_id, ordered_drugs_id) values(5, 13);
+insert into isa.purchase_order_ordered_drugs(purchase_order_id, ordered_drugs_id) values(5, 14);
+
+insert into isa.supplier_drug_stock(id, amount, drug_id, supplier_person_id) values(1, 10000, 1, 81);
+insert into isa.supplier_drug_stock(id, amount, drug_id, supplier_person_id) values(2, 2000, 2, 81);
+insert into isa.supplier_drug_stock(id, amount, drug_id, supplier_person_id) values(3, 5000, 3, 81);
+insert into isa.supplier_drug_stock(id, amount, drug_id, supplier_person_id) values(4, 10000, 4, 81);
+insert into isa.supplier_drug_stock(id, amount, drug_id, supplier_person_id) values(5, 10999, 6, 81);
+insert into isa.supplier_drug_stock(id, amount, drug_id, supplier_person_id) values(6, 2000, 7, 81);
+
+select * from isa.appointments;
+insert into isa.persons (id, pid, date_of_birth, first_name, gender, last_name, phone_number, address_id)
+	values (82,"1532123324", "1980-1-1", "Pacijent", 0, "Pacijentovski", "2130320", 3);
+insert into isa.credentials(email, has_changed_initial_password, is_activated, password, role, uid, username, person_id)
+	values("patient@mail.com", 0, 1, "password", "ROLE_PATIENT", "6f822ac3-b257-4be5-9f34-9d38a252b9ff", "patient", 82);
+update isa.persons set credentials_email="patient@mail.com" where id=82;
+insert into isa.patients(id, penalties, person_id) values(4, 0, 82);
+
+insert into isa.appointments (id, amount, duration, start, type, patient_id, shift_id)
+	values (80, 1300, 1800000000000, "2021-01-10 9:40:00", 1, 4, 1);
+insert into isa.appointments (id, amount, duration, start, type, patient_id, shift_id)
+	values (81, 200, 1800000000000, "2021-01-10 9:40:00", 1, 4, 2);
+insert into isa.appointments (id, amount, duration, start, type, patient_id, shift_id)
+	values (82, 13500, 1800000000000, "2021-01-10 9:40:00", 1, 4, 3);
+
+insert into isa.appointment_reports(id, appointment_info, appointment_id) values(4, "Obican pregled za pacijenta.", 80);
+insert into isa.appointment_reports(id, appointment_info, appointment_id) values(5, "Operacija jezicne sluzokoze", 81);
+insert into isa.appointment_reports(id, appointment_info, appointment_id) values(6, "Postop. kontrola.", 82);

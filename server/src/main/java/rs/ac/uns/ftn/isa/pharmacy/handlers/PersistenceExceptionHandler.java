@@ -91,4 +91,10 @@ public class PersistenceExceptionHandler {
         return e.getMessage();
     }
 
+    @ResponseBody
+    @ExceptionHandler(PenaltiesException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    String penaltyHandler(PenaltiesException e){
+        return e.getMessage();
+    }
 }

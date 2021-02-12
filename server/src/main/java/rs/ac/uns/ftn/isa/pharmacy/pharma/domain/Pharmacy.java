@@ -12,9 +12,10 @@ import java.util.List;
 
 @Entity
 @Table(name = "pharmacies")
+@SequenceGenerator(name = "pharma_seq", initialValue = 100)
 public class Pharmacy {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pharma_seq")
     private long id;
     private String name;
     @OneToOne(cascade = CascadeType.PERSIST)

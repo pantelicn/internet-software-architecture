@@ -5,15 +5,12 @@ import org.springframework.transaction.annotation.Transactional;
 import rs.ac.uns.ftn.isa.pharmacy.exceptions.EntityNotFoundException;
 import rs.ac.uns.ftn.isa.pharmacy.schedule.domain.Appointment;
 import rs.ac.uns.ftn.isa.pharmacy.schedule.domain.AppointmentType;
+import rs.ac.uns.ftn.isa.pharmacy.schedule.exceptions.*;
 import rs.ac.uns.ftn.isa.pharmacy.users.employee.domain.Employee;
 import rs.ac.uns.ftn.isa.pharmacy.users.employee.domain.Shift;
 import rs.ac.uns.ftn.isa.pharmacy.users.employee.domain.Term;
 import rs.ac.uns.ftn.isa.pharmacy.schedule.dtos.CreatedAppointmentDto;
 import rs.ac.uns.ftn.isa.pharmacy.schedule.dtos.PredefinedAppointmentReservationDto;
-import rs.ac.uns.ftn.isa.pharmacy.schedule.exceptions.AppointmentTimeException;
-import rs.ac.uns.ftn.isa.pharmacy.schedule.exceptions.EmployeeOccupiedException;
-import rs.ac.uns.ftn.isa.pharmacy.schedule.exceptions.EmployeeShiftException;
-import rs.ac.uns.ftn.isa.pharmacy.schedule.exceptions.PatientOccupiedException;
 import rs.ac.uns.ftn.isa.pharmacy.users.user.repository.PatientRepository;
 import rs.ac.uns.ftn.isa.pharmacy.users.employee.repository.EmployeeRepository;
 import rs.ac.uns.ftn.isa.pharmacy.schedule.repository.AppointmentRepository;
@@ -58,7 +55,26 @@ public class SchedulingService {
         appointment = appointmentRepository.save(appointment);
         emailService.sendExaminationScheduledMessage(appointment);
     }
-    // TODO: Refactor!
+
+    @Transactional
+    public void scheduleNewAppointmentPatient(CreatedAppointmentDto createdAppointmentDto, AppointmentType type) {
+        checkPatientBanned(createdAppointmentDto.getPatientId());
+        scheduleNewAppointment(createdAppointmentDto, type);
+    }
+
+    @Transactional
+    public void schedulePredefinedAppointmentPatient(PredefinedAppointmentReservationDto appointmentReservation) {
+        checkPatientBanned(appointmentReservation.getPatientId());
+        schedulePredefinedAppointment(appointmentReservation);
+    }
+
+    public void checkPatientBanned(long patientId) {
+        var patient = patientRepository.getOne(patientId);
+        if (patient.isBanned()) {
+            throw new PenaltiesException("Patient has 3 or more penalties.");
+        }
+    }
+
     @Transactional
     public void scheduleNewAppointment(CreatedAppointmentDto createdAppointmentDto, AppointmentType type) throws PersistenceException {
         var term = createdAppointmentDto.getTerm();

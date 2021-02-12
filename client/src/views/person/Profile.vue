@@ -74,20 +74,39 @@
                     :disabled="!editing">
                     </b-form-datepicker>
                 </b-row>
-                <b-row class="mt-4">
-                    <label for="address"> Address: </label>
-                </b-row>
-                <b-row cols="7">
-                    <VueGoogleAutocomplete v-model="getAddress" ref="address" id="map" classname="form-control" v-if="editing"
-                        placeholder="Please type your address" v-on:placechanged="getAddressData">
-                    </VueGoogleAutocomplete>
-                    <b-form-input id="address" :value="getAddress" type="text" v-else
-                            placeholder="Enter your first name" required disabled></b-form-input>
-                </b-row>
                 <b-row>
-                    <b-form-invalid-feedback :state="addressValid">
-                            Please insert a valid address
-                    </b-form-invalid-feedback>
+                    <b-col>
+                        <b-row class="mt-4">
+                            <label for="address"> Address: </label>
+                        </b-row>
+                        <b-row cols="7">
+                            <VueGoogleAutocomplete v-model="getAddress" ref="address" id="map" classname="form-control" v-if="editing"
+                                placeholder="Please type your address" v-on:placechanged="getAddressData">
+                            </VueGoogleAutocomplete>
+                            <b-form-input id="address" :value="getAddress" type="text" v-else
+                                    placeholder="Enter your first name" required disabled></b-form-input>
+                        </b-row>
+                        <b-row>
+                            <b-form-invalid-feedback :state="addressValid">
+                                    Please insert a valid address
+                            </b-form-invalid-feedback>
+                        </b-row>
+                    </b-col>
+                    <b-col class="ml-2">
+                         <b-row class="mt-4">
+                            <label for="zip-code"> Zip code: </label>
+                        </b-row>
+                        <b-row>
+                            <b-form-input id="zip-code" v-model="personInfo.address.city.postalCode" type="text"
+                            placeholder="Enter zip code" required :disabled="!editing">
+                            </b-form-input>
+                        </b-row>
+                        <b-row>
+                            <b-form-invalid-feedback :state="zipCodeValid">
+                                    Please insert a valid zip code
+                            </b-form-invalid-feedback>
+                        </b-row>
+                    </b-col>
                 </b-row>
             </b-col>
 
@@ -226,10 +245,14 @@ export default {
         passwordsMatching: function (){
             return this.personInfo.password === this.passwordValidated
         },
+        zipCodeValid:function(){
+            return this.personInfo.address.city.postalCode.length > 4
+        },
         formValid:function(){
             return this.pidValid && this.firstNameValid && this.lastNameValid && this.genderValid
             && this.phoneNumberValid && this.addressValid && this.userNameValid && 
             this.passwordValid && this.passwordValidationValid && this.passwordsMatching
+            && this.zipCodeValid
         }
     },
     methods: {
@@ -239,7 +262,6 @@ export default {
             this.personInfo.address.latitude = this.googleAddress.latitude
             this.personInfo.address.longitude = this.googleAddress.longitude
             this.personInfo.address.city.name = this.googleAddress.locality
-            this.personInfo.address.city.postalCode = this.googleAddress.postal_code
             this.personInfo.address.city.country.name = this.googleAddress.country
         },
         fetchPersonInfo:function(){

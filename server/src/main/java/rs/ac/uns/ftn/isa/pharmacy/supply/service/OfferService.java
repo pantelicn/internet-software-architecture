@@ -92,4 +92,8 @@ public class OfferService {
     public List<Offer> getByPurchaseOrderId(long purchaseId) {
         return offerRepository.getByPurchaseOrder(purchaseId);
     }
+
+    public Boolean checkSupplies(long purchaseOrderId, long supplierId) {
+        return isSupplierStockedUp(purchaseOrderId, supplierId);
+    }
 }

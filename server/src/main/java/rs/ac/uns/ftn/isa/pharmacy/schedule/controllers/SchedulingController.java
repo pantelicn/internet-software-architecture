@@ -42,7 +42,7 @@ public class SchedulingController {
     public void schedulePredefinedAppointment(HttpServletRequest request, @RequestBody PredefinedAppointmentReservationDto appointmentReservation) {
         IdentityProvider identityProvider = HttpRequestUtil.getIdentity(request);
         appointmentReservation.setPatientId(identityProvider.getRoleId());
-        schedulingService.schedulePredefinedAppointment(appointmentReservation);
+        schedulingService.schedulePredefinedAppointmentPatient(appointmentReservation);
     }
 
     @PostMapping("/examination")
@@ -74,7 +74,7 @@ public class SchedulingController {
         IdentityProvider identityProvider = HttpRequestUtil.getIdentity(request);
         createdAppointmentDto.setPatientId(identityProvider.getRoleId());
         createdAppointmentDto.setDuration(Duration.ofMinutes(30));
-        schedulingService.scheduleNewAppointment(createdAppointmentDto, AppointmentType.Counseling);
+        schedulingService.scheduleNewAppointmentPatient(createdAppointmentDto, AppointmentType.Counseling);
     }
 
 }

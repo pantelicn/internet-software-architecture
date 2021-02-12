@@ -43,7 +43,7 @@
                                 {{drug.manufacturer}}
                             </td>
                             <td>
-                                <StarRating v-model="drug.rating" :star-size="20"/>
+                                <StarRating v-model="drug.rating" :star-size="20" @rating-selected="rateDrug(drug)"/>
                             </td>
                         </tr>
                     </tbody>
@@ -115,6 +115,17 @@ export default {
             axios.post(api.rating.pharmacy, dto)
             .then(() => {
                 this.$toast.open("Pharmacy rated.")
+            })
+            .catch()
+        },
+        rateDrug: function (drug) {
+            let dto = {
+                id: drug.id,
+                rating: drug.rating
+            }
+            axios.post(api.rating.drug, dto)
+            .then(() => {
+                this.$toast.open("Drug rated.")
             })
             .catch()
         }

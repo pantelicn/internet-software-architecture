@@ -11,9 +11,10 @@ import java.util.List;
 
 @Entity
 @Table(name="employees")
+@SequenceGenerator(name = "employee_seq", initialValue = 100)
 public class Employee {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "employee_seq")
     private long id;
     @OneToOne
     private Person person;

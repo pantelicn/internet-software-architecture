@@ -38,4 +38,14 @@ public class OfferMapper {
 
         return offer;
     }
+
+    public static OfferOverviewDto objectToDto(Offer offer) {
+        return new OfferOverviewDto(
+                offer.getId(),
+                offer.getPrice(),
+                offer.getDeliveryDeadline(),
+                offer.getStatus(),
+                PurchaseOrderMapper.objectToDto(offer.getPurchaseOrder())
+        );
+    }
 }

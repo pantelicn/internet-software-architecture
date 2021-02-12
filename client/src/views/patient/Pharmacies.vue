@@ -40,8 +40,40 @@
                 </div>
                 <hr>
                 <div class="m-2">
-                    <button class="btn btn-success ml-1" @click="reset">Reset</button>
+                    <button class="btn btn-danger ml-1" @click="reset">Reset</button>
                 </div>
+                <hr style="border-top: 1px solid red;">
+
+              <div class="row ml-1 mt-2">
+                  <p class="float-left text-dark
+                  pl-4 pr-4 pt-2 pb-2 bg-warning" v-if="isPatient">Your subscriptions:</p>
+                </div>
+                <div>
+                  <table class="w-100">
+                    <tr v-for="subscription in subscribedPharmacies" :key="subscription.pharmacyId">
+                      <td class="row w-100 ml-1 mt-2 border-warning border pr-2 pt-3 pb-3">
+                        <div style="text-align: left;" class="col-7">
+                          <span class="font-weight-bold" style="font-size: 20px;">
+                              {{subscription.name}}
+                          </span>
+                          <br>
+                          {{subscription.address.streetName}}
+                          <br>
+                          {{subscription.address.city.name}} {{subscription.address.city.postalCode}}
+                          <br>
+                          <span class="font-italic">
+                            {{subscription.description}}
+                          </span>
+                        </div>
+                        <div class="col-5 mt-4">
+                          <b-button class="btn btn-warning" @click="schedule(subscription.pharmacyId)">Open</b-button>
+                        </div>
+                      </td>
+                    </tr>
+
+                  </table>
+                </div>
+
             </div>
         </div>
         <div class="col-6">
@@ -60,6 +92,7 @@
 import axios from 'axios'
 import { api } from '../../api.js'
 import StarRating from 'vue-star-rating'
+import {getRole} from "@/helpers/jwt";
 
 export default {
     data: function () {
@@ -72,13 +105,19 @@ export default {
             cityAscending: false,
             ratingAscending: false,
             nameSearch: '',
-            citySearch: ''
+            citySearch: '',
+            subscribedPharmacies: [],
+            isPatient: false
         }
     },
     components: {
         StarRating,
     },
     mounted: function () {
+        this.isPatient = getRole() === "ROLE_PATIENT";
+        if (this.isPatient) {
+          this.getSubscribedPharmacies();
+        }
         axios.get(api.pharmacies.root)
         .then(response => {
             this.pharmacies = response.data
@@ -93,6 +132,13 @@ export default {
         reset: function () {
             this.filteredPharmacies = this.pharmacies
             this.searchedPharmacies = this.pharmacies
+        },
+        getSubscribedPharmacies() {
+            axios.get(api.promotion.pharmacies)
+                .then(response => {
+                    this.subscribedPharmacies = response.data;
+                })
+                .catch(() => this.$toast.error("Failed to fetch subscriptions"))
         },
         sortByName: function () {
             this.pharmacies.sort((p1, p2) => {

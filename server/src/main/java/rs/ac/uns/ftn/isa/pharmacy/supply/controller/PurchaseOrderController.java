@@ -7,9 +7,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import rs.ac.uns.ftn.isa.pharmacy.auth.model.Role;
 import rs.ac.uns.ftn.isa.pharmacy.supply.domain.PurchaseOrder;
+import rs.ac.uns.ftn.isa.pharmacy.supply.dto.PurchaseOrderMapper;
+import rs.ac.uns.ftn.isa.pharmacy.supply.dto.PurchaseOrderOverviewDto;
 import rs.ac.uns.ftn.isa.pharmacy.supply.service.PurchaseOrderService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("api/purchase-order")
@@ -23,7 +26,11 @@ public class PurchaseOrderController {
 
     @GetMapping
     @Secured(Role.SUPPLIER)
-    public ResponseEntity<List<PurchaseOrder>> getAllActive() {
-        return ResponseEntity.ok(purchaseOrderService.getAllActive());
+    public ResponseEntity<List<PurchaseOrderOverviewDto>> getAllActive() {
+        return ResponseEntity.ok(purchaseOrderService.getAllActive()
+                .stream()
+                .map(PurchaseOrderMapper::objectToDto)
+                .collect(Collectors.toList())
+        );
     }
 }

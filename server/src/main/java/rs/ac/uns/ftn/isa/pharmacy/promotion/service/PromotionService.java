@@ -1,6 +1,7 @@
 package rs.ac.uns.ftn.isa.pharmacy.promotion.service;
 
 import org.springframework.stereotype.Service;
+import rs.ac.uns.ftn.isa.pharmacy.pharma.domain.Pharmacy;
 import rs.ac.uns.ftn.isa.pharmacy.promotion.dto.PromotionCreationDto;
 import rs.ac.uns.ftn.isa.pharmacy.promotion.dto.SubscriptionOrderDto;
 import rs.ac.uns.ftn.isa.pharmacy.promotion.mapper.PromotionMapper;
@@ -66,5 +67,13 @@ public class PromotionService {
         for (var subscription : subscriptions) {
             emailService.sendPromotionMessage(promotion, subscription);
         }
+    }
+
+    public boolean isPatientSubscribed(long personId, long pharmacyId) {
+        return subscriptionRepository.countByPharmacyAndPerson(pharmacyId, personId) > 0;
+    }
+
+    public List<Subscription> getSubscribedPharmaciesForPatient(long personId) {
+        return subscriptionRepository.getByPerson(personId);
     }
 }
