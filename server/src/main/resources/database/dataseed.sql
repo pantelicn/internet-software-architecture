@@ -54,6 +54,7 @@ values (1,"0112998091229", "2000-1-1", "Sam", 0, "Hunter", "05123123123", 3);
 insert into isa.patients (id,person_id,penalties) values (1,1,3);
 insert into isa.credentials (email,username,is_activated,has_changed_initial_password,password,role,uid,person_id) 
 values ("samhunter@gmail.com","samhunter",1,1,"password","ROLE_PATIENT",'337d2368-8bb0-46a5-a33a-7a0fd98d262f',1);
+update isa.persons set credentials_email="samhunter@gmail.com" where id=1;
 
 insert into isa.persons (id, pid, date_of_birth, first_name, gender, last_name, phone_number, address_id)
 values (2,"021099911229", "1998-2-2", "John", 0, "Doe", "0642025209", 4);

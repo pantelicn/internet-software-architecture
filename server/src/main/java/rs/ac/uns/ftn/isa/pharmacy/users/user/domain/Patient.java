@@ -75,4 +75,8 @@ public class Patient {
     public void penalize() {
         this.penalties += 1;
     }
+
+    public boolean isBanned() {
+        return this.penalties >= 3;
+    }
 }
