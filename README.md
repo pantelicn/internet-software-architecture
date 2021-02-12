@@ -44,6 +44,6 @@ Nakon prvog pokretanja projekta tabele u bazi će biti kreirane i može se iskor
 - Dermatolog 1 (sagefinley@gmail.com, password: password)
 - Dermatolog 2 (mackenzieashton@gmail.com. password: password)
   - za demonstraciju prvog prijavljivanja
-- Farmaceut 1 (mickeyfrankie@gmail.com, password: password) zaposlen u "Tiny Pill"
-- Farmaceut 2 (luiswallace@gmail.com, password: password) zaposlen u "Zegin"
+- Farmaceut 1 (mickeyfrankie@gmail.com, password: password) zaposlen u "Zegin"
+- Farmaceut 2 (luiswallace@gmail.com, password: password) zaposlen u "Tiny Pill"
   - za demonstraciju prvog prijavljivanja
