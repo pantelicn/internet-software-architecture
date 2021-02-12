@@ -47,3 +47,15 @@ Nakon prvog pokretanja projekta tabele u bazi će biti kreirane i može se iskor
 - Farmaceut 1 (mickeyfrankie@gmail.com, password: password) zaposlen u "Zegin"
 - Farmaceut 2 (luiswallace@gmail.com, password: password) zaposlen u "Tiny Pill"
   - za demonstraciju prvog prijavljivanja
+  #### Student 4
+  - Za potrebe testiranja definisani su sledeci profili:
+    - Adminstrator sistema
+        sysadmin1@mail.com
+        password
+    - Nabavljac
+        suppliersupplierovsky@mail.com
+        password
+    - Pacijent
+        patient@mail.com
+        password
+    
