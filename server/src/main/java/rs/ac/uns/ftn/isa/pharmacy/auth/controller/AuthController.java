@@ -80,14 +80,14 @@ public class AuthController {
     }
 
     @GetMapping("logged")
-    @Secured({Role.SUPPLIER, Role.DERMATOLOGIST, Role.PHARMACIST})
+    @Secured({Role.SUPPLIER, Role.DERMATOLOGIST, Role.PHARMACIST, Role.SYS_ADMIN})
     public ResponseEntity<?> hasChangedInitialPassword(HttpServletRequest request) {
         var identityProvider = HttpRequestUtil.getIdentity(request);
         return ResponseEntity.ok(credentialsService.hasChangedInitialPassword(identityProvider.getEmail()));
     }
 
     @PostMapping("change-password")
-    @Secured({Role.SUPPLIER, Role.DERMATOLOGIST, Role.PHARMACIST})
+    @Secured({Role.SUPPLIER, Role.DERMATOLOGIST, Role.PHARMACIST, Role.SYS_ADMIN})
     public ResponseEntity<?> changePassword(HttpServletRequest request, @RequestBody PassChangeDto dto) {
         var identityProvider = HttpRequestUtil.getIdentity(request);
         try {

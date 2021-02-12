@@ -70,10 +70,10 @@ public class PersonController {
         }
     }
     @GetMapping
-    @Secured({Role.PATIENT,Role.DERMATOLOGIST,Role.PHARMACIST})
+    @Secured({Role.PATIENT,Role.DERMATOLOGIST,Role.PHARMACIST, Role.SUPPLIER})
     public ResponseEntity<?> get (HttpServletRequest request){
         var identityProvider = HttpRequestUtil.getIdentity(request);
-        try{
+        try {
             var person = personService.get(identityProvider.getPersonId());
             return ResponseEntity.ok(new PersonDto(person));
         }

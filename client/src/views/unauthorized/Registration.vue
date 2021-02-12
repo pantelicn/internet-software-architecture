@@ -26,7 +26,7 @@
             <label>Password:</label>
           </b-row>
           <b-row>
-            <b-input placeholder="Password" v-model="password"></b-input>
+            <b-input placeholder="Password" type="password" v-model="password"></b-input>
           </b-row>
         </b-col>
 
@@ -214,7 +214,7 @@ export default {
           .then(() => {
               this.statusMessage = "Registration successful. Please check your email to activate your account.";
           })
-          .catch(error => alert(error.response.data))
+          .catch(error => console.log("error "))
       },
       validateInput() {
           if (!this.email) {this.statusMessage = "Incorrect mail"; return false;}

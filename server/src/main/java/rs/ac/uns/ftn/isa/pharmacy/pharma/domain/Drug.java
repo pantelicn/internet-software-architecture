@@ -10,8 +10,10 @@ import java.util.List;
 
 @Entity
 @Table(name = "drugs")
+@SequenceGenerator(name = "drug_seq", initialValue = 100)
 public class Drug {
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "drug_seq")
     private long id;
     private String name;
     private Drug.Type drugType;
@@ -28,11 +30,11 @@ public class Drug {
     private List<DrugRating> ratings;
 
     public void validate() throws InvalidEntityException {
-        if (name == null) throw new InvalidEntityException("Name");
+        if (name == null || name.isEmpty()) throw new InvalidEntityException("Name");
         if (drugType == null) throw new InvalidEntityException("Drug type");
         if (intakeType == null) throw new InvalidEntityException("Intake type");
         if (ingredients == null || ingredients.isEmpty()) throw new InvalidEntityException("Ingredients");
-        if (manufacturer == null) throw new InvalidEntityException("Manufacturer");
+        if (manufacturer == null || manufacturer.isEmpty()) throw new InvalidEntityException("Manufacturer");
         if (additionalNotes == null) throw new InvalidEntityException("Additional notes");
     }
 

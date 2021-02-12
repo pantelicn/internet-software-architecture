@@ -61,8 +61,8 @@
 
         </b-table>
 
-        <b-modal size="lg" :title="drugSpecModal.title" :id="drugSpecModal.id" ok-only>
-            <drug-specification :drug="drugSpecModal.drug"></drug-specification>
+        <b-modal size="lg" :title="drugSpecificationModal.title" :id="drugSpecificationModal.id" ok-only>
+            <drug-specification :drug="drugSpecificationModal.drug"></drug-specification>
         </b-modal>
         <b-modal size="lg" :title="drugPrescriptionModal.title" :id="drugPrescriptionModal.id" ok-only>
             <drug-prescription :drug="drugPrescriptionModal.drug"></drug-prescription>
@@ -82,7 +82,7 @@
 
 <script>
 import axios from 'axios'
-import { api } from '../../../../api.js'
+import { api } from '@/api'
 import DrugSpecification from '../../../../components/report/DrugSpecification.vue'
 import DrugPrescription from '../../../../components/report/DrugPrescription.vue'
 
@@ -101,14 +101,14 @@ export default {
             ],
             filter :null,
             filterOn: ['name','manufacturer'],
-            drugSpecModal: {
+            drugSpecificationModal: {
                 id: 'drug-specifications-modal',
                 drug: null,
                 title: ''
             },
             drugPrescriptionModal:{
                 id: 'drug-prescription-modal',
-                drug: null,
+                drug: undefined,
                 title: ''
             }
         }
@@ -121,9 +121,10 @@ export default {
             this.$router.push({ name: 'counseling-report-step-two' })
         },
         showDrugSpec(item,button){
-            this.drugSpecModal.drug = item
-            this.drugSpecModal.title = 'Drug ' + item.name
-            this.$root.$emit('bv::show::modal',this.drugSpecModal.id,button)
+            this.drugSpecificationModal.drug = item
+            this.drugSpecificationModal.title = 'Drug ' + item.name
+            this.$root.$emit('')
+            this.$root.$emit('bv::show::modal',this.drugSpecificationModal.id,button)
         },
         showDrugPrescription(item,button){
             this.drugPrescriptionModal.drug = item
