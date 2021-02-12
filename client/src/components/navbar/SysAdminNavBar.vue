@@ -18,6 +18,7 @@
             <router-link class="dropdown-item" to="/sys/register-pharmacy">Pharmacy</router-link>
             <router-link class="dropdown-item" to="/sys/register-ph-admin">Pharmacy admin</router-link>
             <router-link class="dropdown-item" to="/sys/register-sys-admin">Sys admin</router-link>
+            <router-link class="dropdown-item" to="/sys/register-dermatologist">Dermatologist</router-link>
           </div>
         </li>
         <router-link to="/sys/complaints" class="nav-link">Complaints</router-link>

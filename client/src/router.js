@@ -46,6 +46,7 @@ import RegisterPharmacy from "@/views/sysadmin/RegisterPharmacy";
 import RegisterPhAdmin from "@/views/sysadmin/RegisterPhAdmin";
 import AddDrugs from "@/views/sysadmin/AddDrugs";
 import RegisterSysAdmin from "@/views/sysadmin/RegisterSysAdmin";
+import RegisterDermatologist from "@/views/sysadmin/RegisterDermatologist";
 
 const router = new VueRouter({
     mode: 'hash',
@@ -191,6 +192,11 @@ const router = new VueRouter({
                     path: 'register-sys-admin',
                     name: 'register-sys-admin',
                     component: RegisterSysAdmin
+                },
+                {
+                    path: 'register-dermatologist',
+                    name: 'register-dermatologist',
+                    component: RegisterDermatologist
                 }
             ]
         },
