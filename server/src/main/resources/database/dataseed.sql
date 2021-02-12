@@ -1,7 +1,9 @@
-drop schema isa;
-create schema isa;
-SET @@session.time_zone='+01:00';
-SELECT @@global.time_zone, @@session.time_zone;
+# drop schema isa;
+# create schema isa; # Used to create initial schema
+# SET @@session.time_zone='+00:00';
+# SELECT @@global.time_zone, @@session.time_zone;
+
+# before inserting, run spring-boot application first in order to create tables.
 
 insert into isa.countries (id, code, name)
 values (1, "RS", "Srbija");
