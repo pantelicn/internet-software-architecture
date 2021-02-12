@@ -278,6 +278,7 @@ values (29, 2200, 1800000000000, "2021-02-28 16:00:00", 1, null, 42);
 insert into isa.appointments (id, amount, duration, start, type, patient_id, shift_id)
 values (30, 2340, 1800000000000, "2021-02-28 17:00:00", 1, null, 42);
 
+
 insert into isa.appointments (id, amount, duration, start, type, patient_id, shift_id)
 values (31, 2200, 1800000000000, "2021-02-24 12:30:00", 1, 1, 41);
 insert into isa.appointments (id, amount, duration, start, type, patient_id, shift_id)
@@ -403,6 +404,14 @@ values (14, 150.0, "2022-03-03 00:00:00", 25, 7, 2, 0);
 
 insert into isa.appointment_reports (id, appointment_info, appointment_id)
 values (1, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ac sem erat. Sed dui neque, aliquam rhoncus fermentum vitae, facilisis quis metus.", 1);
+insert into isa.appointment_reports (id, appointment_info, appointment_id)
+values (2, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ac sem erat. Sed dui neque, aliquam rhoncus fermentum vitae, facilisis quis metus.", 2);
+insert into isa.appointment_reports (id, appointment_info, appointment_id)
+values (3, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ac sem erat. Sed dui neque, aliquam rhoncus fermentum vitae, facilisis quis metus.", 10);
 
 insert into isa.drug_reservations (id, is_dispensed, pick_up_before, quantity, patient_id, stored_drug_id)
 values (1, true, "2021-1-5", 2, 1, 1);
+insert into isa.drug_reservations (id, is_dispensed, pick_up_before, quantity, patient_id, stored_drug_id)
+values (2, true, "2021-1-6", 3, 2, 1);
+insert into isa.drug_reservations (id, is_dispensed, pick_up_before, quantity, patient_id, stored_drug_id)
+values (3, true, "2021-1-6", 3, 2, 2);
