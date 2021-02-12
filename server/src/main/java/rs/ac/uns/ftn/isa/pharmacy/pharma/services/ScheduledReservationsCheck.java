@@ -27,10 +27,12 @@ public class ScheduledReservationsCheck {
     private void penalize() {
         List<DrugReservation> expiredReservations = drugReservationService.findExpired(LocalDate.now());
         for (var reservation: expiredReservations) {
-            reservation.getPatient().penalize();
-            patientService.update(reservation.getPatient(), reservation.getPatient().getId());
-            drugReservationService.deleteById(reservation.getId());
-            drugReservationService.updateStoredDrugQuantity(reservation.getStoredDrug().getId(), reservation.getQuantity());
+            if (!reservation.isDispensed()) {
+                reservation.getPatient().penalize();
+                patientService.update(reservation.getPatient(), reservation.getPatient().getId());
+                drugReservationService.deleteById(reservation.getId());
+                drugReservationService.updateStoredDrugQuantity(reservation.getStoredDrug().getId(), reservation.getQuantity());
+            }
         }
         System.out.println(expiredReservations.size() + " penalties given.");
     }

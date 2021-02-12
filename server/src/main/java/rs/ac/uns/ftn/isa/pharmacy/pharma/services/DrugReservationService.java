@@ -10,6 +10,7 @@ import rs.ac.uns.ftn.isa.pharmacy.pharma.exceptions.AllergyException;
 import rs.ac.uns.ftn.isa.pharmacy.pharma.exceptions.DateException;
 import rs.ac.uns.ftn.isa.pharmacy.exceptions.EntityNotFoundException;
 import rs.ac.uns.ftn.isa.pharmacy.pharma.repository.StoredDrugRepository;
+import rs.ac.uns.ftn.isa.pharmacy.schedule.exceptions.PenaltiesException;
 import rs.ac.uns.ftn.isa.pharmacy.users.employee.repository.EmployeeRepository;
 import rs.ac.uns.ftn.isa.pharmacy.pharma.repository.DrugReservationRepository;
 import rs.ac.uns.ftn.isa.pharmacy.mail.services.EmailService;
@@ -75,6 +76,9 @@ public class DrugReservationService {
     public void reserve(DrugReservation drugReservation, long patientId) {
         var patient = patientRepository.findById(patientId)
                 .orElseThrow(() -> new EntityNotFoundException(Patient.class.getSimpleName(), patientId));
+        if(patient.isBanned()) {
+            throw new PenaltiesException("Patient has 3 or more penalties.");
+        }
         var storedDrug = storedDrugRepository.findById(drugReservation.getStoredDrug().getId())
                 .orElseThrow(() -> new EntityNotFoundException(
                         StoredDrug.class.getSimpleName(),
