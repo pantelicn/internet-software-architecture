@@ -1,5 +1,6 @@
 package rs.ac.uns.ftn.isa.pharmacy.users.person.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import rs.ac.uns.ftn.isa.pharmacy.auth.model.Credentials;
 import rs.ac.uns.ftn.isa.pharmacy.locale.domain.Address;
 import rs.ac.uns.ftn.isa.pharmacy.users.user.domain.Gender;

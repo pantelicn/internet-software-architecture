@@ -56,11 +56,13 @@ public class SchedulingService {
         emailService.sendExaminationScheduledMessage(appointment);
     }
 
+    @Transactional
     public void scheduleNewAppointmentPatient(CreatedAppointmentDto createdAppointmentDto, AppointmentType type) {
         checkPatientBanned(createdAppointmentDto.getPatientId());
         scheduleNewAppointment(createdAppointmentDto, type);
     }
 
+    @Transactional
     public void schedulePredefinedAppointmentPatient(PredefinedAppointmentReservationDto appointmentReservation) {
         checkPatientBanned(appointmentReservation.getPatientId());
         schedulePredefinedAppointment(appointmentReservation);

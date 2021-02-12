@@ -27,6 +27,7 @@ public class Drug {
     private List<Drug> alternatives;
     private String additionalNotes;
     @OneToMany(cascade = CascadeType.ALL, mappedBy ="drug")
+    @JsonIgnore
     private List<DrugRating> ratings;
 
     public void validate() throws InvalidEntityException {
