@@ -46,7 +46,7 @@
 
               <div class="row ml-1 mt-2">
                   <p class="float-left text-dark
-                  pl-4 pr-4 pt-2 pb-2 bg-warning">Your subscriptions:</p>
+                  pl-4 pr-4 pt-2 pb-2 bg-warning" v-if="isPatient">Your subscriptions:</p>
                 </div>
                 <div>
                   <table class="w-100">
@@ -92,6 +92,7 @@
 import axios from 'axios'
 import { api } from '../../api.js'
 import StarRating from 'vue-star-rating'
+import {getRole} from "@/helpers/jwt";
 
 export default {
     data: function () {
@@ -105,14 +106,18 @@ export default {
             ratingAscending: false,
             nameSearch: '',
             citySearch: '',
-            subscribedPharmacies: []
+            subscribedPharmacies: [],
+            isPatient: false
         }
     },
     components: {
         StarRating,
     },
     mounted: function () {
-        this.getSubscribedPharmacies();
+        this.isPatient = getRole() === "ROLE_PATIENT";
+        if (this.isPatient) {
+          this.getSubscribedPharmacies();
+        }
         axios.get(api.pharmacies.root)
         .then(response => {
             this.pharmacies = response.data

@@ -56,7 +56,7 @@
           <div class="modal-footer">
             <div v-if="selectedDrug">
               <b>Total price:</b> {{formatPrice(selectedDrug.price.amount.amount * quantity) + selectedDrug.price.amount.currency}}
-              <button type="button" class="btn btn-warning ml-4">Login required</button>
+              <button type="button" class="btn btn-warning ml-4" data-dismiss="modal" @click="$router.push('/')">Login required</button>
             </div>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Abort</button>
           </div>
