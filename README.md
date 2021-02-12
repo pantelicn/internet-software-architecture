@@ -19,7 +19,11 @@ Korišćeni sistem za upravljanje bazama podataka je [MySql](https://www.mysql.c
 - MAIL_USERNAME - e-mail sa kojeg će se slati pošta od strane sistema
 - MAIL_PASSWORD - lozinka pomenutog e-mail naloga
 
+takodje je potrebno obezbediti postojanje šeme sa nazivom "isa" u MySql bazi
+
 #### Za pokretanje koristiti maven:
 postaviti se u server direktorijum i izvšiti:
 
 `$ mvn spring-boot:run`
+
+Nakon prvog pokretanja projekta tabele u bazi će biti kreirane i može se iskoristiti sql skripta u folderu `server/src/main/resources/database` za popunjavanje podacima
