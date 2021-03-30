@@ -3,7 +3,7 @@ University project for Internet Software Architecture [2020]
 
 [![Build Status](https://travis-ci.com/nikolapantelic-ftn/internet-software-architecture.svg?branch=main)](https://travis-ci.com/nikolapantelic-ftn/internet-software-architecture)
 
-#### Produkciona verzija dostupna na [isa-pharmacy.herokuapp.com](https://isa-pharmacy.herokuapp.com)
+#### ~~Produkciona verzija dostupna na [isa-pharmacy.herokuapp.com](https://isa-pharmacy.herokuapp.com)~~
 ## Pokretanje Vue aplikacije
 Za pokretanje frontend dela aplikacije pogledati client/README.md.
 
